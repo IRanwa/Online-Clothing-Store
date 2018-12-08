@@ -21,7 +21,8 @@
         <activity
             android:name=".StyleOmega"
             android:label="@string/title_activity_style_omega"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan"></activity>
     </application>
 
 </manifest>

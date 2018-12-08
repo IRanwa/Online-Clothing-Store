@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimary">#FF8C00</color>
+    <color name="colorPrimaryDark">#FF8C00</color>
     <color name="colorAccent">#FF8C00</color>
     <color name="splashBackground">#3A4750</color>
     <color name="ediText_textColor">#808080</color>
