@@ -10,7 +10,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.imeshranawaka.styleomega.SignIn"
+        android:name="com.example.imeshranawaka.styleomega.Fragments.SignIn"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout="@layout/fragment_sign_in" />

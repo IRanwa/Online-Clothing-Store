@@ -1,4 +1,4 @@
-package com.example.imeshranawaka.styleomega;
+package com.example.imeshranawaka.styleomega.Fragments;
 
 
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.imeshranawaka.styleomega.R;
 
 /**
  * A simple {@link Fragment} subclass.
