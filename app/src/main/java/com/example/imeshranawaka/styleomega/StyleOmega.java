@@ -1,27 +1,28 @@
 package com.example.imeshranawaka.styleomega;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.example.imeshranawaka.styleomega.Fragments.MyAccount;
 
 public class StyleOmega extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private DrawerLayout drawer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_style_omega);
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -32,10 +33,6 @@ public class StyleOmega extends AppCompatActivity
 
         navigationView.setEnabled(true);
         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-    }
-
-    public void enableDrawer(){
-        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
     }
 
     @Override
@@ -77,9 +74,15 @@ public class StyleOmega extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            // Handle the camera action
-        } else if (id == R.id.nav_account) {
 
+        } else if (id == R.id.nav_account) {
+            FragmentManager fm = getSupportFragmentManager();
+            Fragment frag = fm.findFragmentByTag("MyAccount");
+            if (frag==null){
+                FragmentTransaction transaction = fm.beginTransaction().add(R.id.mainFragment, new MyAccount(), "MyAccount");
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
         } else if (id == R.id.nav_order) {
 
         }
