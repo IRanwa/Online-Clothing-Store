@@ -40,6 +40,7 @@ public class SignIn extends Fragment {
             FragmentManager fm = getActivity().getSupportFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();
             Register register = new Register();
+            //AccountInfo ac = new AccountInfo();
             transaction.add(R.id.mainFragment,register,"Register");
             transaction.addToBackStack(null);
             transaction.commit();

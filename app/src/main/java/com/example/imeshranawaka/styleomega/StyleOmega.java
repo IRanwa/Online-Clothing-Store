@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import com.example.imeshranawaka.styleomega.Fragments.MyAccount;
 
+import java.util.List;
+
 public class StyleOmega extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -45,28 +47,6 @@ public class StyleOmega extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.style_omega, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -77,12 +57,25 @@ public class StyleOmega extends AppCompatActivity
 
         } else if (id == R.id.nav_account) {
             FragmentManager fm = getSupportFragmentManager();
-            Fragment frag = fm.findFragmentByTag("MyAccount");
-            if (frag==null){
-                FragmentTransaction transaction = fm.beginTransaction().add(R.id.mainFragment, new MyAccount(), "MyAccount");
-                transaction.addToBackStack(null);
-                transaction.commit();
+            FragmentTransaction transaction = fm.beginTransaction();
+
+            List<Fragment> fragList = fm.getFragments();
+            boolean state = false;
+            for(Fragment frag : fragList){
+                String tag = frag.getTag();
+                if(tag!=null && tag.equalsIgnoreCase("MyAccount")){
+                    state = true;
+                }
+                if(state){
+                    transaction.remove(frag);
+                }
             }
+            transaction.commit();
+
+            transaction = fm.beginTransaction();
+            transaction.add(R.id.mainFragment, new MyAccount(), "MyAccount");
+            transaction.addToBackStack("MainMenu");
+            transaction.commit();
         } else if (id == R.id.nav_order) {
 
         }

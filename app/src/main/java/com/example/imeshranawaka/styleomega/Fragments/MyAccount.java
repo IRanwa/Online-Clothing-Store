@@ -2,6 +2,7 @@ package com.example.imeshranawaka.styleomega.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,18 @@ public class MyAccount extends Fragment {
         View v = inflater.inflate(R.layout.fragment_my_account, container, false);
 
         v.findViewById(R.id.btnBack).setOnClickListener(new btnBack_onClick(this));
+        v.findViewById(R.id.btnAccInfo).setOnClickListener(new btnAccInfo_onClick());
         return v;
+    }
+
+    private class btnAccInfo_onClick implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            AccountInfo accInfo = new AccountInfo();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.add(R.id.mainFragment,accInfo,"AccountInfo");
+            transaction.addToBackStack("MyAccount");
+            transaction.commit();
+        }
     }
 }
