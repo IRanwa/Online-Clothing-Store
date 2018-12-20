@@ -75,7 +75,7 @@
         tools:targetApi="jelly_bean" />
 
     <EditText
-        android:id="@+id/txtEmail2"
+        android:id="@+id/txtFName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -114,11 +114,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.037"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtEmail2"
+        app:layout_constraintTop_toBottomOf="@+id/txtFName"
         tools:targetApi="jelly_bean" />
 
     <EditText
-        android:id="@+id/txtEmail3"
+        android:id="@+id/txtLName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -158,11 +158,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.035"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtEmail3"
+        app:layout_constraintTop_toBottomOf="@+id/txtLName"
         tools:targetApi="jelly_bean" />
 
     <EditText
-        android:id="@+id/txtEmail4"
+        android:id="@+id/txtEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -201,11 +201,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.035"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtEmail4"
+        app:layout_constraintTop_toBottomOf="@+id/txtEmail"
         tools:targetApi="jelly_bean" />
 
     <EditText
-        android:id="@+id/txtEmail5"
+        android:id="@+id/txtPass"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -244,11 +244,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtEmail5"
+        app:layout_constraintTop_toBottomOf="@+id/txtPass"
         tools:targetApi="jelly_bean" />
 
     <EditText
-        android:id="@+id/txtEmail6"
+        android:id="@+id/txtCPass"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -261,6 +261,7 @@
         android:defaultFocusHighlightEnabled="true"
         android:ems="10"
         android:hint="Confirm Password"
+        android:imeOptions="actionDone"
         android:inputType="textPassword"
         android:textColor="@color/ediText_textColor"
         android:textColorHint="@android:color/darker_gray"

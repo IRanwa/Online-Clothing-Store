@@ -25,7 +25,7 @@ public class ChangePassword extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_change_password, container, false);
-        v.findViewById(R.id.btnBack).setOnClickListener(new btnBack_onClick(this));
+        v.findViewById(R.id.btnBack).setOnClickListener(new fragment_actions(this));
         v.findViewById(R.id.btnSavePass).setOnClickListener(new btnSavePass_onClick());
         return v;
     }

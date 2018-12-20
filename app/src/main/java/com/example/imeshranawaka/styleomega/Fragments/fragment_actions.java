@@ -5,9 +5,9 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-class btnBack_onClick implements View.OnClickListener {
+class fragment_actions implements View.OnClickListener {
     private Fragment frag;
-    public btnBack_onClick(Fragment frag) {
+    public fragment_actions(Fragment frag) {
         this.frag = frag;
     }
 
@@ -17,7 +17,7 @@ class btnBack_onClick implements View.OnClickListener {
         hideKeyboard();
     }
 
-    private void hideKeyboard() {
+    public void hideKeyboard() {
         // Check if no view has focus:
         View view = frag.getView();
         if (view != null) {

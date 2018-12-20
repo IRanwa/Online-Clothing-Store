@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 
 import com.example.imeshranawaka.styleomega.R;
 
@@ -19,7 +18,7 @@ public class MyAccount extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_my_account, container, false);
 
-        v.findViewById(R.id.btnBack).setOnClickListener(new btnBack_onClick(this));
+        v.findViewById(R.id.btnBack).setOnClickListener(new fragment_actions(this));
         v.findViewById(R.id.btnAccInfo).setOnClickListener(new btnAccInfo_onClick());
         v.findViewById(R.id.btnChangePass).setOnClickListener(new btnChangePass_onClick());
         v.findViewById(R.id.btnAddBook).setOnClickListener(new btnAddBook_onClick());

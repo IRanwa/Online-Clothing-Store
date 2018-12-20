@@ -3,17 +3,13 @@ package com.example.imeshranawaka.styleomega.Fragments;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.support.annotation.DrawableRes;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 
 import com.example.imeshranawaka.styleomega.R;
 
@@ -34,7 +30,7 @@ public class AccountInfo extends Fragment {
         accView.findViewById(R.id.genderSelection).setEnabled(false);
 
         accView.findViewById(R.id.btnCalendar).setOnClickListener(new btnCalendar_onClick());
-        accView.findViewById(R.id.btnBack).setOnClickListener(new btnBack_onClick(this));
+        accView.findViewById(R.id.btnBack).setOnClickListener(new fragment_actions(this));
         accView.findViewById(R.id.btnUpdate).setOnClickListener(new btnUpdate_onClick());
         return accView;
     }

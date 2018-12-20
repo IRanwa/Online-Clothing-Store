@@ -35,6 +35,7 @@ public class StyleOmega extends AppCompatActivity
 
         navigationView.setEnabled(true);
         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
     }
 
     @Override
