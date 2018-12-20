@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 
 import com.example.imeshranawaka.styleomega.R;
 
@@ -21,6 +22,7 @@ public class MyAccount extends Fragment {
         v.findViewById(R.id.btnBack).setOnClickListener(new btnBack_onClick(this));
         v.findViewById(R.id.btnAccInfo).setOnClickListener(new btnAccInfo_onClick());
         v.findViewById(R.id.btnChangePass).setOnClickListener(new btnChangePass_onClick());
+        v.findViewById(R.id.btnAddBook).setOnClickListener(new btnAddBook_onClick());
         return v;
     }
 
@@ -41,6 +43,17 @@ public class MyAccount extends Fragment {
             ChangePassword changePass = new ChangePassword();
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.add(R.id.mainFragment,changePass,"ChangePassword");
+            transaction.addToBackStack("MyAccount");
+            transaction.commit();
+        }
+    }
+
+    private class btnAddBook_onClick implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            MyAddressBook add = new MyAddressBook();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.add(R.id.mainFragment,add,"ChangePassword");
             transaction.addToBackStack("MyAccount");
             transaction.commit();
         }
