@@ -1,0 +1,42 @@
+{
+	"products": [
+		{
+			"id": 1,
+			"category": 1,
+			"title": "Lacoste croc logo oxford shirt in white",
+			"description": "<html><div ><div ><div ><h4>Product Details</h4><span><a href=\"https://www.asos.com/men/shirts/oxford-shirts/cat/?cid=14478\"><strong>Oxford shirt</strong></a> by <a href=\"https://www.asos.com/Men/A-To-Z-Of-Brands/Lacoste/Cat/pgecategory.aspx?cid=7368\"><strong>Lacoste</strong></a><ul>    <li>Smart thinking</li>    <li>Button-down collar</li>    <li>Chest pocket with signature logo</li>    <li>Button fastening</li>    <li>Regular fit</li><li>A standard cut for a classic shape</li></ul></span></div></div><div ><div ><h4>Brand</h4><span>Famed for their iconic crocodile emblem, <a href=\"https://www.asos.com/Men/A-To-Z-Of-Brands/Lacoste/Cat/pgecategory.aspx?cid=7368\"><strong>Lacoste</strong></a> was founded by tennis superstar René Lacoste in 1933 and was first to introduce the pique polo shirt. Utilising their sporting background, <a href=\"https://www.asos.com/Men/A-To-Z-Of-Brands/Lacoste/Cat/pgecategory.aspx?cid=7368\"><strong>Lacoste</strong></a> fuse functionality with style to create their contemporary collections, embracing a bold use of colour in a wide range of products that include their timeless polo shirt as well as shoes and trainers.</span></div></div><div ><div ><h4>SIZE &amp; FIT</h4><span><br>Model's height: 185.5cm/6'1\"<br>Model is wearing: Size Medium</span></div><div ><h4>LOOK AFTER ME</h4><span><div>You know the drill</div><div>Always check the label</div><div>Separate your colours, etc.</div></span></div><div ><h4>ABOUT ME</h4><span><div>Cotton twill</div><div>Ribbed, diagonal pattern</div><div>Slightly structured, very versatile</div><br>Main: 100% Cotton.<br><br></span></div></div></div></html>",
+			"price": 90.00,
+			"quantity": 10,
+			"image": [
+				"https://images.asos-media.com/products/lacoste-croc-logo-oxford-shirt-in-white/10780169-1-white",
+				"https://images.asos-media.com/products/lacoste-croc-logo-oxford-shirt-in-white/10780169-2",
+				"https://images.asos-media.com/products/lacoste-croc-logo-oxford-shirt-in-white/10780169-3",
+				"https://images.asos-media.com/products/lacoste-croc-logo-oxford-shirt-in-white/10780169-4"
+			],
+			"Size": [
+				"small",
+				"medium",
+				"large"
+			]
+		},
+		{
+			"id": 2,
+			"category": 1,
+			"title": "ASOS DESIGN regular fit patchwork check shirt",
+			"description": "<html><div ><div ><div ><h4>Product Details</h4><span><a href=\"https://www.asos.com/men/shirts/cat/?cid=3602\"><strong>Shirt</strong></a> by <a href=\"https://www.asos.com/men/a-to-z-of-brands/asos-collection/cat/?cid=3159\"><strong>ASOS DESIGN</strong></a><ul>    <li>Check design</li><li>It's hip to be square</li><li>Spread collar</li><li>Button placket</li><li>Two chest pockets</li><li>Long sleeves</li><li>Regular fit</li><li>No surprises, just a classic cut</li></ul></span></div></div><div ><div ><h4>Brand</h4><span>Giving you the confidence to express your individuality, <a href=\"https://www.asos.com/men/a-to-z-of-brands/asos-collection/cat/?cid=3159\"><strong>ASOS DESIGN</strong></a> takes major trends, adding the freshest ASOS spin. All the gear you need – including in our fit ranges Plus and Tall and our <a href=\"https://www.asos.com/men/a-to-z-of-brands/asos-collection/cat/?cid=3159\"><strong>ASOS DESIGN</strong></a> Makeup collection – to create your coolest look, then switch it up again tomorrow. Make every day, night and everything in-between as extraordinary as you are.</span></div></div><div ><div ><h4>SIZE &amp; FIT</h4><span><br>Model's height: 6'1”/185.5 cm <br>Model is wearing: Size Medium</span></div><div ><h4>LOOK AFTER ME</h4><span><div>Avoid post-wash regrets</div><div>Always check the label</div></span></div><div ><h4>ABOUT ME</h4><span>Lightweight cotton<br>Brushed for added softness<br><br>Main: 100% Cotton.<br><br></span></div></div></div></html>",
+			"price": 32.00,
+			"quantity": 10,
+			"image": [
+				"https://images.asos-media.com/products/asos-design-regular-fit-patchwork-check-shirt/10661098-1-navy",
+				"https://images.asos-media.com/products/asos-design-regular-fit-patchwork-check-shirt/10661098-2",
+				"https://images.asos-media.com/products/asos-design-regular-fit-patchwork-check-shirt/10661098-3",
+				"https://images.asos-media.com/products/asos-design-regular-fit-patchwork-check-shirt/10661098-4"
+			],
+			"Size": [
+				"small",
+				"medium",
+				"large"
+			]
+		}
+	]
+}

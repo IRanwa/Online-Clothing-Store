@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.imeshranawaka.styleomega">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:name="com.orm.SugarApp"
         android:allowBackup="true"

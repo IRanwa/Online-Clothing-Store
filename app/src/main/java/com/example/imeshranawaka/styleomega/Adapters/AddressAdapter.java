@@ -19,8 +19,8 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
     private Context mContext;
     private static ArrayList<View> viewsList;
 
-    public AddressAdapter(Context context, List<String> animalsList) {
-        mDataSet = animalsList;
+    public AddressAdapter(Context context, List<String> addressList) {
+        mDataSet = addressList;
         mContext = context;
         viewsList = new ArrayList<>();
     }

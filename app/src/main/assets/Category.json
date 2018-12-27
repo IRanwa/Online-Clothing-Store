@@ -1,0 +1,34 @@
+{"categories":
+	[
+		{
+			"id":1,
+			"title":"Men's Cloth",
+			"description":"Men's Cloth",
+			"image":"https://png.pngtree.com/svg/20160928/mens_wear_1197384.png"
+		},
+		{
+			"id":2,
+			"title":"Women's Cloth",
+			"description":"Women's Cloth",
+			"image":"https://cdn0.iconfinder.com/data/icons/fashion-volume-2/72/37-512.png"
+		},
+		{
+			"id":3,
+			"title":"Kids Cloth",
+			"description":"Kids Cloth",
+			"image":"https://static.thenounproject.com/png/178269-200.png"
+		},
+		{
+			"id":4,
+			"title":"Jewelry and Watch Cloth",
+			"description":"Jewelry and Watch Cloth",
+			"image":"https://cdn0.iconfinder.com/data/icons/fashion-volume-2/72/28-512.png"
+		},
+		{
+			"id":5,
+			"title":"Bags and Shoes Cloth",
+			"description":"Bags and Shoes Cloth",
+			"image":"https://cdn4.iconfinder.com/data/icons/mixed-6/100/mixed-08-512.png"
+		}
+	]
+}
