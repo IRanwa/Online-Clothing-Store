@@ -8,16 +8,19 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.imeshranawaka.styleomega.R;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -28,11 +31,13 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
     private Context mContext;
     private List<JSONObject> mDataset;
     private ArrayList<View> viewList;
+    private boolean searchPage;
 
-    public ItemsAdapter(Context mContext, List<JSONObject> mDataset) {
+    public ItemsAdapter(Context mContext, List<JSONObject> mDataset, boolean searchPage) {
         this.mContext = mContext;
         this.mDataset = mDataset;
         this.viewList = new ArrayList<>();
+        this.searchPage = searchPage;
     }
 
     @NonNull
@@ -44,13 +49,23 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ItemsAdapter.ViewHolder viewHolder, int i) {
-        JSONObject product = mDataset.get(i);
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         try {
+            JSONObject product = mDataset.get(i);
+            System.out.println(product);
             viewHolder.itemTitle.setText(product.getString("title"));
             viewHolder.price.setText("$"+String.valueOf(product.getDouble("price")));
-            Picasso.get().load(product.getJSONArray("image").get(0).toString()).resize(500,500)
-            .transform(new RoundedTransformation(100, 0)).into(viewHolder.itemImg);
+            Picasso.get().load(product.getJSONArray("images").get(0).toString()).resize(500,500)
+                    .transform(new RoundedTransformation(75, 0)).into(viewHolder.itemImg);
+            if(searchPage){
+                viewHolder.container.setBackgroundDrawable(ContextCompat.getDrawable(mContext, R.drawable.button_layout));
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                );
+                params.setMargins(10, 10, 10, 10);
+                viewHolder.container.setLayoutParams(params);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -99,11 +114,13 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
         public ImageView itemImg;
         public TextView itemTitle;
         public TextView price;
+        public LinearLayout container;
         public ViewHolder(@NonNull View v) {
             super(v);
             itemImg = v.findViewById(R.id.itemImg);
             itemTitle = v.findViewById(R.id.txtTitle);
             price = v.findViewById(R.id.txtPrice);
+            container = v.findViewById(R.id.itemsContainer);
             viewList.add(v);
         }
     }

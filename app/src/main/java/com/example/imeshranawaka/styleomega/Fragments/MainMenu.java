@@ -15,6 +15,7 @@ import com.example.imeshranawaka.styleomega.Adapters.CategoryAdapter;
 import com.example.imeshranawaka.styleomega.Adapters.ProductsAdapter;
 import com.example.imeshranawaka.styleomega.Models.User;
 import com.example.imeshranawaka.styleomega.R;
+import com.example.imeshranawaka.styleomega.loadJSONFromAsset;
 import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
@@ -65,55 +66,19 @@ public class MainMenu extends Fragment {
     }
 
     private void setCategoryList(View v){
-
-        /*final String[] animals = {
-                "Aardvark",
-                "Albatross",
-                "Alligator",
-                "Alpaca",
-                "Ant",
-                "Anteater",
-                "Antelope",
-                "Ape",
-                "Armadillo",
-                "Donkey",
-                "Baboon",
-                "Badger",
-                "Barracuda",
-                "Bear",
-                "Beaver",
-                "Bee"
-        };
-
-        // Intilize an array list from array
-        final List<String> animalsList = new ArrayList(Arrays.asList(animals));
-
-        RecyclerView recycleView = v.findViewById(R.id.categoryList);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
-        recycleView.setLayoutManager(layoutManager);
-
-        CategoryAdapter categoryAdapte = new CategoryAdapter(getContext(), animalsList);
-        recycleView.setAdapter(categoryAdapte);*/
         JSONObject json = null;
         try {
-            json = new JSONObject(loadJSONFromAsset("Category.json"));
+            json = new JSONObject(new loadJSONFromAsset().readJson("Category.json",getActivity().getAssets()));
             JSONArray categoryList = json.getJSONArray("categories");
 
             RecyclerView recycleView = v.findViewById(R.id.categoryList);
             LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
             recycleView.setLayoutManager(layoutManager);
 
-            CategoryAdapter categoryAdapter = new CategoryAdapter(getContext(), categoryList);
+            CategoryAdapter categoryAdapter = new CategoryAdapter(getFragmentManager(),getContext(), categoryList);
             recycleView.setAdapter(categoryAdapter);
 
             setProductsList(categoryList,v);
-            /*RecyclerView rcView = v.findViewById(R.id.productsList);
-            rcView.setNestedScrollingEnabled(false);
-            LinearLayoutManager layoutMg = new LinearLayoutManager(getContext());
-            rcView.setLayoutManager(layoutMg);
-
-            CategoryAdapter productsAdapter = new CategoryAdapter(getContext(), categoryList);
-            rcView.setAdapter(productsAdapter);*/
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -122,7 +87,8 @@ public class MainMenu extends Fragment {
     private void setProductsList(JSONArray categories,View v){
         JSONObject json = null;
         try {
-            json = new JSONObject(loadJSONFromAsset("Products.json"));
+
+            json = new JSONObject(new loadJSONFromAsset().readJson("Products.json",getActivity().getAssets()));
             JSONArray productsList = json.getJSONArray("products");
 
             RecyclerView recycleView = v.findViewById(R.id.productsList);
@@ -133,31 +99,8 @@ public class MainMenu extends Fragment {
 
             ProductsAdapter productsAdapter = new ProductsAdapter(getContext(), productsList, categories );
             recycleView.setAdapter(productsAdapter);
-
-            /*RecyclerView rcView = v.findViewById(R.id.productsList);
-            rcView.setNestedScrollingEnabled(false);
-            LinearLayoutManager layoutMg = new LinearLayoutManager(getContext());
-            rcView.setLayoutManager(layoutMg);
-
-            CategoryAdapter productsAdapter = new CategoryAdapter(getContext(), categoryList);
-            rcView.setAdapter(productsAdapter);*/
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }
-    public String loadJSONFromAsset(String fileName) {
-        String json = null;
-        try {
-            InputStream is = getActivity().getAssets().open(fileName);
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-        return json;
     }
 }

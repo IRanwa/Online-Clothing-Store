@@ -56,7 +56,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
                     productNum++;
                 }
 
-                if(productNum>5){
+                if(productNum>4){
                     break;
                 }
             }
@@ -66,7 +66,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
             LinearLayoutManager layoutManager = new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL,false);
             viewHolder.itemsList.setLayoutManager(layoutManager);
 
-            ItemsAdapter itemsAdapter = new ItemsAdapter(mContext,productsList);
+            ItemsAdapter itemsAdapter = new ItemsAdapter(mContext,productsList,false);
             viewHolder.itemsList.setAdapter(itemsAdapter);
         } catch (JSONException e) {
             e.printStackTrace();
