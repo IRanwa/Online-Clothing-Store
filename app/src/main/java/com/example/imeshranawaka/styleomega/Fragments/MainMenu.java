@@ -2,6 +2,8 @@ package com.example.imeshranawaka.styleomega.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +11,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.imeshranawaka.styleomega.Adapters.CategoryAdapter;
@@ -16,15 +19,10 @@ import com.example.imeshranawaka.styleomega.Adapters.ProductsAdapter;
 import com.example.imeshranawaka.styleomega.Models.User;
 import com.example.imeshranawaka.styleomega.R;
 import com.example.imeshranawaka.styleomega.loadJSONFromAsset;
-import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
 
 public class MainMenu extends Fragment {
 
@@ -38,9 +36,9 @@ public class MainMenu extends Fragment {
         setNavHeader(arg.getString("email"));
         setCategoryList(v);
         v.findViewById(R.id.btnSideMenu).setOnClickListener(new btnSideMenu_onClick());
+        ((SearchView)v.findViewById(R.id.searchBar)).setOnQueryTextListener(new searchBar_onQueryListener());
         return v;
     }
-
 
     private class btnSideMenu_onClick implements View.OnClickListener {
         @Override
@@ -101,6 +99,50 @@ public class MainMenu extends Fragment {
             recycleView.setAdapter(productsAdapter);
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+    }
+
+    private class searchBar_onQueryListener implements SearchView.OnQueryTextListener {
+        @Override
+        public boolean onQueryTextSubmit(String query) {
+            System.out.println(query);
+            try {
+                JSONObject json = new JSONObject(new loadJSONFromAsset().readJson("Products.json", getActivity().getAssets()));
+                JSONArray prodList = json.getJSONArray("products");
+                JSONArray productsList = new JSONArray();
+
+                for(int count = 0; count<prodList.length();count++){
+                    JSONObject obj = prodList.getJSONObject(count);
+                    if(obj.has("title") && obj.getString("title").toLowerCase().contains(query.toLowerCase())){
+                        productsList.put(obj);
+                    }
+                }
+
+                Bundle bundle = new Bundle();
+                bundle.putString("products", productsList.toString());
+                if(query.length()>25) {
+                    query = query.substring(0, 25);
+                }
+                bundle.putString("title", query);
+
+                SearchProducts searchProd = new SearchProducts();
+                searchProd.setArguments(bundle);
+
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction transaction = fm.beginTransaction().add(R.id.mainFragment, searchProd,"SearchProducts");
+                transaction.addToBackStack("MainMenu");
+                transaction.commit();
+
+                new fragment_actions(MainMenu.this).hideKeyboard();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return true;
+        }
+
+        @Override
+        public boolean onQueryTextChange(String newText) {
+            return true;
         }
     }
 }

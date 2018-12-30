@@ -61,7 +61,6 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
                 }
             }
 
-
             viewHolder.itemsList.setNestedScrollingEnabled(false);
             LinearLayoutManager layoutManager = new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL,false);
             viewHolder.itemsList.setLayoutManager(layoutManager);

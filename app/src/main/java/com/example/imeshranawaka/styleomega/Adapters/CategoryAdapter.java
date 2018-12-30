@@ -99,7 +99,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
                 Bundle bundle = new Bundle();
                 bundle.putString("products", productsList.toString());
-                bundle.putString("title", category.getString("title"));
+                String title = category.getString("title");
+                if(title.length()>25) {
+                    title = title.substring(0, 25);
+                }
+                bundle.putString("title", title);
 
                 SearchProducts searchProd = new SearchProducts();
                 searchProd.setArguments(bundle);
