@@ -7,7 +7,10 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,7 +20,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.imeshranawaka.styleomega.Fragments.ProductDetails;
 import com.example.imeshranawaka.styleomega.R;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -29,12 +34,14 @@ import java.util.List;
 
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> {
     private Context mContext;
+    private final FragmentManager fm;
     private List<JSONObject> mDataset;
     private ArrayList<View> viewList;
     private boolean searchPage;
 
-    public ItemsAdapter(Context mContext, List<JSONObject> mDataset, boolean searchPage) {
+    public ItemsAdapter(Context mContext, FragmentManager fm, List<JSONObject> mDataset, boolean searchPage) {
         this.mContext = mContext;
+        this.fm = fm;
         this.mDataset = mDataset;
         this.viewList = new ArrayList<>();
         this.searchPage = searchPage;
@@ -66,6 +73,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                 params.setMargins(10, 10, 10, 10);
                 viewHolder.container.setLayoutParams(params);
             }
+            viewHolder.container.setOnClickListener(new Product_onClick(product));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -122,6 +130,25 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
             price = v.findViewById(R.id.txtPrice);
             container = v.findViewById(R.id.itemsContainer);
             viewList.add(v);
+        }
+    }
+
+    private class Product_onClick implements View.OnClickListener {
+        private JSONObject product;
+        public Product_onClick(JSONObject product) {
+            this.product = product;
+        }
+
+        @Override
+        public void onClick(View v) {
+            ProductDetails prodDetails = new ProductDetails();
+            Bundle bundle = new Bundle();
+            bundle.putString("product",product.toString());
+            prodDetails.setArguments(bundle);
+
+            FragmentTransaction transaction = fm.beginTransaction().add(R.id.mainFragment, prodDetails,"ProductDetails");
+            transaction.addToBackStack("MainMenu");
+            transaction.commit();
         }
     }
 }

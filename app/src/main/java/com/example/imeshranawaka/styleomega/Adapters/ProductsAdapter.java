@@ -3,6 +3,7 @@ package com.example.imeshranawaka.styleomega.Adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
@@ -22,12 +23,14 @@ import java.util.List;
 
 public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHolder> {
     private JSONArray mDataSet;
+    private FragmentManager fm;
     private JSONArray categoryList;
     private Context mContext;
     private static ArrayList<View> viewsList;
 
-    public ProductsAdapter(Context context, JSONArray productsList, JSONArray categoryList) {
+    public ProductsAdapter(Context context, FragmentManager fm, JSONArray productsList, JSONArray categoryList) {
         mDataSet = productsList;
+        this.fm = fm;
         this.categoryList = categoryList;
         mContext = context;
         viewsList = new ArrayList<>();
@@ -65,7 +68,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
             LinearLayoutManager layoutManager = new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL,false);
             viewHolder.itemsList.setLayoutManager(layoutManager);
 
-            ItemsAdapter itemsAdapter = new ItemsAdapter(mContext,productsList,false);
+            ItemsAdapter itemsAdapter = new ItemsAdapter(mContext,fm, productsList,false);
             viewHolder.itemsList.setAdapter(itemsAdapter);
         } catch (JSONException e) {
             e.printStackTrace();

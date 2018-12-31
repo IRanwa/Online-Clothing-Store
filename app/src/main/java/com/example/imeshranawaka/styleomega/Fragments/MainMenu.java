@@ -95,7 +95,7 @@ public class MainMenu extends Fragment {
             LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
             recycleView.setLayoutManager(layoutManager);
 
-            ProductsAdapter productsAdapter = new ProductsAdapter(getContext(), productsList, categories );
+            ProductsAdapter productsAdapter = new ProductsAdapter(getContext(),getFragmentManager(), productsList, categories );
             recycleView.setAdapter(productsAdapter);
         } catch (JSONException e) {
             e.printStackTrace();

@@ -63,7 +63,7 @@ public class SearchProducts extends Fragment {
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(),2);
         recycleView.setLayoutManager(layoutManager);
 
-        ItemsAdapter productsAdapter = new ItemsAdapter(getContext(),products,true);
+        ItemsAdapter productsAdapter = new ItemsAdapter(getContext(),getFragmentManager(),products,true);
         recycleView.setAdapter(productsAdapter);
     }
 
