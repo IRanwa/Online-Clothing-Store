@@ -75,9 +75,9 @@ public class ProductDetails extends Fragment {
                 txtRevDesc.setVisibility(View.GONE);
             }else{
                 Reviews rev = reviews.get(0);
-                List<User> user = User.find(User.class, "email=?", rev.getUser_Email());
+                List<User> user = User.find(User.class, "email=?", rev.getUserEmail());
                 txtRevName.setText(user.get(0).getfName().concat(" ").concat(user.get(0).getlName()));
-                txtRevDesc.setText(rev.getRev_Desc());
+                txtRevDesc.setText(rev.getRevDesc());
             }
 
             if(questions.size()==0){
