@@ -21,6 +21,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHolder> {
     private JSONArray mDataSet;
     private FragmentManager fm;
@@ -81,12 +84,11 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        public TextView category;
-        public RecyclerView itemsList;
+        @BindView(R.id.txtCategory) TextView category;
+        @BindView(R.id.itemsList) RecyclerView itemsList;
         public ViewHolder(@NonNull View v) {
             super(v);
-            category = v.findViewById(R.id.txtCategory);
-            itemsList = v.findViewById(R.id.itemsList);
+            ButterKnife.bind(this,v);
             viewsList.add(v);
         }
     }

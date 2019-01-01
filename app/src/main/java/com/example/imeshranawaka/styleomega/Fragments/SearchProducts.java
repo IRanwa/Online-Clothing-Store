@@ -20,11 +20,18 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class SearchProducts extends Fragment {
 
+    @BindView(R.id.txtSearchName) TextView txtSearchName;
+    @BindView(R.id.productsList) RecyclerView productsList;
+    private Unbinder unbinder;
 
     public SearchProducts() {
         // Required empty public constructor
@@ -36,19 +43,20 @@ public class SearchProducts extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_search_products, container, false);
+        unbinder = ButterKnife.bind(this,v);
         String json = getArguments().getString("products");
-        System.out.println(json);
+        //System.out.println(json);
         try {
             JSONArray array = new JSONArray(json);
-            System.out.println(array);
+            //System.out.println(array);
             List<JSONObject> productsList = new ArrayList<>();
             for(int count = 0; count<array.length();count++){
                 productsList.add(array.getJSONObject(count));
             }
             String title = getArguments().getString("title");
 
-            ((TextView)v.findViewById(R.id.txtSearchName)).setText(title);
-            setProducts(productsList,v);
+            txtSearchName.setText(title);
+            setProducts(productsList);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -57,14 +65,17 @@ public class SearchProducts extends Fragment {
         return v;
     }
 
-    private void setProducts(List<JSONObject> products, View v){
-        RecyclerView recycleView = v.findViewById(R.id.productsList);
-
+    private void setProducts(List<JSONObject> products){
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(),2);
-        recycleView.setLayoutManager(layoutManager);
+        productsList.setLayoutManager(layoutManager);
 
         ItemsAdapter productsAdapter = new ItemsAdapter(getContext(),getFragmentManager(),products,true);
-        recycleView.setAdapter(productsAdapter);
+        productsList.setAdapter(productsAdapter);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 }

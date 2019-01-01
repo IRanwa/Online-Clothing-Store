@@ -1,5 +1,6 @@
 package com.example.imeshranawaka.styleomega.Fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -24,32 +25,45 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+
+import static android.content.Context.MODE_PRIVATE;
+
 public class MainMenu extends Fragment {
+    @BindView(R.id.categoryList) RecyclerView catRecyclerView;
+    @BindView(R.id.productsList) RecyclerView prodRecyclerView;
+    private Unbinder unbind;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Bundle arg = getArguments();
-        // Inflate the layout for this fragment
+
         View v = inflater.inflate(R.layout.fragment_main_menu, container, false);
+        unbind = ButterKnife.bind(this,v);
         enableDrawer();
-        setNavHeader(arg.getString("email"));
+
+        SharedPreferences prefs = getContext().getSharedPreferences("login", MODE_PRIVATE);
+        //String restoredText = prefs.getString("text", null);
+        if (prefs != null) {
+            setNavHeader(prefs.getString("email", ""));
+        }
         setCategoryList(v);
-        v.findViewById(R.id.btnSideMenu).setOnClickListener(new btnSideMenu_onClick());
+        //v.findViewById(R.id.btnSideMenu).setOnClickListener(new btnSideMenu_onClick());
         ((SearchView)v.findViewById(R.id.searchBar)).setOnQueryTextListener(new searchBar_onQueryListener());
         return v;
     }
 
-    private class btnSideMenu_onClick implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            DrawerLayout drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
-            drawer.openDrawer(Gravity.START);
-        }
+    @OnClick(R.id.btnSideMenu)
+    public void btnSideMenu_onClick(){
+        DrawerLayout drawer = getActivity().findViewById(R.id.drawer_layout);
+        drawer.openDrawer(Gravity.START);
     }
 
     private void enableDrawer(){
-        DrawerLayout drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = getActivity().findViewById(R.id.drawer_layout);
         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
     }
 
@@ -69,12 +83,11 @@ public class MainMenu extends Fragment {
             json = new JSONObject(new loadJSONFromAsset().readJson("Category.json",getActivity().getAssets()));
             JSONArray categoryList = json.getJSONArray("categories");
 
-            RecyclerView recycleView = v.findViewById(R.id.categoryList);
             LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
-            recycleView.setLayoutManager(layoutManager);
+            catRecyclerView.setLayoutManager(layoutManager);
 
             CategoryAdapter categoryAdapter = new CategoryAdapter(getFragmentManager(),getContext(), categoryList);
-            recycleView.setAdapter(categoryAdapter);
+            catRecyclerView.setAdapter(categoryAdapter);
 
             setProductsList(categoryList,v);
         } catch (JSONException e) {
@@ -89,14 +102,13 @@ public class MainMenu extends Fragment {
             json = new JSONObject(new loadJSONFromAsset().readJson("Products.json",getActivity().getAssets()));
             JSONArray productsList = json.getJSONArray("products");
 
-            RecyclerView recycleView = v.findViewById(R.id.productsList);
-            recycleView.setNestedScrollingEnabled(false);
+            prodRecyclerView.setNestedScrollingEnabled(false);
 
             LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-            recycleView.setLayoutManager(layoutManager);
+            prodRecyclerView.setLayoutManager(layoutManager);
 
             ProductsAdapter productsAdapter = new ProductsAdapter(getContext(),getFragmentManager(), productsList, categories );
-            recycleView.setAdapter(productsAdapter);
+            prodRecyclerView.setAdapter(productsAdapter);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -105,7 +117,6 @@ public class MainMenu extends Fragment {
     private class searchBar_onQueryListener implements SearchView.OnQueryTextListener {
         @Override
         public boolean onQueryTextSubmit(String query) {
-            System.out.println(query);
             try {
                 JSONObject json = new JSONObject(new loadJSONFromAsset().readJson("Products.json", getActivity().getAssets()));
                 JSONArray prodList = json.getJSONArray("products");
@@ -144,5 +155,11 @@ public class MainMenu extends Fragment {
         public boolean onQueryTextChange(String newText) {
             return true;
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbind.unbind();
     }
 }

@@ -37,10 +37,6 @@ public class MyAddressBook extends Fragment {
     }
 
     private void setList(View v) {
-        /*ListView listview = (ListView) v.findViewById(R.id.addList);
-        listview.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        listview.setAdapter(new AddressAdapter(v.getContext(), new String[] { "data1",
-                "data2","data2","data2","data2","data2","data2","data2","data2","data2"}));*/
 
         // Initialize a new String array
         final String[] animals = {

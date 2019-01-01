@@ -14,6 +14,10 @@ import com.example.imeshranawaka.styleomega.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHolder>{
     private List<String> mDataSet;
     private Context mContext;
@@ -25,26 +29,22 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
         viewsList = new ArrayList<>();
     }
 
+
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        public TextView mTextView;
-        public RadioButton defBtnRadio;
+        public @BindView(R.id.txtName) TextView mTextView;
+        public @BindView(R.id.defBtnRadio) RadioButton defBtnRadio;
         public ViewHolder(View v){
             super(v);
-            mTextView = v.findViewById(R.id.txtName);
-            defBtnRadio = v.findViewById(R.id.defBtnRadio);
-            defBtnRadio.setOnClickListener(new defBtnRadio_onClick());
+            ButterKnife.bind(this,v);
             viewsList.add(v);
         }
 
-        private class defBtnRadio_onClick implements View.OnClickListener {
-            @Override
-            public void onClick(View v) {
-                RadioButton btn = v.findViewById(R.id.defBtnRadio);
-                for(View view : viewsList){
-                    RadioButton tempBtn = view.findViewById(R.id.defBtnRadio);
-                    if(tempBtn!=btn){
-                        tempBtn.setChecked(false);
-                    }
+        @OnClick(R.id.defBtnRadio)
+        public void defBtnRadio_onClick(){
+            for(View view : viewsList){
+                RadioButton tempBtn = view.findViewById(R.id.defBtnRadio);
+                if(tempBtn!=defBtnRadio){
+                    tempBtn.setChecked(false);
                 }
             }
         }

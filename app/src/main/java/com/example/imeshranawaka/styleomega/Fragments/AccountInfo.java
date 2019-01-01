@@ -2,51 +2,67 @@ package com.example.imeshranawaka.styleomega.Fragments;
 
 
 import android.app.DatePickerDialog;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.imeshranawaka.styleomega.R;
 
 import java.text.DateFormat;
 import java.util.Calendar;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class AccountInfo extends Fragment {
+    @BindView(R.id.genderSelection) Spinner genderSelection;
+    @BindView(R.id.btnCalendar) Button btnCalendar;
+    @BindView(R.id.btnBack) ImageView btnBack;
+    @BindView(R.id.btnUpdate) ImageView btnUpdate;
 
-    static View accView;
+    @BindView(R.id.txtFName) TextView txtFName;
+    @BindView(R.id.txtLName) TextView txtLName;
+    @BindView(R.id.txtContact) TextView txtContact;
+    private Unbinder unbinder;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        accView = inflater.inflate(R.layout.fragment_account_info, container, false);
-        accView.findViewById(R.id.genderSelection).setEnabled(false);
-
-        accView.findViewById(R.id.btnCalendar).setOnClickListener(new btnCalendar_onClick());
-        accView.findViewById(R.id.btnBack).setOnClickListener(new fragment_actions(this));
-        accView.findViewById(R.id.btnUpdate).setOnClickListener(new btnUpdate_onClick());
+        View accView = inflater.inflate(R.layout.fragment_account_info, container, false);
+        unbinder = ButterKnife.bind(this,accView);
+        genderSelection.setEnabled(false);
         return accView;
     }
 
-    private class btnCalendar_onClick implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            DatePickerFragment dateFrag = new DatePickerFragment();
-            dateFrag.show(getFragmentManager(),"date picker");
+    @OnClick(R.id.btnBack)
+    public void btnBack_onClick(View v){
+        new fragment_actions(this).onClick(v);
+    }
 
-        }
+    @OnClick(R.id.btnCalendar)
+    public void btnCalendar_onClick(){
+        DatePickerFragment dateFrag = new DatePickerFragment();
+        dateFrag.show(getFragmentManager(),"date picker");
     }
 
     public static DatePickerDialog.OnDateSetListener datePickerListener
             = new DatePickerDialog.OnDateSetListener() {
-
+        @BindView(R.id.txtDOB) EditText txtDOB;
         @Override
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
             Calendar cal = Calendar.getInstance();
@@ -54,19 +70,23 @@ public class AccountInfo extends Fragment {
             cal.set(Calendar.MONTH,month);
             cal.set(Calendar.DAY_OF_MONTH,dayOfMonth);
             String date  = DateFormat.getDateInstance(DateFormat.SHORT).format(cal.getTime());
-            ((EditText)accView.findViewById(R.id.txtDOB)).setText(date);
+            txtDOB.setText(date);
         }
     };
 
-    private class btnUpdate_onClick implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            accView.findViewById(R.id.txtFName).setEnabled(true);
-            accView.findViewById(R.id.txtLName).setEnabled(true);
-            accView.findViewById(R.id.txtContact).setEnabled(true);
-            accView.findViewById(R.id.btnCalendar).setEnabled(true);
-            accView.findViewById(R.id.genderSelection).setEnabled(true);
-            ((ImageView)accView.findViewById(R.id.btnUpdate)).setImageResource(R.drawable.done_icon);
-        }
+    @OnClick(R.id.btnUpdate)
+    public void btnUpdate_onClick(){
+        txtFName.setEnabled(true);
+        txtLName.setEnabled(true);
+        txtContact.setEnabled(true);
+        btnCalendar.setEnabled(true);
+        genderSelection.setEnabled(true);
+        btnUpdate.setImageResource(R.drawable.done_icon);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

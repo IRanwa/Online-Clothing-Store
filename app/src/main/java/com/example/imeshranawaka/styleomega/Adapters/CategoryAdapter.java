@@ -24,6 +24,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
     private final FragmentManager fm;
@@ -39,14 +43,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        public TextView mTextView;
-        public ImageView imgView;
-        public LinearLayout conatiner;
+        @BindView(R.id.txtTitle) TextView mTextView;
+        @BindView(R.id.imgCategory) ImageView imgView;
+        @BindView(R.id.categoryContainer) LinearLayout conatiner;
         public ViewHolder(View v){
             super(v);
-            mTextView = v.findViewById(R.id.txtTitle);
-            imgView = v.findViewById(R.id.imgCategory);
-            conatiner = v.findViewById(R.id.categoryContainer);
+            ButterKnife.bind(this,v);
             viewsList.add(v);
         }
     }

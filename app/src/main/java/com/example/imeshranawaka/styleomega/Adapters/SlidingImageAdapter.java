@@ -18,6 +18,9 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class SlidingImageAdapter extends PagerAdapter {
     private JSONArray IMAGES;
     private LayoutInflater inflater;
@@ -35,10 +38,12 @@ public class SlidingImageAdapter extends PagerAdapter {
         return IMAGES.length();
     }
 
+    @BindView(R.id.displayImg) ImageView image;
     @Override
     public Object instantiateItem(ViewGroup view, int position) {
         View imageLayout = inflater.inflate(R.layout.product_image, view, false);
-        ImageView image = imageLayout.findViewById(R.id.displayImg);
+        ButterKnife.bind(this,imageLayout);
+        //ImageView image = imageLayout.findViewById(R.id.displayImg);
         try {
             Picasso.get().load(IMAGES.getString(position)).resize(800,800).into(image);
         } catch (JSONException e) {

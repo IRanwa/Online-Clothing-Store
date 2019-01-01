@@ -17,13 +17,26 @@ import com.example.imeshranawaka.styleomega.R;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class Register extends Fragment {
 
-    private View view;
+    @BindView(R.id.txtEmail) EditText txtEmail;
+    @BindView(R.id.txtPass) EditText txtPass;
+    @BindView(R.id.txtCPass) EditText txtCPass;
+    @BindView(R.id.txtFName) EditText txtFName;
+    @BindView(R.id.txtLName) EditText txtLName;
+
+
+    private Unbinder unbinder;
+
     public Register() {
         // Required empty public constructor
     }
@@ -32,53 +45,58 @@ public class Register extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_register, container, false);
-        view.findViewById(R.id.btnBack).setOnClickListener(new fragment_actions(this));
-        view.findViewById(R.id.btnRegister).setOnClickListener(new btnRegister_onClick());
+        View view = inflater.inflate(R.layout.fragment_register, container, false);
+        unbinder = ButterKnife.bind(this,view);
         // Inflate the layout for this fragment
         return view;
     }
 
-    private class btnRegister_onClick implements View.OnClickListener {
+    @OnClick(R.id.btnBack)
+    public void btnBack_onClick(View v){
+        new fragment_actions(this).onClick(v);
+    }
 
-        @Override
-        public void onClick(View v) {
-            String email = ((EditText)view.findViewById(R.id.txtEmail)).getText().toString();
-            String pass = ((EditText)view.findViewById(R.id.txtPass)).getText().toString();
-            String cpass = ((EditText)view.findViewById(R.id.txtCPass)).getText().toString();
-            String fName = ((EditText)view.findViewById(R.id.txtFName)).getText().toString();
-            String lName = ((EditText)view.findViewById(R.id.txtLName)).getText().toString();
+    @OnClick(R.id.btnRegister)
+    public void btnRegister_onClick(View view){
+        String email = txtEmail.getText().toString();
+        String pass = txtPass.getText().toString();
+        String cpass = txtCPass.getText().toString();
+        String fName = txtFName.getText().toString();
+        String lName = txtLName.getText().toString();
 
-            if(email.isEmpty() || pass.isEmpty() || cpass.isEmpty() || fName.isEmpty() || lName.isEmpty()) {
-                Toast.makeText(view.getContext(),"Fill all the details",Toast.LENGTH_SHORT).show();
-            }else if(!cpass.equals(pass)){
-                Toast.makeText(view.getContext(),"Password not matched.",Toast.LENGTH_SHORT).show();
+        if(email.isEmpty() || pass.isEmpty() || cpass.isEmpty() || fName.isEmpty() || lName.isEmpty()) {
+            Toast.makeText(view.getContext(),"Fill all the details",Toast.LENGTH_SHORT).show();
+        }else if(!cpass.equals(pass)){
+            Toast.makeText(view.getContext(),"Password not matched.",Toast.LENGTH_SHORT).show();
+        }else{
+            List<Login> login = Login.find(Login.class, "email=?", email);
+            if(login.size()>0){
+                Toast.makeText(view.getContext(),"User already registered",Toast.LENGTH_SHORT).show();
             }else{
-                List<Login> login = Login.find(Login.class, "email=?", email);
-                if(login.size()>0){
-                    Toast.makeText(view.getContext(),"User already registered",Toast.LENGTH_SHORT).show();
-                }else{
-                    User user = new User(email,fName,lName);
-                    user.save();
+                User user = new User(email,fName,lName);
+                user.save();
 
-                    Login userLogin = new Login(email,pass);
-                    userLogin.save();
+                Login userLogin = new Login(email,pass);
+                userLogin.save();
 
-                    Bundle bundle=new Bundle();
-                    bundle.putString("email",email);
+                Bundle bundle=new Bundle();
+                bundle.putString("email",email);
 
-                    FragmentManager fm = getFragmentManager();
-                    MainMenu menu = new MainMenu();
-                    menu.setArguments(bundle);
-                    FragmentTransaction transaction = fm.beginTransaction().add(R.id.mainFragment, menu,"MainMenu");
-                    transaction.commit();
+                FragmentManager fm = getFragmentManager();
+                MainMenu menu = new MainMenu();
+                menu.setArguments(bundle);
+                FragmentTransaction transaction = fm.beginTransaction().add(R.id.mainFragment, menu,"MainMenu");
+                transaction.commit();
 
-                    fragment_actions f = new fragment_actions(Register.this);
-                    f.hideKeyboard();
-                }
+                fragment_actions f = new fragment_actions(Register.this);
+                f.hideKeyboard();
             }
-
-
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }
