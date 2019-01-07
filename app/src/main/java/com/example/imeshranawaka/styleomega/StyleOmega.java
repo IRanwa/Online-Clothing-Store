@@ -14,7 +14,17 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.imeshranawaka.styleomega.Fragments.MyAccount;
+import com.example.imeshranawaka.styleomega.Models.Category;
+import com.example.imeshranawaka.styleomega.Models.Product;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -43,7 +53,6 @@ public class StyleOmega extends AppCompatActivity
 
         nav_view.setEnabled(true);
         drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-
     }
 
     @Override

@@ -4,13 +4,27 @@ import android.icu.util.ULocale;
 
 import com.orm.SugarRecord;
 
-public class Catgeory extends SugarRecord<ULocale.Category> {
+import java.io.Serializable;
+
+public class Category extends SugarRecord<Category> implements Serializable {
+    private int catId;
     private String title;
     private String desc;
     private String image;
 
-    public Catgeory(){
+    public Category(){
 
+    }
+
+    public Category(int catId, String title, String desc, String image) {
+        this.catId = catId;
+        this.title = title;
+        this.desc = desc;
+        this.image = image;
+    }
+
+    public void setCatId(int catId) {
+        this.catId = catId;
     }
 
     public void setTitle(String title) {
@@ -23,6 +37,10 @@ public class Catgeory extends SugarRecord<ULocale.Category> {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public int getCatId() {
+        return catId;
     }
 
     public String getTitle() {

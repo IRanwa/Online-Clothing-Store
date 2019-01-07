@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.imeshranawaka.styleomega.Models.Category;
+import com.example.imeshranawaka.styleomega.Models.Product;
 import com.example.imeshranawaka.styleomega.R;
 
 import org.json.JSONArray;
@@ -19,20 +21,20 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHolder> {
-    private JSONArray mDataSet;
     private FragmentManager fm;
-    private JSONArray categoryList;
+    private List<Category> categoryList;
     private Context mContext;
     private static ArrayList<View> viewsList;
 
-    public ProductsAdapter(Context context, FragmentManager fm, JSONArray productsList, JSONArray categoryList) {
-        mDataSet = productsList;
+    public ProductsAdapter(Context context, FragmentManager fm, List<Category> categoryList) {
         this.fm = fm;
         this.categoryList = categoryList;
         mContext = context;
@@ -49,38 +51,32 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ProductsAdapter.ViewHolder viewHolder, int i) {
-        try {
-            JSONObject category = (JSONObject) categoryList.get(i);
-            viewHolder.category.setText(category.getString("title"));
 
-            int productNum = 0;
-            List<JSONObject> productsList = new ArrayList<>();
-            for(int count=0;count<mDataSet.length();count++){
-                JSONObject product = (JSONObject) mDataSet.get(count);
-                if(product.getInt("category")== category.getInt("id")){
-                    productsList.add(product);
-                    productNum++;
-                }
+        Category category = categoryList.get(i);
+        viewHolder.category.setText(category.getTitle());
 
-                if(productNum>4){
-                    break;
-                }
+        List<Product> tempProdList = Product.find(Product.class,
+                "cat_Id=?",String.valueOf(category.getCatId()));
+        List<Product> productsList = new ArrayList<>();
+        for(int count = 0;count<tempProdList.size();count++){
+            productsList.add(tempProdList.get(count));
+            if(count>6){
+                break;
             }
-
-            viewHolder.itemsList.setNestedScrollingEnabled(false);
-            LinearLayoutManager layoutManager = new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL,false);
-            viewHolder.itemsList.setLayoutManager(layoutManager);
-
-            ItemsAdapter itemsAdapter = new ItemsAdapter(mContext,fm, productsList,false);
-            viewHolder.itemsList.setAdapter(itemsAdapter);
-        } catch (JSONException e) {
-            e.printStackTrace();
+            count++;
         }
+
+        viewHolder.itemsList.setNestedScrollingEnabled(false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL,false);
+        viewHolder.itemsList.setLayoutManager(layoutManager);
+
+        ItemsAdapter itemsAdapter = new ItemsAdapter(mContext,fm, productsList,false);
+        viewHolder.itemsList.setAdapter(itemsAdapter);
     }
 
     @Override
     public int getItemCount() {
-        return categoryList.length();
+        return categoryList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{

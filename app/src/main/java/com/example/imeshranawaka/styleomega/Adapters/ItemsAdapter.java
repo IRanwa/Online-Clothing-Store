@@ -21,11 +21,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.imeshranawaka.styleomega.Fragments.ProductDetails;
+import com.example.imeshranawaka.styleomega.Models.Product;
 import com.example.imeshranawaka.styleomega.R;
-import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,11 +37,11 @@ import butterknife.ButterKnife;
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> {
     private Context mContext;
     private final FragmentManager fm;
-    private List<JSONObject> mDataset;
+    private List<Product> mDataset;
     private ArrayList<View> viewList;
     private boolean searchPage;
 
-    public ItemsAdapter(Context mContext, FragmentManager fm, List<JSONObject> mDataset, boolean searchPage) {
+    public ItemsAdapter(Context mContext, FragmentManager fm, List<Product> mDataset, boolean searchPage) {
         this.mContext = mContext;
         this.fm = fm;
         this.mDataset = mDataset;
@@ -60,14 +59,16 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        try {
-            JSONObject product = mDataset.get(i);
-            System.out.println(product);
-            viewHolder.itemTitle.setText(product.getString("title"));
-            viewHolder.price.setText("$"+String.valueOf(product.getDouble("price")));
-            Picasso.get().load(product.getJSONArray("images").get(0).toString()).resize(500,500)
+
+            Product product = mDataset.get(i);
+        System.out.println(product);
+            viewHolder.itemTitle.setText(product.getTitle());
+            viewHolder.price.setText("$"+product.getPrice());
+
+            Picasso.get().load(product.getImages().get(0)).resize(500,500)
                     .transform(new RoundedTransformation(75, 0)).into(viewHolder.itemImg);
-            if(searchPage){
+
+        if(searchPage){
                 viewHolder.container.setBackgroundDrawable(ContextCompat.getDrawable(mContext, R.drawable.button_layout));
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
@@ -77,9 +78,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                 viewHolder.container.setLayoutParams(params);
             }
             viewHolder.container.setOnClickListener(new Product_onClick(product));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
     }
 
     public class RoundedTransformation implements com.squareup.picasso.Transformation {
@@ -134,8 +133,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
     }
 
     private class Product_onClick implements View.OnClickListener {
-        private JSONObject product;
-        public Product_onClick(JSONObject product) {
+        private Product product;
+        public Product_onClick(Product product) {
             this.product = product;
         }
 
@@ -143,7 +142,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
         public void onClick(View v) {
             ProductDetails prodDetails = new ProductDetails();
             Bundle bundle = new Bundle();
-            bundle.putString("product",product.toString());
+            bundle.putSerializable("product",product);
             prodDetails.setArguments(bundle);
 
             FragmentTransaction transaction = fm.beginTransaction().add(R.id.mainFragment, prodDetails,"ProductDetails");

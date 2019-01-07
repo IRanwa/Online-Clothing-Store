@@ -2,17 +2,17 @@ package com.example.imeshranawaka.styleomega.Models;
 
 import com.orm.SugarRecord;
 
-public class Order extends SugarRecord<Order> {
-    public String status;
+public class Orders extends SugarRecord<Orders> {
+    public String orderStatus;
     public String useEmail;
     public String userAddress;
 
-    public Order(){
+    public Orders(){
 
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
     public void setUseEmail(String useEmail) {
@@ -23,8 +23,8 @@ public class Order extends SugarRecord<Order> {
         this.userAddress = userAddress;
     }
 
-    public String getStatus() {
-        return status;
+    public String getOrderStatus() {
+        return orderStatus;
     }
 
     public String getUseEmail() {

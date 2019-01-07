@@ -1,6 +1,7 @@
 package com.example.imeshranawaka.styleomega.Fragments;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,6 +22,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 /**
@@ -79,12 +82,14 @@ public class Register extends Fragment {
                 Login userLogin = new Login(email,pass);
                 userLogin.save();
 
-                Bundle bundle=new Bundle();
-                bundle.putString("email",email);
+                SharedPreferences.Editor editor = getContext().getSharedPreferences("login", MODE_PRIVATE).edit();
+                editor.putLong("user", userLogin.getId());
+                editor.putString("email",userLogin.getEmail());
+                editor.putString("pass",userLogin.getPass());
+                editor.apply();
 
                 FragmentManager fm = getFragmentManager();
                 MainMenu menu = new MainMenu();
-                menu.setArguments(bundle);
                 FragmentTransaction transaction = fm.beginTransaction().add(R.id.mainFragment, menu,"MainMenu");
                 transaction.commit();
 

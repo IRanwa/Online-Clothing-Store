@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.imeshranawaka.styleomega.Adapters.ItemsAdapter;
+import com.example.imeshranawaka.styleomega.Models.Product;
 import com.example.imeshranawaka.styleomega.R;
 
 import org.json.JSONArray;
@@ -44,28 +45,28 @@ public class SearchProducts extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_search_products, container, false);
         unbinder = ButterKnife.bind(this,v);
-        String json = getArguments().getString("products");
+        List<Product> productsList = (List<Product>) getArguments().getSerializable("products");
         //System.out.println(json);
-        try {
-            JSONArray array = new JSONArray(json);
+        //try {
+            /*JSONArray array = new JSONArray(json);
             //System.out.println(array);
             List<JSONObject> productsList = new ArrayList<>();
             for(int count = 0; count<array.length();count++){
                 productsList.add(array.getJSONObject(count));
-            }
+            }*/
             String title = getArguments().getString("title");
 
             txtSearchName.setText(title);
             setProducts(productsList);
-        } catch (JSONException e) {
+        /*} catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
 
 
         return v;
     }
 
-    private void setProducts(List<JSONObject> products){
+    private void setProducts(List<Product> products){
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(),2);
         productsList.setLayoutManager(layoutManager);
 

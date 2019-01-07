@@ -17,13 +17,22 @@ import android.widget.TextView;
 
 import com.example.imeshranawaka.styleomega.Adapters.CategoryAdapter;
 import com.example.imeshranawaka.styleomega.Adapters.ProductsAdapter;
+import com.example.imeshranawaka.styleomega.Models.Category;
+import com.example.imeshranawaka.styleomega.Models.Product;
 import com.example.imeshranawaka.styleomega.Models.User;
 import com.example.imeshranawaka.styleomega.R;
 import com.example.imeshranawaka.styleomega.loadJSONFromAsset;
+import com.orm.query.Condition;
+import com.orm.query.Select;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,6 +44,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class MainMenu extends Fragment {
     @BindView(R.id.categoryList) RecyclerView catRecyclerView;
     @BindView(R.id.productsList) RecyclerView prodRecyclerView;
+    @BindView(R.id.searchBar) SearchView searchBar;
     private Unbinder unbind;
 
     @Override
@@ -46,13 +56,11 @@ public class MainMenu extends Fragment {
         enableDrawer();
 
         SharedPreferences prefs = getContext().getSharedPreferences("login", MODE_PRIVATE);
-        //String restoredText = prefs.getString("text", null);
         if (prefs != null) {
             setNavHeader(prefs.getString("email", ""));
         }
         setCategoryList(v);
-        //v.findViewById(R.id.btnSideMenu).setOnClickListener(new btnSideMenu_onClick());
-        ((SearchView)v.findViewById(R.id.searchBar)).setOnQueryTextListener(new searchBar_onQueryListener());
+        searchBar.setOnQueryTextListener(new searchBar_onQueryListener());
         return v;
     }
 
@@ -78,59 +86,41 @@ public class MainMenu extends Fragment {
     }
 
     private void setCategoryList(View v){
-        JSONObject json = null;
-        try {
-            json = new JSONObject(new loadJSONFromAsset().readJson("Category.json",getActivity().getAssets()));
-            JSONArray categoryList = json.getJSONArray("categories");
 
-            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
-            catRecyclerView.setLayoutManager(layoutManager);
+        List<Category> categoryList = Category.listAll(Category.class);
+        System.out.println("category List : "+categoryList);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
+        catRecyclerView.setLayoutManager(layoutManager);
+        //List<Iterator<Category>> categoryList = (Category.findAll(Category.class));
+        CategoryAdapter categoryAdapter = new CategoryAdapter(getFragmentManager(),getContext(), categoryList);
+        catRecyclerView.setAdapter(categoryAdapter);
 
-            CategoryAdapter categoryAdapter = new CategoryAdapter(getFragmentManager(),getContext(), categoryList);
-            catRecyclerView.setAdapter(categoryAdapter);
-
-            setProductsList(categoryList,v);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        setProductsList(categoryList);
     }
 
-    private void setProductsList(JSONArray categories,View v){
-        JSONObject json = null;
-        try {
-
-            json = new JSONObject(new loadJSONFromAsset().readJson("Products.json",getActivity().getAssets()));
-            JSONArray productsList = json.getJSONArray("products");
-
+    private void setProductsList(List<Category> categories){
             prodRecyclerView.setNestedScrollingEnabled(false);
 
             LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
             prodRecyclerView.setLayoutManager(layoutManager);
 
-            ProductsAdapter productsAdapter = new ProductsAdapter(getContext(),getFragmentManager(), productsList, categories );
+            ProductsAdapter productsAdapter = new ProductsAdapter(getContext(),getFragmentManager(), categories );
             prodRecyclerView.setAdapter(productsAdapter);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
 
     private class searchBar_onQueryListener implements SearchView.OnQueryTextListener {
         @Override
         public boolean onQueryTextSubmit(String query) {
-            try {
-                JSONObject json = new JSONObject(new loadJSONFromAsset().readJson("Products.json", getActivity().getAssets()));
-                JSONArray prodList = json.getJSONArray("products");
-                JSONArray productsList = new JSONArray();
-
-                for(int count = 0; count<prodList.length();count++){
-                    JSONObject obj = prodList.getJSONObject(count);
-                    if(obj.has("title") && obj.getString("title").toLowerCase().contains(query.toLowerCase())){
-                        productsList.put(obj);
-                    }
+               List<Product> tempList = Product.listAll(Product.class);
+            ArrayList<Product> productsList = new ArrayList<>();
+            for(Product prod : tempList){
+                if(prod.getTitle().toLowerCase().contains(query.toLowerCase())) {
+                    productsList.add(prod);
                 }
+            }
 
                 Bundle bundle = new Bundle();
-                bundle.putString("products", productsList.toString());
+                bundle.putSerializable("products",  productsList);
                 if(query.length()>25) {
                     query = query.substring(0, 25);
                 }
@@ -145,9 +135,6 @@ public class MainMenu extends Fragment {
                 transaction.commit();
 
                 new fragment_actions(MainMenu.this).hideKeyboard();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
             return true;
         }
 

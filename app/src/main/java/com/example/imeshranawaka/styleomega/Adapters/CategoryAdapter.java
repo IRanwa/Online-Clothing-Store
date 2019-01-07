@@ -14,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.imeshranawaka.styleomega.Fragments.SearchProducts;
+import com.example.imeshranawaka.styleomega.Models.Category;
+import com.example.imeshranawaka.styleomega.Models.Product;
 import com.example.imeshranawaka.styleomega.R;
 import com.example.imeshranawaka.styleomega.loadJSONFromAsset;
 import com.squareup.picasso.Picasso;
@@ -22,7 +24,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,11 +37,11 @@ import butterknife.OnClick;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
     private final FragmentManager fm;
-    private JSONArray mDataSet;
+    private List<Category> mDataSet;
     private Context mContext;
     private static ArrayList<View> viewsList;
 
-    public CategoryAdapter(FragmentManager fm, Context context, JSONArray categoryList) {
+    public CategoryAdapter(FragmentManager fm, Context context, List<Category> categoryList) {
         this.fm = fm;
         mDataSet = categoryList;
         mContext = context;
@@ -63,45 +69,35 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull CategoryAdapter.ViewHolder viewHolder, int i) {
-        try {
-            JSONObject category = (JSONObject) mDataSet.get(i);
-            viewHolder.mTextView.setText(category.getString("title"));
-            Picasso.get().load(category.getString("image"))
+        System.out.println(mDataSet);
+        Category category = mDataSet.get(i);
+            System.out.println(category);
+            viewHolder.mTextView.setText(category.getTitle());
+            Picasso.get().load(category.getImage())
                     .resize(100,100).error(R.drawable.add_icon).into(viewHolder.imgView);
             viewHolder.conatiner.setOnClickListener(new category_onClick(category));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
     }
 
     @Override
     public int getItemCount() {
-        return mDataSet.length();
+        return mDataSet.size();
     }
 
     private class category_onClick implements View.OnClickListener {
-        JSONObject category;
-        public category_onClick(JSONObject category) {
+        Category category;
+        public category_onClick(Category category) {
             this.category = category;
         }
 
         @Override
         public void onClick(View v) {
-            try {
-                JSONObject json = new JSONObject(new loadJSONFromAsset().readJson("Products.json", mContext.getAssets()));
-                JSONArray prodList = json.getJSONArray("products");
-                JSONArray productsList = new JSONArray();
 
-                for(int count = 0; count<prodList.length();count++){
-                    JSONObject obj = prodList.getJSONObject(count);
-                    if(obj.getInt("category")==category.getInt("id")){
-                        productsList.put(obj);
-                    }
-                }
+            List<Product> prodList = Product.find(Product.class, "cat_Id=?", category.getId().toString());
 
                 Bundle bundle = new Bundle();
-                bundle.putString("products", productsList.toString());
-                String title = category.getString("title");
+                bundle.putSerializable("products", (Serializable) prodList);
+                String title = category.getTitle();
                 if(title.length()>25) {
                     title = title.substring(0, 25);
                 }
@@ -113,9 +109,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                 FragmentTransaction transaction = fm.beginTransaction().add(R.id.mainFragment, searchProd,"SearchProducts");
                 transaction.addToBackStack("MainMenu");
                 transaction.commit();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
         }
     }
 }
