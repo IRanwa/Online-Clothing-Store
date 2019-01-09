@@ -1,5 +1,7 @@
 package com.example.imeshranawaka.styleomega.Fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -8,7 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.example.imeshranawaka.styleomega.Models.User;
 import com.example.imeshranawaka.styleomega.R;
 
 import butterknife.BindView;
@@ -18,7 +22,8 @@ import butterknife.Unbinder;
 
 
 public class MyAccount extends Fragment {
-
+    @BindView(R.id.txtUserName) TextView txtUserName;
+    @BindView(R.id.txtEmail) TextView txtEmail;
     private Unbinder unbinder;
 
     @Override
@@ -27,6 +32,13 @@ public class MyAccount extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_my_account, container, false);
         unbinder = ButterKnife.bind(this,v);
+
+        SharedPreferences shared = getContext().getSharedPreferences("login",Context.MODE_PRIVATE);
+        String email = shared.getString("email","");
+        User user = User.find(User.class,"email=?",email).get(0);
+
+        txtUserName.setText(user.getfName()+" "+user.getlName());
+        txtEmail.setText(email);
         return v;
     }
 

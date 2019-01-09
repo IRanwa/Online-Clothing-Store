@@ -171,7 +171,7 @@
         tools:targetApi="jelly_bean" />
 
     <EditText
-        android:id="@+id/txtContact"
+        android:id="@+id/txtUserCon"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -209,7 +209,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/btnBack"
-        app:layout_constraintTop_toBottomOf="@+id/txtContact"
+        app:layout_constraintTop_toBottomOf="@+id/txtUserCon"
         tools:targetApi="jelly_bean" />
 
     <LinearLayout

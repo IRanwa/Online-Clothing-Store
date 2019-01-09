@@ -103,7 +103,7 @@
             app:fontFamily="serif" />
 
         <TextView
-            android:id="@+id/textView13"
+            android:id="@+id/txtUserName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -114,7 +114,7 @@
             app:fontFamily="serif" />
 
         <TextView
-            android:id="@+id/textView14"
+            android:id="@+id/txtEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
