@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +20,11 @@ import android.widget.Toast;
 
 import com.example.imeshranawaka.styleomega.Models.User;
 import com.example.imeshranawaka.styleomega.R;
+import com.example.imeshranawaka.styleomega.SharedPreferenceUtility;
 
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,9 +59,8 @@ public class AccountInfo extends Fragment {
 
     private void setupAccInfo() {
         genderSelection.setEnabled(false);
-
-        SharedPreferences shared = getContext().getSharedPreferences("login",Context.MODE_PRIVATE);
-        String email = shared.getString("email","");
+        SharedPreferenceUtility sharedPref = SharedPreferenceUtility.getInstance(getContext());
+        String email = sharedPref.getUserEmail();
         User user = User.find(User.class,"email=?",email).get(0);
 
         txtFName.setText(user.getfName());
@@ -118,8 +121,8 @@ public class AccountInfo extends Fragment {
             if(fName.isEmpty() || lName.isEmpty()){
                 Toast.makeText(getContext(),"Please fill first and last name!", Toast.LENGTH_SHORT).show();
             }else{
-                SharedPreferences shared = getContext().getSharedPreferences("login",Context.MODE_PRIVATE);
-                String email = shared.getString("email","");
+                SharedPreferenceUtility sharedPref = SharedPreferenceUtility.getInstance(getContext());
+                String email = sharedPref.getUserEmail();
                 User user = User.find(User.class,"email=?",email).get(0);
 
                 user.setfName(fName);
@@ -128,7 +131,24 @@ public class AccountInfo extends Fragment {
                 user.setDob(dob);
                 user.setUserGender(gender);
                 user.save();
+
+                FragmentManager fm = getFragmentManager();
+
+
+
+
                 new fragment_actions(this).onClick(getView());
+                List<Fragment> fragList = fm.getFragments();
+                for(Fragment frag : fragList){
+                    System.out.println(frag.getTag());
+                    if(frag.getTag()!=null && (frag.getTag().equalsIgnoreCase("myaccount") ||
+                            frag.getTag().equalsIgnoreCase("mainmenu") )){
+                        FragmentTransaction transaction = fm.beginTransaction();
+                        transaction.detach(frag);
+                        transaction.attach(frag);
+                        transaction.commit();
+                    }
+                }
             }
 
         }else{

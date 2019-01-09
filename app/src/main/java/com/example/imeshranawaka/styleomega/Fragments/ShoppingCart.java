@@ -15,6 +15,7 @@ import com.example.imeshranawaka.styleomega.Adapters.CartAdapter;
 import com.example.imeshranawaka.styleomega.Models.Order_Product;
 import com.example.imeshranawaka.styleomega.Models.Orders;
 import com.example.imeshranawaka.styleomega.R;
+import com.example.imeshranawaka.styleomega.SharedPreferenceUtility;
 
 import java.util.List;
 
@@ -44,8 +45,8 @@ public class ShoppingCart extends Fragment {
     }
 
     private void setupShoppingCart() {
-        SharedPreferences shared = getContext().getSharedPreferences("login",Context.MODE_PRIVATE);
-        String email = shared.getString("email","");
+        SharedPreferenceUtility sharedPref = SharedPreferenceUtility.getInstance(getContext());
+        String email = sharedPref.getUserEmail();
         List<Orders> orders = Orders.find(Orders.class, "user_Email=? and order_Status=?", email, "pending");
         Orders order = orders.get(0);
         List<Order_Product> productsList = Order_Product.find(Order_Product.class, "order_No=?", order.getId().toString());

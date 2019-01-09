@@ -21,6 +21,7 @@ import com.example.imeshranawaka.styleomega.Models.Category;
 import com.example.imeshranawaka.styleomega.Models.Product;
 import com.example.imeshranawaka.styleomega.Models.User;
 import com.example.imeshranawaka.styleomega.R;
+import com.example.imeshranawaka.styleomega.SharedPreferenceUtility;
 import com.example.imeshranawaka.styleomega.loadJSONFromAsset;
 import com.orm.query.Condition;
 import com.orm.query.Select;
@@ -55,13 +56,19 @@ public class MainMenu extends Fragment {
         unbind = ButterKnife.bind(this,v);
         enableDrawer();
 
-        SharedPreferences prefs = getContext().getSharedPreferences("login", MODE_PRIVATE);
-        if (prefs != null) {
-            setNavHeader(prefs.getString("email", ""));
-        }
+
         setCategoryList(v);
         searchBar.setOnQueryTextListener(new searchBar_onQueryListener());
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        SharedPreferenceUtility sharedPref = SharedPreferenceUtility.getInstance(getContext());
+        if (sharedPref != null) {
+            setNavHeader(sharedPref.getUserEmail());
+        }
     }
 
     @OnClick(R.id.btnSideMenu)

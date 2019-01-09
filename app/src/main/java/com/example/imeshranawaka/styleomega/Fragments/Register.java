@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.imeshranawaka.styleomega.Models.Login;
 import com.example.imeshranawaka.styleomega.Models.User;
 import com.example.imeshranawaka.styleomega.R;
+import com.example.imeshranawaka.styleomega.SharedPreferenceUtility;
 
 import java.util.List;
 
@@ -82,11 +83,10 @@ public class Register extends Fragment {
                 Login userLogin = new Login(email,pass);
                 userLogin.save();
 
-                SharedPreferences.Editor editor = getContext().getSharedPreferences("login", MODE_PRIVATE).edit();
-                editor.putLong("user", userLogin.getId());
-                editor.putString("email",userLogin.getEmail());
-                editor.putString("pass",userLogin.getPass());
-                editor.apply();
+                SharedPreferenceUtility sharedPref = SharedPreferenceUtility.getInstance(getContext());
+                sharedPref.setUserId(userLogin.getId());
+                sharedPref.setUserEmail(userLogin.getEmail());
+                sharedPref.setUserPass(userLogin.getPass());
 
                 FragmentManager fm = getFragmentManager();
                 MainMenu menu = new MainMenu();

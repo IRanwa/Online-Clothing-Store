@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.imeshranawaka.styleomega.Models.Login;
 import com.example.imeshranawaka.styleomega.R;
+import com.example.imeshranawaka.styleomega.SharedPreferenceUtility;
 
 import java.util.List;
 
@@ -79,11 +80,10 @@ public class SignIn extends Fragment {
                     if(!u.getPass().equals(pass)){
                         Toast.makeText(view.getContext(),"Incorrect password. Try again!",Toast.LENGTH_SHORT).show();
                     }else{
-                        SharedPreferences.Editor editor = getContext().getSharedPreferences("login", MODE_PRIVATE).edit();
-                        editor.putLong("user", u.getId());
-                        editor.putString("email",u.getEmail());
-                        editor.putString("pass",u.getPass());
-                        editor.apply();
+                        SharedPreferenceUtility sharedPref = SharedPreferenceUtility.getInstance(getContext());
+                        sharedPref.setUserId(u.getId());
+                        sharedPref.setUserEmail(u.getEmail());
+                        sharedPref.setUserPass(u.getPass());
 
                         FragmentManager fm = getFragmentManager();
                         MainMenu menu = new MainMenu();

@@ -30,6 +30,7 @@ import com.example.imeshranawaka.styleomega.Models.Questions;
 import com.example.imeshranawaka.styleomega.Models.Reviews;
 import com.example.imeshranawaka.styleomega.Models.User;
 import com.example.imeshranawaka.styleomega.R;
+import com.example.imeshranawaka.styleomega.SharedPreferenceUtility;
 import com.orm.SugarRecord;
 
 import org.json.JSONException;
@@ -136,8 +137,8 @@ public class ProductDetails extends Fragment {
 
     @OnClick(R.id.btnAddToCart)
     public void btnAddToCart_onClick(){
-        SharedPreferences shared = getContext().getSharedPreferences("login",MODE_PRIVATE);
-        String email = shared.getString("email", "");
+        SharedPreferenceUtility sharedPref = SharedPreferenceUtility.getInstance(getContext());
+        String email = sharedPref.getUserEmail();
 
         List<Orders> orders = Orders.find(Orders.class, "user_Email=? and order_Status=?", email, "pending");
 

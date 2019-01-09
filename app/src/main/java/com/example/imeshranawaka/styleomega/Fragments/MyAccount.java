@@ -3,7 +3,10 @@ package com.example.imeshranawaka.styleomega.Fragments;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +14,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.imeshranawaka.styleomega.Models.User;
 import com.example.imeshranawaka.styleomega.R;
+import com.example.imeshranawaka.styleomega.SharedPreferenceUtility;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,13 +38,18 @@ public class MyAccount extends Fragment {
         View v = inflater.inflate(R.layout.fragment_my_account, container, false);
         unbinder = ButterKnife.bind(this,v);
 
-        SharedPreferences shared = getContext().getSharedPreferences("login",Context.MODE_PRIVATE);
-        String email = shared.getString("email","");
+        return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        SharedPreferenceUtility sharedPref = SharedPreferenceUtility.getInstance(getContext());
+        String email = sharedPref.getUserEmail();
         User user = User.find(User.class,"email=?",email).get(0);
 
         txtUserName.setText(user.getfName()+" "+user.getlName());
         txtEmail.setText(email);
-        return v;
     }
 
     @OnClick(R.id.btnBack)
@@ -53,6 +63,7 @@ public class MyAccount extends Fragment {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.add(R.id.mainFragment,accInfo,"AccountInfo");
         transaction.addToBackStack("MyAccount");
+
         transaction.commit();
     }
 

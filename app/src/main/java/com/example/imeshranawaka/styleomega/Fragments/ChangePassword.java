@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.imeshranawaka.styleomega.Models.Login;
 import com.example.imeshranawaka.styleomega.R;
+import com.example.imeshranawaka.styleomega.SharedPreferenceUtility;
 
 import java.util.List;
 
@@ -59,17 +60,15 @@ public class ChangePassword extends Fragment {
         String newPass = txtNewPass.getText().toString();
         String conPass = txtConPass.getText().toString();
 
-        SharedPreferences shared = getContext().getSharedPreferences("login",Context.MODE_PRIVATE);
-        long id = shared.getLong("user",0);
+        SharedPreferenceUtility sharedPref = SharedPreferenceUtility.getInstance(getContext());
+        long id = sharedPref.getUserId();
         Login login = Login.findById(Login.class,id);
         if(existPass.equals(login.getPass())){
             if(newPass.equals(conPass)){
                 login.setPass(newPass);
                 login.save();
 
-                SharedPreferences.Editor editor = getContext().getSharedPreferences("login",Context.MODE_PRIVATE).edit();
-                editor.putLong("user",0);
-                editor.apply();
+                sharedPref.setUserId(0);
 
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 FragmentTransaction transaction = fm.beginTransaction();
