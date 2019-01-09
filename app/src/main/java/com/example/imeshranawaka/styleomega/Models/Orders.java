@@ -4,19 +4,25 @@ import com.orm.SugarRecord;
 
 public class Orders extends SugarRecord<Orders> {
     public String orderStatus;
-    public String useEmail;
+    public String userEmail;
     public String userAddress;
 
     public Orders(){
 
     }
 
+    public Orders(String orderStatus, String userEmail, String userAddress) {
+        this.orderStatus = orderStatus;
+        this.userEmail = userEmail;
+        this.userAddress = userAddress;
+    }
+
     public void setOrderStatus(String orderStatus) {
         this.orderStatus = orderStatus;
     }
 
-    public void setUseEmail(String useEmail) {
-        this.useEmail = useEmail;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public void setUserAddress(String userAddress) {
@@ -27,8 +33,8 @@ public class Orders extends SugarRecord<Orders> {
         return orderStatus;
     }
 
-    public String getUseEmail() {
-        return useEmail;
+    public String getUserEmail() {
+        return userEmail;
     }
 
     public String getUserAddress() {

@@ -5,13 +5,19 @@ import com.orm.SugarRecord;
 import java.util.Date;
 
 public class Order_Product extends SugarRecord<Order_Product> {
-    private int orderNo;
-    private int prodId;
-    private Date purchasedDate;
+    private long orderNo;
+    private long prodId;
+    private String purchasedDate;
     private int quantity;
 
     public Order_Product(){
 
+    }
+
+    public Order_Product(long orderNo, long prodId, int quantity) {
+        this.orderNo = orderNo;
+        this.prodId = prodId;
+        this.quantity = quantity;
     }
 
     public void setOrderNo(int orderNo) {
@@ -22,7 +28,7 @@ public class Order_Product extends SugarRecord<Order_Product> {
         this.prodId = prodId;
     }
 
-    public void setPurchasedDate(Date purchasedDate) {
+    public void setPurchasedDate(String purchasedDate) {
         this.purchasedDate = purchasedDate;
     }
 
@@ -30,15 +36,15 @@ public class Order_Product extends SugarRecord<Order_Product> {
         this.quantity = quantity;
     }
 
-    public int getOrderNo() {
+    public long getOrderNo() {
         return orderNo;
     }
 
-    public int getProdId() {
+    public long getProdId() {
         return prodId;
     }
 
-    public Date getPurchasedDate() {
+    public String getPurchasedDate() {
         return purchasedDate;
     }
 

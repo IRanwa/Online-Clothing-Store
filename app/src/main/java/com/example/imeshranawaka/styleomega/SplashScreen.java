@@ -30,7 +30,7 @@ public class SplashScreen extends AppCompatActivity {
     private void InsertProducts() {
         try {
             JSONArray array = new JSONArray(new loadJSONFromAsset().readJson("Products.json",getAssets()));
-            List<Product> productList = Product.findWithQuery(Product.class,"Select * from Product");
+            List<Product> productList = Product.listAll(Product.class);
 
             if(productList.size()!=array.length()) {
                 for (int count = 0; count < array.length(); count++) {
