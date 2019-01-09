@@ -80,7 +80,7 @@ public class MyAccount extends Fragment {
     public void btnAddBook_onClick(){
         MyAddressBook add = new MyAddressBook();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.add(R.id.mainFragment,add,"ChangePassword");
+        transaction.add(R.id.mainFragment,add,"MyAddressBook");
         transaction.addToBackStack("MyAccount");
         transaction.commit();
     }

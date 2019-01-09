@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="gender">
+        <item></item>
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+    <string-array name="province">
+        <item></item>
+        <item>Northern Province</item>
+        <item>North Western Province</item>
+        <item>Western Province </item>
+        <item>North Central Province </item>
+        <item>Central Province</item>
+        <item>Sabaragamuwa Province</item>
+        <item>Eastern Province</item>
+        <item>Uva Province</item>
+        <item>Southern Province</item>
+    </string-array>
+</resources>

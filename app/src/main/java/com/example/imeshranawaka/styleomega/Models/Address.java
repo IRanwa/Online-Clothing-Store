@@ -16,6 +16,17 @@ public class Address extends SugarRecord<Address> {
 
     }
 
+    public Address(String userEmail, String fName, String lName, String address, String city, int contact, String province, boolean def) {
+        this.userEmail = userEmail;
+        this.fName = fName;
+        this.lName = lName;
+        this.address = address;
+        this.city = city;
+        this.contact = contact;
+        this.province = province;
+        this.def = def;
+    }
+
     public String getUserEmail() {
         return userEmail;
     }

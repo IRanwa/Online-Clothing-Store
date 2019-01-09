@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
+    android:clickable="true"
     tools:context=".Fragments.MyAccount">
 
     <!-- TODO: Update blank fragment layout -->
@@ -32,6 +33,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="@+id/textView12"
         app:layout_constraintEnd_toStartOf="@+id/textView12"
         app:layout_constraintHorizontal_bias="0.4"

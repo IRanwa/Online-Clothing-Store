@@ -54,7 +54,7 @@
         tools:targetApi="jelly_bean" />
 
     <ImageView
-        android:id="@+id/btnUpdate2"
+        android:id="@+id/btnAddAddress"
         android:layout_width="34dp"
         android:layout_height="33dp"
         android:layout_marginStart="8dp"
