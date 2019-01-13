@@ -48,11 +48,16 @@ public class MyAddressBook extends Fragment {
         return v;
     }
 
+    @OnClick(R.id.btnBack)
+    public void btnBack_onClick(View v){
+        new fragment_actions(this).onClick(v);
+    }
+
     @OnClick(R.id.btnAddAddress)
     public void btnAddAddress_onClick(){
         FragmentManager fm = getFragmentManager();
         NewAddress newAddress = new NewAddress();
-        FragmentTransaction transaction = fm.beginTransaction().add(R.id.mainFragment, newAddress,"NewAddress");
+        FragmentTransaction transaction = fm.beginTransaction().replace(R.id.mainFragment, newAddress,"NewAddress");
         transaction.addToBackStack("MyAddressBook");
         transaction.commit();
     }

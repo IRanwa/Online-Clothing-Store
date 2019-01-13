@@ -177,7 +177,7 @@ public class ProductDetails extends Fragment {
     public void btnCartInView_onClick(){
         FragmentManager fm = getFragmentManager();
         ShoppingCart shoppingCart = new ShoppingCart();
-        FragmentTransaction transaction = fm.beginTransaction().add(R.id.mainFragment, shoppingCart,"ShoppingCart");
+        FragmentTransaction transaction = fm.beginTransaction().replace(R.id.mainFragment, shoppingCart,"ShoppingCart");
         transaction.addToBackStack("ProductDetails");
         transaction.commit();
     }

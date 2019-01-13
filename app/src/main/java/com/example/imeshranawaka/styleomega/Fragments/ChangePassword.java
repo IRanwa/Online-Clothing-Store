@@ -72,7 +72,7 @@ public class ChangePassword extends Fragment {
 
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 FragmentTransaction transaction = fm.beginTransaction();
-                transaction.add(R.id.mainFragment, new SignIn(), "SignIn");
+                transaction.replace(R.id.mainFragment, new SignIn(), "SignIn");
                 for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
                     fm.popBackStack();
                 }

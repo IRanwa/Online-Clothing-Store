@@ -106,7 +106,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                 SearchProducts searchProd = new SearchProducts();
                 searchProd.setArguments(bundle);
 
-                FragmentTransaction transaction = fm.beginTransaction().add(R.id.mainFragment, searchProd,"SearchProducts");
+                FragmentTransaction transaction = fm.beginTransaction().replace(R.id.mainFragment, searchProd,"SearchProducts");
                 transaction.addToBackStack("MainMenu");
                 transaction.commit();
         }

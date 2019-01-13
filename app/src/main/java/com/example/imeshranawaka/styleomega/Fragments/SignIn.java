@@ -58,7 +58,7 @@ public class SignIn extends Fragment {
         FragmentTransaction transaction = fm.beginTransaction();
         Register register = new Register();
         //AccountInfo ac = new AccountInfo();
-        transaction.add(R.id.mainFragment,register,"Register");
+        transaction.replace(R.id.mainFragment,register,"Register");
         transaction.addToBackStack(null);
         transaction.commit();
     }
@@ -87,7 +87,7 @@ public class SignIn extends Fragment {
 
                         FragmentManager fm = getFragmentManager();
                         MainMenu menu = new MainMenu();
-                        FragmentTransaction transaction = fm.beginTransaction().add(R.id.mainFragment, menu,"MainMenu");
+                        FragmentTransaction transaction = fm.beginTransaction().replace(R.id.mainFragment, menu,"MainMenu");
                         transaction.commit();
 
                         fragment_actions f = new fragment_actions(SignIn.this);

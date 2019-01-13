@@ -90,7 +90,7 @@ public class Register extends Fragment {
 
                 FragmentManager fm = getFragmentManager();
                 MainMenu menu = new MainMenu();
-                FragmentTransaction transaction = fm.beginTransaction().add(R.id.mainFragment, menu,"MainMenu");
+                FragmentTransaction transaction = fm.beginTransaction().replace(R.id.mainFragment, menu,"MainMenu");
                 transaction.commit();
 
                 fragment_actions f = new fragment_actions(Register.this);

@@ -145,7 +145,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
             bundle.putSerializable("product",product);
             prodDetails.setArguments(bundle);
 
-            FragmentTransaction transaction = fm.beginTransaction().add(R.id.mainFragment, prodDetails,"ProductDetails");
+            FragmentTransaction transaction = fm.beginTransaction().replace(R.id.mainFragment, prodDetails,"ProductDetails");
             transaction.addToBackStack("MainMenu");
             transaction.commit();
         }

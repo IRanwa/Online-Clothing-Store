@@ -16,6 +16,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.imeshranawaka.styleomega.Models.User;
@@ -122,8 +123,8 @@ public class AccountInfo extends Fragment {
                 Toast.makeText(getContext(),"Please fill first and last name!", Toast.LENGTH_SHORT).show();
             }else{
                 SharedPreferenceUtility sharedPref = SharedPreferenceUtility.getInstance(getContext());
-                String email = sharedPref.getUserEmail();
-                User user = User.find(User.class,"email=?",email).get(0);
+                String loginEmail = sharedPref.getUserEmail();
+                User user = User.find(User.class,"email=?",loginEmail).get(0);
 
                 user.setfName(fName);
                 user.setlName(lName);
@@ -131,24 +132,14 @@ public class AccountInfo extends Fragment {
                 user.setDob(dob);
                 user.setUserGender(gender);
                 user.save();
-
-                FragmentManager fm = getFragmentManager();
-
-
-
-
                 new fragment_actions(this).onClick(getView());
-                List<Fragment> fragList = fm.getFragments();
-                for(Fragment frag : fragList){
-                    System.out.println(frag.getTag());
-                    if(frag.getTag()!=null && (frag.getTag().equalsIgnoreCase("myaccount") ||
-                            frag.getTag().equalsIgnoreCase("mainmenu") )){
-                        FragmentTransaction transaction = fm.beginTransaction();
-                        transaction.detach(frag);
-                        transaction.attach(frag);
-                        transaction.commit();
-                    }
-                }
+
+                TextView name = getActivity().findViewById(R.id.txtName);
+                TextView email = getActivity().findViewById(R.id.txtHeadEmail);
+
+                name.setText(user.getfName()+" "+user.getlName());
+                email.setText(loginEmail);
+
             }
 
         }else{

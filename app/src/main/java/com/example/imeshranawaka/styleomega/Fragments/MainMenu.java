@@ -2,6 +2,7 @@ package com.example.imeshranawaka.styleomega.Fragments;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -47,6 +48,14 @@ public class MainMenu extends Fragment {
     @BindView(R.id.productsList) RecyclerView prodRecyclerView;
     @BindView(R.id.searchBar) SearchView searchBar;
     private Unbinder unbind;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(savedInstanceState!=null){
+            return;
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -137,7 +146,7 @@ public class MainMenu extends Fragment {
                 searchProd.setArguments(bundle);
 
                 FragmentManager fm = getFragmentManager();
-                FragmentTransaction transaction = fm.beginTransaction().add(R.id.mainFragment, searchProd,"SearchProducts");
+                FragmentTransaction transaction = fm.beginTransaction().replace(R.id.mainFragment, searchProd,"SearchProducts");
                 transaction.addToBackStack("MainMenu");
                 transaction.commit();
 

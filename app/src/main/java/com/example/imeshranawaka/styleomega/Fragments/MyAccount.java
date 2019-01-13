@@ -32,6 +32,14 @@ public class MyAccount extends Fragment {
     private Unbinder unbinder;
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(savedInstanceState!=null){
+            return;
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -61,7 +69,7 @@ public class MyAccount extends Fragment {
     public void btnAccInfo_onClick(){
         AccountInfo accInfo = new AccountInfo();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.add(R.id.mainFragment,accInfo,"AccountInfo");
+        transaction.replace(R.id.mainFragment,accInfo,"AccountInfo");
         transaction.addToBackStack("MyAccount");
 
         transaction.commit();
@@ -71,7 +79,7 @@ public class MyAccount extends Fragment {
     public void btnChangePass_onClick(){
         ChangePassword changePass = new ChangePassword();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.add(R.id.mainFragment,changePass,"ChangePassword");
+        transaction.replace(R.id.mainFragment,changePass,"ChangePassword");
         transaction.addToBackStack("MyAccount");
         transaction.commit();
     }
@@ -80,7 +88,7 @@ public class MyAccount extends Fragment {
     public void btnAddBook_onClick(){
         MyAddressBook add = new MyAddressBook();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.add(R.id.mainFragment,add,"MyAddressBook");
+        transaction.replace(R.id.mainFragment,add,"MyAddressBook");
         transaction.addToBackStack("MyAccount");
         transaction.commit();
     }
