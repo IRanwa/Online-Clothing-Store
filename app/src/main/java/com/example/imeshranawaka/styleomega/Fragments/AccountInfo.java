@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -69,6 +70,11 @@ public class AccountInfo extends Fragment {
         txtFName.setText(user.getfName());
         txtContact.setText(String.valueOf(user.getContactNo()));
         txtDOB.setText(user.getDob());
+
+        ArrayAdapter<CharSequence> genderAdapter = ArrayAdapter.createFromResource(getContext(), R.array.gender, R.layout.spinner_item_view);
+        genderAdapter.setDropDownViewResource(R.layout.spinner_item_view);
+        genderSelection.setAdapter(genderAdapter);
+
         if(user.getUserGender()!=null){
             if(user.getUserGender().equalsIgnoreCase("male")){
                 genderSelection.setSelection(1);
@@ -76,12 +82,11 @@ public class AccountInfo extends Fragment {
                 genderSelection.setSelection(2);
             }
         }
-
     }
 
     @OnClick(R.id.btnBack)
-    public void btnBack_onClick(View v){
-        new fragment_actions(this).onClick(v);
+    public void btnBack_onClick(){
+        fragment_actions.getIntance(this).btnBack_onClick();
     }
 
     @OnClick(R.id.btnCalendar)
@@ -132,7 +137,7 @@ public class AccountInfo extends Fragment {
                 user.setDob(dob);
                 user.setUserGender(gender);
                 user.save();
-                new fragment_actions(this).onClick(getView());
+                fragment_actions.getIntance(this).btnBack_onClick();
 
                 TextView name = getActivity().findViewById(R.id.txtName);
                 TextView email = getActivity().findViewById(R.id.txtHeadEmail);

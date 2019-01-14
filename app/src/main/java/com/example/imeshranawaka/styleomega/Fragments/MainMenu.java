@@ -80,6 +80,11 @@ public class MainMenu extends Fragment {
         }
     }
 
+    @OnClick(R.id.btnCart)
+    public void btnCart_onClick(){
+        fragment_actions.getIntance(this).btnCart_onClick();
+    }
+
     @OnClick(R.id.btnSideMenu)
     public void btnSideMenu_onClick(){
         DrawerLayout drawer = getActivity().findViewById(R.id.drawer_layout);
@@ -150,7 +155,7 @@ public class MainMenu extends Fragment {
                 transaction.addToBackStack("MainMenu");
                 transaction.commit();
 
-                new fragment_actions(MainMenu.this).hideKeyboard();
+                fragment_actions.getIntance(MainMenu.this).hideKeyboard();
             return true;
         }
 

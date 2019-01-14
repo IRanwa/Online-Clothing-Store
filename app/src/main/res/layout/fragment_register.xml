@@ -49,8 +49,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.198"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:targetApi="jelly_bean" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -87,8 +86,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.03"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2"
-                tools:targetApi="jelly_bean" />
+                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
             <EditText
                 android:id="@+id/txtFName"
@@ -126,8 +124,7 @@
                 android:textAllCaps="false"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                tools:targetApi="jelly_bean" />
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/txtLName"
@@ -170,8 +167,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.035"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtLName"
-                tools:targetApi="jelly_bean" />
+                app:layout_constraintTop_toBottomOf="@+id/txtLName" />
 
             <EditText
                 android:id="@+id/txtEmail"
@@ -213,8 +209,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.035"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtEmail"
-                tools:targetApi="jelly_bean" />
+                app:layout_constraintTop_toBottomOf="@+id/txtEmail" />
 
             <EditText
                 android:id="@+id/txtPass"
@@ -256,8 +251,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.05"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtPass"
-                tools:targetApi="jelly_bean" />
+                app:layout_constraintTop_toBottomOf="@+id/txtPass" />
 
             <EditText
                 android:id="@+id/txtCPass"

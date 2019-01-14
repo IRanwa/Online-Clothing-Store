@@ -25,6 +25,5 @@
         android:layout_marginBottom="10dp"
         android:text="Men's Cloth"
         android:textColor="@android:color/white"
-        android:textSize="14sp"
-        app:fontFamily="serif" />
+        android:textSize="14sp" />
 </LinearLayout>

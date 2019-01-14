@@ -2,6 +2,7 @@ package com.example.imeshranawaka.styleomega.Fragments;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -105,7 +106,9 @@ public class ProductDetails extends Fragment {
         for(int count=1;count<=prodQty;count++){
             qtyList.add(count);
         }
-        ArrayAdapter<Integer> qtyAdapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_spinner_item,qtyList);
+
+        ArrayAdapter<Integer> qtyAdapter = new ArrayAdapter<>(getActivity(),R.layout.spinner_item_view,qtyList);
+        qtyAdapter.setDropDownViewResource(R.layout.spinner_item_view);
         quantity.setAdapter(qtyAdapter);
 
         txtDesc.setText(Html.fromHtml(product.getDesc()));
@@ -133,6 +136,17 @@ public class ProductDetails extends Fragment {
             txtAnswer.setText(que.getAnswer());
         }
         return v;
+    }
+
+    @OnClick(R.id.btnShare)
+    public void btnShare_onClick(){
+        String shareBody = product.getImages().get(0)+"\n\nProduct Title : "+product.getTitle()+"\n\nProduct Price : $"+product.getPrice();
+
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+
+        sharingIntent.putExtra(Intent.EXTRA_TEXT,shareBody );
+        startActivity(Intent.createChooser(sharingIntent, "Share using"));
     }
 
     @OnClick(R.id.btnAddToCart)
@@ -173,13 +187,19 @@ public class ProductDetails extends Fragment {
     }
 
 
+    @OnClick(R.id.btnCart)
+    public void btnCart_onClick(){
+        fragment_actions.getIntance(this).btnCart_onClick();
+    }
+
     @OnClick(R.id.btnCartInView)
     public void btnCartInView_onClick(){
-        FragmentManager fm = getFragmentManager();
-        ShoppingCart shoppingCart = new ShoppingCart();
-        FragmentTransaction transaction = fm.beginTransaction().replace(R.id.mainFragment, shoppingCart,"ShoppingCart");
-        transaction.addToBackStack("ProductDetails");
-        transaction.commit();
+        fragment_actions.getIntance(this).btnCart_onClick();
+    }
+
+    @OnClick(R.id.btnBack)
+    public void btnBack_onClick(){
+        fragment_actions.getIntance(this).btnBack_onClick();
     }
 
     @Override

@@ -56,8 +56,8 @@ public class Register extends Fragment {
     }
 
     @OnClick(R.id.btnBack)
-    public void btnBack_onClick(View v){
-        new fragment_actions(this).onClick(v);
+    public void btnBack_onClick(){
+        fragment_actions.getIntance(this).btnBack_onClick();
     }
 
     @OnClick(R.id.btnRegister)
@@ -93,8 +93,7 @@ public class Register extends Fragment {
                 FragmentTransaction transaction = fm.beginTransaction().replace(R.id.mainFragment, menu,"MainMenu");
                 transaction.commit();
 
-                fragment_actions f = new fragment_actions(Register.this);
-                f.hideKeyboard();
+                fragment_actions.getIntance(Register.this).hideKeyboard();
             }
         }
     }

@@ -90,8 +90,7 @@ public class SignIn extends Fragment {
                         FragmentTransaction transaction = fm.beginTransaction().replace(R.id.mainFragment, menu,"MainMenu");
                         transaction.commit();
 
-                        fragment_actions f = new fragment_actions(SignIn.this);
-                        f.hideKeyboard();
+                        fragment_actions.getIntance(SignIn.this).hideKeyboard();
                     }
                 }
             }

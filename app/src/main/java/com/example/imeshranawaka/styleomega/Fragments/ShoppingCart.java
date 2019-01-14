@@ -22,6 +22,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 
@@ -67,8 +68,13 @@ public class ShoppingCart extends Fragment {
         }else{
             productsRecycleView.setVisibility(View.GONE);
             Toast.makeText(getContext(),"Cart Empty!",Toast.LENGTH_SHORT).show();
-            new fragment_actions(this).onClick(getView());
+            fragment_actions.getIntance(this).btnBack_onClick();
         }
+    }
+
+    @OnClick(R.id.btnBack)
+    public void btnBack_onClick(){
+        fragment_actions.getIntance(this).btnBack_onClick();
     }
 
     @Override

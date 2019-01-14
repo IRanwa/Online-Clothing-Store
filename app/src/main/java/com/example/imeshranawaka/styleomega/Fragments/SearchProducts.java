@@ -23,6 +23,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -46,24 +47,23 @@ public class SearchProducts extends Fragment {
         View v = inflater.inflate(R.layout.fragment_search_products, container, false);
         unbinder = ButterKnife.bind(this,v);
         List<Product> productsList = (List<Product>) getArguments().getSerializable("products");
-        //System.out.println(json);
-        //try {
-            /*JSONArray array = new JSONArray(json);
-            //System.out.println(array);
-            List<JSONObject> productsList = new ArrayList<>();
-            for(int count = 0; count<array.length();count++){
-                productsList.add(array.getJSONObject(count));
-            }*/
-            String title = getArguments().getString("title");
 
-            txtSearchName.setText(title);
-            setProducts(productsList);
-        /*} catch (JSONException e) {
-            e.printStackTrace();
-        }*/
+        String title = getArguments().getString("title");
+        txtSearchName.setText(title);
+        setProducts(productsList);
 
 
         return v;
+    }
+
+    @OnClick(R.id.btnCart)
+    public void btnCart_onClick(){
+        fragment_actions.getIntance(this).btnCart_onClick();
+    }
+
+    @OnClick(R.id.btnBack)
+    public void btnBack_onClick(){
+        fragment_actions.getIntance(this).btnBack_onClick();
     }
 
     private void setProducts(List<Product> products){

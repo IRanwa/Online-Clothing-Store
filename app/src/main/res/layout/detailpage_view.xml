@@ -26,11 +26,11 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
+            android:fontFamily="serif"
             android:text="Imesh Ranawaka"
             android:textColor="@android:color/white"
             android:textSize="18sp"
-            android:textStyle="bold"
-            app:fontFamily="serif" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtTitle"
@@ -43,8 +43,7 @@
             android:text="Imesh Ranawaka"
             android:textColor="@android:color/white"
             android:textSize="18sp"
-            android:textStyle="bold"
-            app:fontFamily="serif" />
+            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
@@ -71,7 +70,7 @@
 
             <TextView
                 android:id="@+id/txtTitle2"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
@@ -81,31 +80,19 @@
                 android:text="Quantity :"
                 android:textColor="@android:color/white"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                app:fontFamily="serif" />
+                android:textStyle="bold" />
 
             <Spinner
                 android:id="@+id/quantity"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@drawable/spinner_view"
-                android:padding="5dp" />
+                android:foregroundGravity="center"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp" />
 
-            <TextView
-                android:id="@+id/txtTitle3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_weight="1"
-                android:textColor="@android:color/white"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:fontFamily="serif" />
         </LinearLayout>
 
         <LinearLayout
@@ -169,8 +156,7 @@
             android:text="Description"
             android:textColor="@android:color/white"
             android:textSize="18sp"
-            android:textStyle="bold"
-            app:fontFamily="serif" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtDesc"
@@ -181,8 +167,7 @@
             android:layout_marginBottom="10dp"
             android:text="No.432/3, Himbutana Lane, Angoda, Mulleriyawa, Western, 10620"
             android:textColor="@android:color/white"
-            android:textSize="14sp"
-            app:fontFamily="serif" />
+            android:textSize="14sp" />
 
     </LinearLayout>
 
@@ -209,8 +194,7 @@
             android:text="Reviews"
             android:textColor="@android:color/white"
             android:textSize="18sp"
-            android:textStyle="bold"
-            app:fontFamily="serif" />
+            android:textStyle="bold" />
 
         <RatingBar
             android:id="@+id/prodRating"
@@ -229,8 +213,7 @@
             android:layout_marginBottom="10dp"
             android:text="Imesh"
             android:textColor="@android:color/white"
-            android:textSize="14sp"
-            app:fontFamily="serif" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/txtRevDesc"
@@ -241,8 +224,7 @@
             android:layout_marginBottom="10dp"
             android:text="No.432/3, Himbutana Lane, Angoda, Mulleriyawa, Western, 10620"
             android:textColor="@android:color/white"
-            android:textSize="14sp"
-            app:fontFamily="serif" />
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/btnRevViewAll"
@@ -277,8 +259,7 @@
             android:text="Questions and  Answers"
             android:textColor="@android:color/white"
             android:textSize="18sp"
-            android:textStyle="bold"
-            app:fontFamily="serif" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtQuestion"
@@ -290,8 +271,7 @@
             android:layout_marginBottom="10dp"
             android:text="Question : Is"
             android:textColor="@android:color/white"
-            android:textSize="14sp"
-            app:fontFamily="serif" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/txtAnswer"
@@ -302,8 +282,7 @@
             android:layout_marginBottom="10dp"
             android:text="Answer : No"
             android:textColor="@android:color/white"
-            android:textSize="14sp"
-            app:fontFamily="serif" />
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/btnQueViewAll"

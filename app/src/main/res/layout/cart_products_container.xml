@@ -45,8 +45,7 @@
             android:layout_height="wrap_content"
             android:text="No"
             android:textColor="@android:color/white"
-            android:textSize="14sp"
-            app:fontFamily="serif" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/txtPrice"
@@ -54,8 +53,7 @@
             android:layout_height="wrap_content"
             android:text="No"
             android:textColor="@android:color/white"
-            android:textSize="14sp"
-            app:fontFamily="serif" />
+            android:textSize="14sp" />
 
         <LinearLayout
             android:layout_width="match_parent"

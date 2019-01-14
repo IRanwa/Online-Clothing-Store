@@ -50,8 +50,8 @@ public class ChangePassword extends Fragment {
     }
 
     @OnClick(R.id.btnBack)
-    public void btnBack_onClick(View v){
-        new fragment_actions(this).onClick(v);
+    public void btnBack_onClick(){
+        fragment_actions.getIntance(this).btnBack_onClick();
     }
 
     @OnClick(R.id.btnSavePass)

@@ -24,6 +24,7 @@ import butterknife.OnClick;
 
 public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHolder>{
     private List<Address> mDataSet;
+    private List<btnDelete_onClick> deleteBtns;
     private Context mContext;
     private static ArrayList<View> viewsList;
 
@@ -31,6 +32,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
         mDataSet = addressList;
         mContext = context;
         viewsList = new ArrayList<>();
+        deleteBtns = new ArrayList<>();
     }
 
 
@@ -75,7 +77,9 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
             viewHolder.defBtnRadio.setChecked(true);
         }
 
-        viewHolder.btnDelete.setOnClickListener(new btnDelete_onClick(address,i));
+        btnDelete_onClick deletBtn = new btnDelete_onClick(address, i);
+        deleteBtns.add(deletBtn);
+        viewHolder.btnDelete.setOnClickListener(deletBtn);
 
     }
 
@@ -93,12 +97,22 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
             this.position = position;
         }
 
+        public void setPosition(int position) {
+            this.position = position;
+        }
+
         @Override
         public void onClick(View v) {
             Address.deleteAll(Address.class,"id=?",address.getId().toString());
             viewsList.remove(position);
             mDataSet.remove(position);
             notifyItemRemoved(position);
+            deleteBtns.remove(position);
+
+            for(int count=position;count<deleteBtns.size();count++){
+                btnDelete_onClick btnOnClick = deleteBtns.get(count);
+                btnOnClick.setPosition(count);
+            }
 
             SharedPreferenceUtility sharedPref = SharedPreferenceUtility.getInstance(mContext);
             List<Address> addressList = Address.find(Address.class, "user_Email=?"

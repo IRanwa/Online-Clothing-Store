@@ -49,8 +49,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.477"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:targetApi="jelly_bean" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/btnUpdate"
@@ -84,8 +83,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/btnBack"
-        app:layout_constraintTop_toBottomOf="@+id/imageView6"
-        tools:targetApi="jelly_bean" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView6" />
 
     <EditText
         android:id="@+id/txtFName"
@@ -124,8 +122,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/btnBack"
-        app:layout_constraintTop_toBottomOf="@+id/txtFName"
-        tools:targetApi="jelly_bean" />
+        app:layout_constraintTop_toBottomOf="@+id/txtFName" />
 
     <EditText
         android:id="@+id/txtLName"
@@ -165,8 +162,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/btnBack"
-        app:layout_constraintTop_toBottomOf="@+id/txtLName"
-        tools:targetApi="jelly_bean" />
+        app:layout_constraintTop_toBottomOf="@+id/txtLName" />
 
     <EditText
         android:id="@+id/txtUserCon"
@@ -207,8 +203,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/btnBack"
-        app:layout_constraintTop_toBottomOf="@+id/txtUserCon"
-        tools:targetApi="jelly_bean" />
+        app:layout_constraintTop_toBottomOf="@+id/txtUserCon" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -257,8 +252,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/btnBack"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        tools:targetApi="jelly_bean" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <Spinner
         android:id="@+id/genderSelection"
@@ -267,6 +261,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/spinner_view"
         android:entries="@array/gender"
         android:padding="3dp"
         android:paddingLeft="5dp"

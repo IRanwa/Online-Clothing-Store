@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -47,7 +48,16 @@ public class NewAddress extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_new_address, container, false);
         unbinder = ButterKnife.bind(this,view);
+
+        ArrayAdapter<CharSequence> provinceAdapter = ArrayAdapter.createFromResource(getContext(), R.array.province, R.layout.spinner_item_view);
+        provinceAdapter.setDropDownViewResource(R.layout.spinner_item_view);
+        provinceList.setAdapter(provinceAdapter);
         return view;
+    }
+
+    @OnClick(R.id.btnBack)
+    public void btnBack_onClick(){
+        fragment_actions.getIntance(this).btnBack_onClick();
     }
 
     @OnClick(R.id.btnSave)
@@ -94,7 +104,7 @@ public class NewAddress extends Fragment {
                         ,province,defaultAdd);
                 newAddress.save();
 
-                new fragment_actions(this).onClick(getView());
+                fragment_actions.getIntance(this).btnBack_onClick();
 
                 FragmentManager fm = getFragmentManager();
                 List<Fragment> fragList = fm.getFragments();
