@@ -9,7 +9,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.example.imeshranawaka.styleomega.R;
 
-class fragment_actions {
+public class fragment_actions {
     private static fragment_actions instance = new fragment_actions();
     private static Fragment frag;
 

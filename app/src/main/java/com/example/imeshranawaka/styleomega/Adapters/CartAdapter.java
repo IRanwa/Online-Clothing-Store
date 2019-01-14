@@ -3,6 +3,7 @@ package com.example.imeshranawaka.styleomega.Adapters;
 import android.content.Context;
 import android.graphics.Point;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.Display;
@@ -11,13 +12,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.imeshranawaka.styleomega.Fragments.ShoppingCart;
+import com.example.imeshranawaka.styleomega.Fragments.fragment_actions;
 import com.example.imeshranawaka.styleomega.Models.Order_Product;
+import com.example.imeshranawaka.styleomega.Models.Orders;
 import com.example.imeshranawaka.styleomega.Models.Product;
 import com.example.imeshranawaka.styleomega.R;
 import com.squareup.picasso.Picasso;
@@ -30,6 +36,8 @@ import butterknife.ButterKnife;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
     private List<Order_Product> mDataSet;
+    private List<CheckBox> checkboxList;
+    private List<btnDelete_onClick> btnDeleteList;
     private Context mContext;
     private FragmentActivity mActivity;
     private static ArrayList<View> viewsList;
@@ -38,6 +46,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
         mDataSet = productsList;
         mContext = context;
         viewsList = new ArrayList<>();
+        checkboxList = new ArrayList<>();
+        btnDeleteList = new ArrayList<>();
         mActivity = activity;
     }
 
@@ -46,8 +56,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
         @BindView(R.id.prodImg) ImageView prodImg;
         @BindView(R.id.txtProductTitle) TextView prodTitle;
         @BindView(R.id.txtPrice) TextView prodPrice;
-        @BindView(R.id.noOfQuantity)
-        Spinner prodQty;
+        @BindView(R.id.noOfQuantity) Spinner prodQty;
+        @BindView(R.id.checkBox)CheckBox checkbox;
+        @BindView(R.id.btnDelete) ImageView btnDelete;
+        @BindView(R.id.btnUpdate) ImageView btnUpdate;
+
         public ViewHolder(View v){
             super(v);
             ButterKnife.bind(this,v);
@@ -93,7 +106,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
         for(int count=1;count<=totalQty;count++){
             qtyList.add(count);
         }
-        ArrayAdapter<Integer> qtyAdapter = new ArrayAdapter<>(mContext,android.R.layout.simple_spinner_item,qtyList);
+        ArrayAdapter<Integer> qtyAdapter = new ArrayAdapter<>(mContext,R.layout.spinner_item_view,qtyList);
+        qtyAdapter.setDropDownViewResource(R.layout.spinner_item_view);
         viewHolder.prodQty.setAdapter(qtyAdapter);
 
         int orderProdQty = orderProduct.getQuantity();
@@ -104,6 +118,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
         }
 
         viewHolder.prodQty.setOnItemSelectedListener(new QtyChangeListener(orderProduct));
+        checkboxList.add(viewHolder.checkbox);
+        viewHolder.checkbox.setOnClickListener(new checkbox_onClick());
+
+        btnDelete_onClick deleteAction = new btnDelete_onClick(orderProduct, i);
+        btnDeleteList.add(deleteAction);
+        viewHolder.btnDelete.setOnClickListener(deleteAction);
 
     }
 
@@ -129,6 +149,80 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
 
+        }
+    }
+
+    public void checkboxall_onClick(boolean status){
+        for(CheckBox checkbox : checkboxList){
+            checkbox.setChecked(status);
+        }
+    }
+
+    private class checkbox_onClick implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            boolean status = true;
+            for(CheckBox checkbox : checkboxList){
+                if(!checkbox.isChecked()){
+                    status = false;
+                    break;
+                }
+            }
+            if(!status){
+                ((CheckBox)mActivity.findViewById(R.id.checkboxAll)).setChecked(status);
+            }else{
+                ((CheckBox)mActivity.findViewById(R.id.checkboxAll)).setChecked(status);
+            }
+        }
+    }
+
+    private class btnDelete_onClick implements View.OnClickListener {
+        private Order_Product orderProduct;
+        private int position;
+        public btnDelete_onClick(Order_Product orderProduct, int position) {
+            this.orderProduct = orderProduct;
+            this.position = position;
+        }
+
+        public void setPosition(int position) {
+            this.position = position;
+        }
+
+        @Override
+        public void onClick(View v) {
+            deleteItem(position,orderProduct);
+        }
+    }
+
+    private void deleteItem(int position,Order_Product orderProduct){
+        long id = orderProduct.getOrderNo();
+        orderProduct.delete();
+        notifyItemRemoved(position);
+        mDataSet.remove(position);
+        checkboxList.remove(position);
+        btnDeleteList.remove(position);
+
+        for(int count=position;count<btnDeleteList.size();count++){
+            btnDeleteList.get(position).setPosition(position);
+        }
+
+        if(mDataSet.size()==0){
+            Orders order = Orders.findById(Orders.class,id);
+            order.delete();
+
+            Fragment shoppingCart = mActivity.getSupportFragmentManager().findFragmentByTag("ShoppingCart");
+            if(shoppingCart!=null) {
+                fragment_actions.getIntance(shoppingCart).btnBack_onClick();
+            }
+        }
+    }
+
+    public void btnDeleteSelected_onClick(View v){
+        int checkboxSize = checkboxList.size();
+        for(int count=0;count<checkboxSize;count++){
+            if(checkboxList.get(0).isChecked()){
+                btnDeleteList.get(0).onClick(v);
+            }
         }
     }
 }

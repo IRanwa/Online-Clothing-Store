@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.example.imeshranawaka.styleomega.Adapters.CartAdapter;
@@ -29,6 +30,7 @@ import butterknife.Unbinder;
 public class ShoppingCart extends Fragment {
     @BindView(R.id.orderProductsList)
     RecyclerView productsRecycleView;
+    CartAdapter adapter;
     private Unbinder unbinder;
 
     public ShoppingCart() {
@@ -41,8 +43,6 @@ public class ShoppingCart extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_shopping_cart, container, false);
         unbinder = ButterKnife.bind(this,view);
-
-
         return view;
     }
 
@@ -63,13 +63,28 @@ public class ShoppingCart extends Fragment {
             LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
             productsRecycleView.setLayoutManager(layoutManager);
 
-            CartAdapter adapter = new CartAdapter(getContext(), productsList, getActivity());
+            adapter = new CartAdapter(getContext(), productsList, getActivity());
             productsRecycleView.setAdapter(adapter);
         }else{
             productsRecycleView.setVisibility(View.GONE);
             Toast.makeText(getContext(),"Cart Empty!",Toast.LENGTH_SHORT).show();
             fragment_actions.getIntance(this).btnBack_onClick();
         }
+    }
+
+    @OnClick(R.id.checkboxAll)
+    public void checkboxAll_onClick(View v){
+        CheckBox checkbox = v.findViewById(R.id.checkboxAll);
+        boolean status = false;
+        if(checkbox.isChecked()){
+            status = true;
+        }
+        adapter.checkboxall_onClick(status);
+    }
+
+    @OnClick(R.id.btnDeleteSelected)
+    public void btnDeleteSelected_onClick(View v){
+        adapter.btnDeleteSelected_onClick(v);
     }
 
     @OnClick(R.id.btnBack)
