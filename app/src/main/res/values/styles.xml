@@ -6,15 +6,10 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
     </style>
 
     <style name="SplashScreen" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_screen</item>
-    </style>
-
-    <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
-        <item name="android:fontFamily">serif</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

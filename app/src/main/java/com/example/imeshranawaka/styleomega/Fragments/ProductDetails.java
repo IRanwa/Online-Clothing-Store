@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.imeshranawaka.styleomega.Adapters.SlidingImageAdapter;
+import com.example.imeshranawaka.styleomega.Models.Address;
 import com.example.imeshranawaka.styleomega.Models.Order_Product;
 import com.example.imeshranawaka.styleomega.Models.Orders;
 import com.example.imeshranawaka.styleomega.Models.Product;
@@ -157,19 +158,40 @@ public class ProductDetails extends Fragment {
         List<Orders> orders = Orders.find(Orders.class, "user_Email=? and order_Status=?", email, "pending");
 
         if(orders.size()==0){
-            Orders newOrder = new Orders("pending",email,"No.432/3");
-            newOrder.save();
-            long id = newOrder.getId();
+            List<Address> addresssList = Address.find(Address.class, "user_Email=?", email);
+            if(addresssList.size()>0) {
+                Address address = null;
+                for(Address tempAdd : addresssList){
+                    if(tempAdd.isDef()){
+                        address = tempAdd;
+                        break;
+                    }
+                }
+                if(address!=null) {
+                    Orders newOrder = new Orders("pending", email, address.getId());
+                    newOrder.save();
+                    long id = newOrder.getId();
 
-            Order_Product orderProduct = new Order_Product(id,product.getId(),Integer.parseInt(quantity.getSelectedItem().toString()));
-            orderProduct.save();
+                    Order_Product orderProduct = new Order_Product(id, product.getId(), Integer.parseInt(quantity.getSelectedItem().toString()));
+                    orderProduct.save();
 
-            Toast.makeText(getContext(),"Product Successfully Added!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Product Successfully Added!", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getContext(), "Default Address not found!", Toast.LENGTH_SHORT).show();
+                }
+            }else{
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                FragmentTransaction transaction = fm.beginTransaction();
+                transaction.replace(R.id.mainFragment,new NewAddress(),"NewAddress");
+                transaction.addToBackStack("ProductDetails");
+                transaction.commit();
+            }
         }else{
             Orders currentOrder = orders.get(0);
             long id = currentOrder.getId();
 
-            List<Order_Product> orderList = Order_Product.find(Order_Product.class, "prod_Id=?", product.getId().toString());
+            List<Order_Product> orderList = Order_Product.find(Order_Product.class, "prod_Id=? and order_No=?", product.getId().toString()
+                    ,String.valueOf(id));
             Order_Product orderProduct;
             int selectedQty = Integer.parseInt(quantity.getSelectedItem().toString());
             if(orderList.size()==0){

@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.imeshranawaka.styleomega.Fragments.MyAccount;
 import com.example.imeshranawaka.styleomega.Fragments.SignIn;
+import com.example.imeshranawaka.styleomega.Fragments.fragment_actions;
 import com.example.imeshranawaka.styleomega.Models.Category;
 import com.example.imeshranawaka.styleomega.Models.Product;
 import com.example.imeshranawaka.styleomega.Models.User;
@@ -109,27 +110,27 @@ public class StyleOmega extends FragmentActivity
 
             Fragment fragment = getSupportFragmentManager().findFragmentByTag("AccountInfo");
             if(fragment != null) {
-                fm.popBackStack();
+                fragment_actions.getIntance(fragment).btnBack_onClick();
             }
 
             fragment = getSupportFragmentManager().findFragmentByTag("ChangePassword");
             if(fragment != null) {
-                fm.popBackStack();
+                fragment_actions.getIntance(fragment).btnBack_onClick();
             }
 
             fragment = getSupportFragmentManager().findFragmentByTag("MyAddressBook");
             if(fragment != null) {
-                fm.popBackStack();
+                fragment_actions.getIntance(fragment).btnBack_onClick();
             }
 
             fragment = getSupportFragmentManager().findFragmentByTag("NewAddress");
             if(fragment != null) {
-                fm.popBackStack();
+                fragment_actions.getIntance(fragment).btnBack_onClick();
             }
 
             fragment = getSupportFragmentManager().findFragmentByTag("MyAccount");
             if(fragment != null) {
-                fm.popBackStack();
+                fragment_actions.getIntance(fragment).btnBack_onClick();
             }
 
             transaction.replace(R.id.mainFragment, new MyAccount(), "MyAccount");

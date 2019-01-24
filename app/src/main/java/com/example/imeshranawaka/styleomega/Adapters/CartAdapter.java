@@ -2,9 +2,12 @@ package com.example.imeshranawaka.styleomega.Adapters;
 
 import android.content.Context;
 import android.graphics.Point;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -19,7 +22,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.imeshranawaka.styleomega.Fragments.PlaceOrder;
 import com.example.imeshranawaka.styleomega.Fragments.ShoppingCart;
 import com.example.imeshranawaka.styleomega.Fragments.fragment_actions;
 import com.example.imeshranawaka.styleomega.Models.Order_Product;
@@ -28,6 +33,7 @@ import com.example.imeshranawaka.styleomega.Models.Product;
 import com.example.imeshranawaka.styleomega.R;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,7 +98,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        layoutParams.height = height/6;
+        layoutParams.height = width/4;
         layoutParams.width = width/4;
 
         viewHolder.prodImg.setLayoutParams(layoutParams);
@@ -223,6 +229,41 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
             if(checkboxList.get(0).isChecked()){
                 btnDeleteList.get(0).onClick(v);
             }
+        }
+    }
+
+    public void btnCheckout_onClick(boolean statusAll){
+        List<Order_Product> orderProdList = mDataSet;
+
+        Bundle bundle = new Bundle();
+        boolean itemsSelected = false;
+        if(!statusAll){
+            orderProdList = new ArrayList<>();;
+            for (int count=0;count<checkboxList.size();count++) {
+                if (checkboxList.get(count).isChecked()) {
+                    orderProdList.add(mDataSet.get(count));
+                    itemsSelected = true;
+                }
+            }
+            bundle.putSerializable("order_products", (Serializable) orderProdList);
+        }else{
+            bundle.putLong("orderNo",mDataSet.get(0).getOrderNo());
+            itemsSelected = true;
+        }
+        bundle.putBoolean("checkAll", statusAll);
+
+        if(itemsSelected) {
+            FragmentManager fm = mActivity.getSupportFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
+
+            PlaceOrder placeOrder = new PlaceOrder();
+            placeOrder.setArguments(bundle);
+
+            transaction.replace(R.id.mainFragment, placeOrder,"PlaceOrder");
+            transaction.addToBackStack("ShoppingCart");
+            transaction.commit();
+        }else{
+            Toast.makeText(mContext,"No Items Selected!",Toast.LENGTH_SHORT).show();
         }
     }
 }

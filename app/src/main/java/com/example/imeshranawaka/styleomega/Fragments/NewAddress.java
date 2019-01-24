@@ -16,6 +16,7 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.imeshranawaka.styleomega.Models.Address;
+import com.example.imeshranawaka.styleomega.Models.Orders;
 import com.example.imeshranawaka.styleomega.R;
 import com.example.imeshranawaka.styleomega.SharedPreferenceUtility;
 
@@ -36,7 +37,7 @@ public class NewAddress extends Fragment {
     @BindView(R.id.provinceList) Spinner provinceList;
     @BindView(R.id.defaultSwitch) Switch defaultSwitch;
     private Unbinder unbinder;
-
+    private long orderNo;
     public NewAddress() {
         // Required empty public constructor
     }
@@ -52,6 +53,11 @@ public class NewAddress extends Fragment {
         ArrayAdapter<CharSequence> provinceAdapter = ArrayAdapter.createFromResource(getContext(), R.array.province, R.layout.spinner_item_view);
         provinceAdapter.setDropDownViewResource(R.layout.spinner_item_view);
         provinceList.setAdapter(provinceAdapter);
+
+        Bundle bundle = getArguments();
+        if(bundle!=null) {
+            orderNo = bundle.getLong("orderNo");
+        }
         return view;
     }
 
@@ -104,19 +110,15 @@ public class NewAddress extends Fragment {
                         ,province,defaultAdd);
                 newAddress.save();
 
-                fragment_actions.getIntance(this).btnBack_onClick();
-
-                FragmentManager fm = getFragmentManager();
-                List<Fragment> fragList = fm.getFragments();
-                for(Fragment frag : fragList){
-                    if(frag.getTag()!=null && (frag.getTag().equalsIgnoreCase("myaddressbook"))) {
-                        FragmentTransaction transaction = fm.beginTransaction();
-                        transaction.detach(frag);
-                        transaction.attach(frag);
-                        transaction.commit();
-                    }
+                if(orderNo!=0){
+                    Orders order = Orders.findById(Orders.class,orderNo);
+                    order.setUserAddress(newAddress.getId());
+                    order.save();
                 }
-
+                Fragment frag = getFragmentManager().findFragmentByTag("NewAddress");
+                if(frag!=null) {
+                    fragment_actions.getIntance(frag).btnBack_onClick();
+                }
             }
         }
     }

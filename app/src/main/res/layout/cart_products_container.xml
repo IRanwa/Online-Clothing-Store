@@ -5,11 +5,14 @@
     android:id="@+id/linearLayout5"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="10dp"
-    android:layout_marginTop="10dp"
-    android:layout_marginRight="10dp"
+    android:layout_marginLeft="3dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginRight="3dp"
     android:background="@drawable/button_layout"
-    android:padding="10dp">
+    android:paddingLeft="5dp"
+    android:paddingTop="10dp"
+    android:paddingRight="5dp"
+    android:paddingBottom="10dp">
 
     <CheckBox
         android:id="@+id/checkBox"
@@ -17,7 +20,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:checked="true"
@@ -25,11 +27,11 @@
 
     <ImageView
         android:id="@+id/prodImg"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
-        android:src="@drawable/home_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent" />
+        android:src="@drawable/home_icon" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -58,6 +60,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_gravity="bottom"
             android:layout_marginTop="8dp"
             android:orientation="horizontal">
 
@@ -72,7 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_weight="3"
+                    android:layout_weight="5"
                     android:background="@drawable/spinner_view" />
 
                 <ImageView
@@ -80,6 +83,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:minWidth="30dp"
+                    android:minHeight="30dp"
                     android:src="@drawable/delete_icon" />
 
                 <ImageView
@@ -87,6 +92,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
+                    android:minWidth="30dp"
+                    android:minHeight="30dp"
                     android:src="@drawable/update_icon" />
 
             </LinearLayout>

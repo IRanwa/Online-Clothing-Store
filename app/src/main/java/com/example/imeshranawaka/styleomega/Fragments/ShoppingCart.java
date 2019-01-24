@@ -28,8 +28,7 @@ import butterknife.Unbinder;
 
 
 public class ShoppingCart extends Fragment {
-    @BindView(R.id.orderProductsList)
-    RecyclerView productsRecycleView;
+    @BindView(R.id.orderProductsList) RecyclerView productsRecycleView;
     CartAdapter adapter;
     private Unbinder unbinder;
 
@@ -85,6 +84,16 @@ public class ShoppingCart extends Fragment {
     @OnClick(R.id.btnDeleteSelected)
     public void btnDeleteSelected_onClick(View v){
         adapter.btnDeleteSelected_onClick(v);
+    }
+
+    @OnClick(R.id.btnCheckout)
+    public void btnCheckout_onClick(View v){
+        CheckBox checkbox = v.getRootView().findViewById(R.id.checkboxAll);
+        boolean status = false;
+        if(checkbox.isChecked()){
+            status = true;
+        }
+        adapter.btnCheckout_onClick(status);
     }
 
     @OnClick(R.id.btnBack)

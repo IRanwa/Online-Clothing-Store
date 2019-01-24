@@ -2,9 +2,10 @@ package com.example.imeshranawaka.styleomega.Models;
 
 import com.orm.SugarRecord;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Order_Product extends SugarRecord<Order_Product> {
+public class Order_Product extends SugarRecord<Order_Product> implements Serializable {
     private long orderNo;
     private long prodId;
     private String purchasedDate;
@@ -20,7 +21,7 @@ public class Order_Product extends SugarRecord<Order_Product> {
         this.quantity = quantity;
     }
 
-    public void setOrderNo(int orderNo) {
+    public void setOrderNo(long orderNo) {
         this.orderNo = orderNo;
     }
 
