@@ -24,4 +24,9 @@
     <style name="WhiteCheck">
         <item name="colorAccent">#fff</item>
     </style>
+
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="colorControlActivated">@android:color/background_light</item>
+    </style>
 </resources>

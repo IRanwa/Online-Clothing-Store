@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +35,7 @@ import com.example.imeshranawaka.styleomega.Models.User;
 import com.example.imeshranawaka.styleomega.R;
 import com.example.imeshranawaka.styleomega.SharedPreferenceUtility;
 import com.orm.SugarRecord;
+import com.orm.query.Select;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -67,6 +69,7 @@ public class ProductDetails extends Fragment {
     @BindView(R.id.txtQuestion) TextView txtQuestion;
     @BindView(R.id.txtAnswer) TextView txtAnswer;
     @BindView(R.id.quantity) Spinner quantity;
+    @BindView(R.id.prodRating) RatingBar prodRating;
 
     private Unbinder unbinder;
     private Product product;
@@ -78,7 +81,7 @@ public class ProductDetails extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        String email = SharedPreferenceUtility.getInstance(getContext()).getUserEmail();
         View v = inflater.inflate(R.layout.fragment_product_details, container, false);
         unbinder = ButterKnife.bind(this,v);
         product = (Product) getArguments().getSerializable("product");
@@ -115,18 +118,24 @@ public class ProductDetails extends Fragment {
 
         txtDesc.setText(Html.fromHtml(product.getDesc()));
 
+        List<Reviews> reviewsList = Reviews.find(Reviews.class,"prod_Id=? and user_Email=?"
+                ,String.valueOf(product.getId()),email);
+        List<Questions> questions = Questions.find(Questions.class, "prod_ID=? and user_Email=?"
+                , product.getId().toString(),email);
 
-        List<Reviews> reviews = Reviews.find(Reviews.class, "prod_ID=?", product.getId().toString());
-        List<Questions> questions = Questions.find(Questions.class, "prod_ID=?", product.getId().toString());
-
-        if(reviews.size()==0){
+        if(reviewsList.size()==0){
             txtRevName.setText("No Reviews Found!");
             txtRevDesc.setVisibility(View.GONE);
         }else{
-            Reviews rev = reviews.get(0);
+            Reviews rev = reviewsList.get(reviewsList.size()-1);
             List<User> user = User.find(User.class, "email=?", rev.getUserEmail());
             txtRevName.setText(user.get(0).getfName().concat(" ").concat(user.get(0).getlName()));
             txtRevDesc.setText(rev.getRevDesc());
+            float rating=0;
+            for(Reviews tempRev : reviewsList){
+                rating+=tempRev.getRating();
+            }
+            prodRating.setRating(rating);
         }
 
         if(questions.size()==0){
@@ -182,36 +191,6 @@ public class ProductDetails extends Fragment {
             orderProduct.save();
 
             Toast.makeText(getContext(), "Product Successfully Added!", Toast.LENGTH_SHORT).show();
-            /*List<Address> addresssList = Address.find(Address.class, "user_Email=?", email);
-            if(addresssList.size()>0) {
-                Address address = null;
-                for(Address tempAdd : addresssList){
-                    if(tempAdd.isDef()){
-                        address = tempAdd;
-                        break;
-                    }
-                }
-                if(address!=null) {
-                    Orders newOrder = new Orders("pending", email, address.getId());
-                    Calendar calendar = Calendar.getInstance();
-                    newOrder.setPurchasedDate(calendar.getTime());
-                    newOrder.save();
-                    long id = newOrder.getId();
-
-                    Order_Product orderProduct = new Order_Product(id, product.getId(), Integer.parseInt(quantity.getSelectedItem().toString()));
-                    orderProduct.save();
-
-                    Toast.makeText(getContext(), "Product Successfully Added!", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(getContext(), "Default Address not found!", Toast.LENGTH_SHORT).show();
-                }
-            }else{
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                FragmentTransaction transaction = fm.beginTransaction();
-                transaction.replace(R.id.mainFragment,new NewAddress(),"NewAddress");
-                transaction.addToBackStack("ProductDetails");
-                transaction.commit();
-            }*/
         }else{
             Orders currentOrder = orders.get(0);
             long id = currentOrder.getId();
@@ -234,6 +213,10 @@ public class ProductDetails extends Fragment {
         }
     }
 
+    @OnClick(R.id.btnRevViewAll)
+    public void btnRevViewAll_onClick(){
+
+    }
 
     @OnClick(R.id.btnCart)
     public void btnCart_onClick(){

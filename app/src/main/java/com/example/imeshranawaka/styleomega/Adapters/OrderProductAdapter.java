@@ -1,5 +1,6 @@
 package com.example.imeshranawaka.styleomega.Adapters;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Point;
 import android.support.annotation.NonNull;
@@ -9,14 +10,20 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.imeshranawaka.styleomega.Models.Order_Product;
 import com.example.imeshranawaka.styleomega.Models.Product;
+import com.example.imeshranawaka.styleomega.Models.Reviews;
 import com.example.imeshranawaka.styleomega.R;
+import com.example.imeshranawaka.styleomega.SharedPreferenceUtility;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -87,13 +94,61 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
         Picasso.get().load(product.getImages().get(0)).fit().into(viewHolder.productImage);
 
         if(status.equals("OrderState")){
-            viewHolder.btnReview.setVisibility(View.VISIBLE);
-
+            String email = SharedPreferenceUtility.getInstance(mContext).getUserEmail();
+            List<Reviews> reviews = Reviews.find(Reviews.class, "order_Prod_Id=? and user_Email=?", String.valueOf(orderProduct.getId()), email);
+            if(reviews.size()==0) {
+                viewHolder.btnReview.setVisibility(View.VISIBLE);
+                viewHolder.btnReview.setOnClickListener(new review_onClick(orderProduct,position));
+            }
         }
     }
 
     @Override
     public int getItemCount() {
         return mDataSet.size();
+    }
+
+    private class review_onClick implements View.OnClickListener {
+        Order_Product orderProduct;
+        int position;
+        public review_onClick(Order_Product orderProduct, int position) {
+            this.orderProduct = orderProduct;
+            this.position = position;
+        }
+
+        @Override
+        public void onClick(View v) {
+            final Dialog dialog = new Dialog(mContext);
+            dialog.setContentView(R.layout.review_item_container);
+
+            WindowManager.LayoutParams lWindowParams = new WindowManager.LayoutParams();
+            lWindowParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lWindowParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+            dialog.getWindow().setAttributes(lWindowParams);
+            dialog.findViewById(R.id.btnCancel).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+            dialog.findViewById(R.id.btnSubmit).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String email = SharedPreferenceUtility.getInstance(mContext).getUserEmail();
+                    RatingBar rating = dialog.findViewById(R.id.rateBar);
+                    EditText revDesc = dialog.findViewById(R.id.txtReview);
+
+                    Reviews review = new Reviews(orderProduct.getId(),orderProduct.getProdId(),email,revDesc.getText().toString(),rating.getRating());
+                    review.save();
+                    Toast.makeText(mContext,
+                            "Review Added Successfully!",
+                            Toast.LENGTH_LONG).show();
+                    dialog.dismiss();
+
+                    notifyItemChanged(position);
+                }
+            });
+            dialog.show();
+        }
     }
 }
