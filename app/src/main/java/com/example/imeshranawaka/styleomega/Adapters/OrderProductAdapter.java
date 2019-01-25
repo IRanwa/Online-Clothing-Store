@@ -4,12 +4,12 @@ import android.content.Context;
 import android.graphics.Point;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,17 +25,19 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CheckoutAdapter extends RecyclerView.Adapter<CheckoutAdapter.ViewHolder> {
+public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapter.ViewHolder> {
     private List<Order_Product> mDataSet;
     private Context mContext;
     private static ArrayList<View> viewsList;
     private FragmentActivity mActivity;
+    private String status;
 
-    public CheckoutAdapter(Context context, List<Order_Product> categoryList, FragmentActivity activity) {
+    public OrderProductAdapter(Context context, List<Order_Product> categoryList, FragmentActivity activity, String status) {
         mDataSet = categoryList;
         mContext = context;
         viewsList = new ArrayList<>();
         this.mActivity = activity;
+        this.status = status;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
@@ -43,6 +45,7 @@ public class CheckoutAdapter extends RecyclerView.Adapter<CheckoutAdapter.ViewHo
         @BindView(R.id.prodTitle) TextView prodTitle;
         @BindView(R.id.prodPrice) TextView prodPrice;
         @BindView(R.id.prodQuantity) TextView prodQuantity;
+        @BindView(R.id.btnReview) Button btnReview;
         public ViewHolder(View v){
             super(v);
             ButterKnife.bind(this,v);
@@ -51,14 +54,14 @@ public class CheckoutAdapter extends RecyclerView.Adapter<CheckoutAdapter.ViewHo
     }
 
     @Override
-    public CheckoutAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public OrderProductAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.checkout_product_container,viewGroup,false);
-        CheckoutAdapter.ViewHolder vh = new CheckoutAdapter.ViewHolder(v);
+        OrderProductAdapter.ViewHolder vh = new OrderProductAdapter.ViewHolder(v);
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CheckoutAdapter.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull OrderProductAdapter.ViewHolder viewHolder, int position) {
         Order_Product orderProduct =  mDataSet.get(position);
         Product product = Product.findById(Product.class, orderProduct.getProdId());
 
@@ -83,6 +86,10 @@ public class CheckoutAdapter extends RecyclerView.Adapter<CheckoutAdapter.ViewHo
 
         Picasso.get().load(product.getImages().get(0)).fit().into(viewHolder.productImage);
 
+        if(status.equals("OrderState")){
+            viewHolder.btnReview.setVisibility(View.VISIBLE);
+
+        }
     }
 
     @Override

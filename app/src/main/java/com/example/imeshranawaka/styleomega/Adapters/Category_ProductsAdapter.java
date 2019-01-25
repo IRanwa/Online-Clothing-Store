@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,25 +15,19 @@ import com.example.imeshranawaka.styleomega.Models.Category;
 import com.example.imeshranawaka.styleomega.Models.Product;
 import com.example.imeshranawaka.styleomega.R;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHolder> {
+public class Category_ProductsAdapter extends RecyclerView.Adapter<Category_ProductsAdapter.ViewHolder> {
     private FragmentManager fm;
     private List<Category> categoryList;
     private Context mContext;
     private static ArrayList<View> viewsList;
 
-    public ProductsAdapter(Context context, FragmentManager fm, List<Category> categoryList) {
+    public Category_ProductsAdapter(Context context, FragmentManager fm, List<Category> categoryList) {
         this.fm = fm;
         this.categoryList = categoryList;
         mContext = context;
@@ -43,14 +36,14 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
 
     @NonNull
     @Override
-    public ProductsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public Category_ProductsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.mainpage_product_container,viewGroup,false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProductsAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull Category_ProductsAdapter.ViewHolder viewHolder, int i) {
 
         Category category = categoryList.get(i);
         viewHolder.category.setText(category.getTitle());

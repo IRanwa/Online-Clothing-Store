@@ -1,6 +1,5 @@
 package com.example.imeshranawaka.styleomega.Fragments;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,31 +16,20 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.imeshranawaka.styleomega.Adapters.CategoryAdapter;
-import com.example.imeshranawaka.styleomega.Adapters.ProductsAdapter;
+import com.example.imeshranawaka.styleomega.Adapters.Category_ProductsAdapter;
 import com.example.imeshranawaka.styleomega.Models.Category;
 import com.example.imeshranawaka.styleomega.Models.Product;
 import com.example.imeshranawaka.styleomega.Models.User;
 import com.example.imeshranawaka.styleomega.R;
 import com.example.imeshranawaka.styleomega.SharedPreferenceUtility;
-import com.example.imeshranawaka.styleomega.loadJSONFromAsset;
-import com.orm.query.Condition;
-import com.orm.query.Select;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class MainMenu extends Fragment {
     @BindView(R.id.categoryList) RecyclerView catRecyclerView;
@@ -125,7 +113,7 @@ public class MainMenu extends Fragment {
             LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
             prodRecyclerView.setLayoutManager(layoutManager);
 
-            ProductsAdapter productsAdapter = new ProductsAdapter(getContext(),getFragmentManager(), categories );
+            Category_ProductsAdapter productsAdapter = new Category_ProductsAdapter(getContext(),getFragmentManager(), categories );
             prodRecyclerView.setAdapter(productsAdapter);
     }
 

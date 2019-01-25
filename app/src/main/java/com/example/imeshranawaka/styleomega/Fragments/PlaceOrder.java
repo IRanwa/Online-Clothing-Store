@@ -1,8 +1,5 @@
 package com.example.imeshranawaka.styleomega.Fragments;
 
-import android.content.Context;
-import android.icu.text.SimpleDateFormat;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,9 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.imeshranawaka.styleomega.Adapters.CheckoutAdapter;
+import com.example.imeshranawaka.styleomega.Adapters.OrderProductAdapter;
 import com.example.imeshranawaka.styleomega.Models.Address;
 import com.example.imeshranawaka.styleomega.Models.Order_Product;
 import com.example.imeshranawaka.styleomega.Models.Orders;
@@ -23,8 +19,6 @@ import com.example.imeshranawaka.styleomega.Models.Product;
 import com.example.imeshranawaka.styleomega.R;
 import com.example.imeshranawaka.styleomega.SharedPreferenceUtility;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -143,7 +137,7 @@ public class PlaceOrder extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         productsRecycleView.setLayoutManager(layoutManager);
 
-        CheckoutAdapter adapter = new CheckoutAdapter(getContext(), productsList, getActivity());
+        OrderProductAdapter adapter = new OrderProductAdapter(getContext(), productsList, getActivity(),"CartState");
         productsRecycleView.setAdapter(adapter);
         productsRecycleView.setNestedScrollingEnabled(false);
     }

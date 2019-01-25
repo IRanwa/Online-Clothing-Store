@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.imeshranawaka.styleomega.Adapters.CheckoutAdapter;
+import com.example.imeshranawaka.styleomega.Adapters.OrderProductAdapter;
 import com.example.imeshranawaka.styleomega.Models.Address;
 import com.example.imeshranawaka.styleomega.Models.Order_Product;
 import com.example.imeshranawaka.styleomega.Models.Orders;
@@ -83,7 +83,7 @@ public class OrderDetails extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         productsListRecycle.setLayoutManager(layoutManager);
 
-        CheckoutAdapter adapter = new CheckoutAdapter(getContext(), orderProductList, getActivity());
+        OrderProductAdapter adapter = new OrderProductAdapter(getContext(), orderProductList, getActivity(),"OrderState");
         productsListRecycle.setAdapter(adapter);
         productsListRecycle.setNestedScrollingEnabled(false);
     }
