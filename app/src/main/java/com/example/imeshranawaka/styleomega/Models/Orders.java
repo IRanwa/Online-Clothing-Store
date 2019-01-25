@@ -2,10 +2,14 @@ package com.example.imeshranawaka.styleomega.Models;
 
 import com.orm.SugarRecord;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 public class Orders extends SugarRecord<Orders> {
-    public String orderStatus;
-    public String userEmail;
-    public long userAddress;
+    private String orderStatus;
+    private String userEmail;
+    private long userAddress;
+    private Date purchasedDate;
 
     public Orders(){
 
@@ -15,6 +19,11 @@ public class Orders extends SugarRecord<Orders> {
         this.orderStatus = orderStatus;
         this.userEmail = userEmail;
         this.userAddress = userAddress;
+        this.purchasedDate = null;
+    }
+
+    public void setPurchasedDate(Date purchasedDate) {
+        this.purchasedDate = purchasedDate;
     }
 
     public void setOrderStatus(String orderStatus) {
@@ -39,5 +48,9 @@ public class Orders extends SugarRecord<Orders> {
 
     public long getUserAddress() {
         return userAddress;
+    }
+
+    public Date getPurchasedDate() {
+        return purchasedDate;
     }
 }

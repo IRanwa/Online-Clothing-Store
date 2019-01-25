@@ -1,6 +1,7 @@
 package com.example.imeshranawaka.styleomega.Fragments;
 
 import android.content.Context;
+import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.imeshranawaka.styleomega.Adapters.CheckoutAdapter;
 import com.example.imeshranawaka.styleomega.Models.Address;
@@ -21,6 +23,10 @@ import com.example.imeshranawaka.styleomega.Models.Product;
 import com.example.imeshranawaka.styleomega.R;
 import com.example.imeshranawaka.styleomega.SharedPreferenceUtility;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -66,7 +72,7 @@ public class PlaceOrder extends Fragment {
         if(orderNo!=0){
             Orders order = Orders.findById(Orders.class,orderNo);
             Address address = Address.findById(Address.class,order.getUserAddress());
-            boolean addressAvailable = true;
+            boolean addressAvailable = false;
             if(address==null){
                 SharedPreferenceUtility sharedPref = SharedPreferenceUtility.getInstance(getContext());
                 String email = sharedPref.getUserEmail();
@@ -75,12 +81,13 @@ public class PlaceOrder extends Fragment {
                 for(Address tempAddress : addressList){
                     if(tempAddress.isDef()){
                         address = tempAddress;
+                        addressAvailable = true;
                         break;
                     }
-                    addressAvailable = false;
                 }
             }
-            if(addressAvailable) {
+            if(address!=null) {
+                order.setUserAddress(address.getId());
                 ((TextView) view.findViewById(R.id.txtAddressName)).setText(address.getfName() + " " + address.getlName());
                 ((TextView) view.findViewById(R.id.txtAddress)).setText(address.getAddress() + ", " + address.getCity() + ", " + address.getProvince());
             }else{
@@ -143,14 +150,21 @@ public class PlaceOrder extends Fragment {
 
     @OnClick(R.id.btnConfirmOrder)
     public void btnConfirmOrder(){
+
+
         if(orderNo!=0){
             Orders order = Orders.findById(Orders.class, orderNo);
             order.setOrderStatus("Delivery Pending");
+            Calendar calendar = Calendar.getInstance();
+            Date date = calendar.getTime();
+            //DateFormat date = DateFormat.getDateInstance(DateFormat.MEDIUM);
+            //String currentDate = DateFormat.getDateInstance(DateFormat.MEDIUM).format(calendar.getTime());
+            //order.setUserAddress(address.getId());
+            order.setPurchasedDate(date);
             order.save();
         }else{
             SharedPreferenceUtility sharedPref = SharedPreferenceUtility.getInstance(getContext());
             String email = sharedPref.getUserEmail();
-
             List<Address> addressList = Address.find(Address.class, "user_Email=?", email);
             Address address=null;
             for(Address tempAdd : addressList){
@@ -160,6 +174,12 @@ public class PlaceOrder extends Fragment {
                 }
             }
             Orders order = new Orders("Delivery Pending",email,address.getId());
+            Calendar calendar = Calendar.getInstance();
+            Date date = calendar.getTime();
+            //DateFormat date = DateFormat.getDateInstance(DateFormat.MEDIUM);
+            //String currentDate = DateFormat.getDateInstance(DateFormat.MEDIUM).format(calendar.getTime());
+            order.setPurchasedDate(date);
+            order.setUserAddress(address.getId());
             order.save();
 
             for(Order_Product orderProd : productsList){
@@ -167,7 +187,9 @@ public class PlaceOrder extends Fragment {
                 orderProd.save();
             }
         }
+        fragment_actions.getIntance(this).btnBack_onClick();
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

@@ -8,7 +8,6 @@ import java.util.Date;
 public class Order_Product extends SugarRecord<Order_Product> implements Serializable {
     private long orderNo;
     private long prodId;
-    private String purchasedDate;
     private int quantity;
 
     public Order_Product(){
@@ -29,10 +28,6 @@ public class Order_Product extends SugarRecord<Order_Product> implements Seriali
         this.prodId = prodId;
     }
 
-    public void setPurchasedDate(String purchasedDate) {
-        this.purchasedDate = purchasedDate;
-    }
-
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
@@ -43,10 +38,6 @@ public class Order_Product extends SugarRecord<Order_Product> implements Seriali
 
     public long getProdId() {
         return prodId;
-    }
-
-    public String getPurchasedDate() {
-        return purchasedDate;
     }
 
     public int getQuantity() {

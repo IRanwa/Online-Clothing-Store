@@ -92,7 +92,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
         Point size = new Point();
         display. getSize(size);
         int width = size. x;
-        int height = size. y;
 
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,

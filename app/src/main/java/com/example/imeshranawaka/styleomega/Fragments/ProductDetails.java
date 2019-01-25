@@ -41,6 +41,7 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -158,7 +159,30 @@ public class ProductDetails extends Fragment {
         List<Orders> orders = Orders.find(Orders.class, "user_Email=? and order_Status=?", email, "pending");
 
         if(orders.size()==0){
-            List<Address> addresssList = Address.find(Address.class, "user_Email=?", email);
+            List<Address> addressList = Address.find(Address.class, "user_Email=?", email);
+            Address address=null;
+            for(Address tempAdd : addressList){
+                if(tempAdd.isDef()){
+                    address = tempAdd;
+                    break;
+                }
+            }
+            Orders newOrder;
+            if(address==null) {
+                newOrder = new Orders("pending", email, 0);
+            }else{
+                newOrder = new Orders("pending", email, address.getId());
+            }
+            Calendar calendar = Calendar.getInstance();
+            newOrder.setPurchasedDate(calendar.getTime());
+            newOrder.save();
+            long id = newOrder.getId();
+
+            Order_Product orderProduct = new Order_Product(id, product.getId(), Integer.parseInt(quantity.getSelectedItem().toString()));
+            orderProduct.save();
+
+            Toast.makeText(getContext(), "Product Successfully Added!", Toast.LENGTH_SHORT).show();
+            /*List<Address> addresssList = Address.find(Address.class, "user_Email=?", email);
             if(addresssList.size()>0) {
                 Address address = null;
                 for(Address tempAdd : addresssList){
@@ -169,6 +193,8 @@ public class ProductDetails extends Fragment {
                 }
                 if(address!=null) {
                     Orders newOrder = new Orders("pending", email, address.getId());
+                    Calendar calendar = Calendar.getInstance();
+                    newOrder.setPurchasedDate(calendar.getTime());
                     newOrder.save();
                     long id = newOrder.getId();
 
@@ -185,7 +211,7 @@ public class ProductDetails extends Fragment {
                 transaction.replace(R.id.mainFragment,new NewAddress(),"NewAddress");
                 transaction.addToBackStack("ProductDetails");
                 transaction.commit();
-            }
+            }*/
         }else{
             Orders currentOrder = orders.get(0);
             long id = currentOrder.getId();

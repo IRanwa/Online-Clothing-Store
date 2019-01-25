@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.imeshranawaka.styleomega.Fragments.MyAccount;
+import com.example.imeshranawaka.styleomega.Fragments.MyOrders;
 import com.example.imeshranawaka.styleomega.Fragments.SignIn;
 import com.example.imeshranawaka.styleomega.Fragments.fragment_actions;
 import com.example.imeshranawaka.styleomega.Models.Category;
@@ -137,7 +138,11 @@ public class StyleOmega extends FragmentActivity
             transaction.addToBackStack("MainMenu");
             transaction.commit();
         } else if (id == R.id.nav_order) {
-
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
+            transaction.replace(R.id.mainFragment, new MyOrders(), "MyOrders");
+            transaction.addToBackStack("MainMenu");
+            transaction.commit();
         }
 
         drawer_layout.closeDrawer(GravityCompat.START);
@@ -146,7 +151,7 @@ public class StyleOmega extends FragmentActivity
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         unbinder.unbind();
+        super.onDestroy();
     }
 }

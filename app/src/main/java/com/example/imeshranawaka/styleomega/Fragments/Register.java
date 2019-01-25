@@ -4,6 +4,7 @@ package com.example.imeshranawaka.styleomega.Fragments;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -90,7 +91,18 @@ public class Register extends Fragment {
 
                 FragmentManager fm = getFragmentManager();
                 MainMenu menu = new MainMenu();
-                FragmentTransaction transaction = fm.beginTransaction().replace(R.id.mainFragment, menu,"MainMenu");
+                FragmentTransaction transaction = fm.beginTransaction();
+
+                int backStackEntry = fm.getBackStackEntryCount();
+                List<Fragment> fragments = fm.getFragments();
+                if (backStackEntry > 0) {
+                    for (int i = 0; i < backStackEntry; i++) {
+                        fm.popBackStack();
+                        transaction.remove(fragments.get(i));
+
+                    }
+                }
+                transaction.replace(R.id.mainFragment, menu,"MainMenu");
                 transaction.commit();
 
                 fragment_actions.getIntance(Register.this).hideKeyboard();
