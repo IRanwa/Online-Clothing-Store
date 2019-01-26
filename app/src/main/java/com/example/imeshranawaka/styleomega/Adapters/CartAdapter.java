@@ -104,7 +104,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
 
         Picasso.get().load(product.getImages().get(0)).fit().into(viewHolder.prodImg);
         viewHolder.prodTitle.setText(product.getTitle());
-        viewHolder.prodPrice.setText(String.valueOf(product.getPrice()));
+        viewHolder.prodPrice.setText("US$"+String.valueOf(product.getPrice()));
 
         int totalQty = product.getQuantity();
         ArrayList<Integer> qtyList = new ArrayList<>();

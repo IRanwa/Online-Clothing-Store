@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -139,8 +140,9 @@ public class AccountInfo extends Fragment {
                 user.save();
                 fragment_actions.getIntance(this).btnBack_onClick();
 
-                TextView name = getActivity().findViewById(R.id.txtName);
-                TextView email = getActivity().findViewById(R.id.txtHeadEmail);
+                NavigationView nav_view = getActivity().findViewById(R.id.nav_view);
+                TextView name = nav_view.getHeaderView(0).findViewById(R.id.txtNavName);
+                TextView email = nav_view.getHeaderView(0).findViewById(R.id.txtHeadEmail);
 
                 name.setText(user.getfName()+" "+user.getlName());
                 email.setText(loginEmail);

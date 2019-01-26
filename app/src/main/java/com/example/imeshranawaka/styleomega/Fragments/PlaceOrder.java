@@ -33,6 +33,9 @@ public class PlaceOrder extends Fragment {
     private Unbinder unbinder;
     private long orderNo;
     private List<Order_Product> productsList;
+    private String orderStatus;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -47,8 +50,8 @@ public class PlaceOrder extends Fragment {
             orderNo = bundle.getLong("orderNo");
             productsList = Order_Product.find(Order_Product.class,"order_No=?",String.valueOf(orderNo));
         }else{
+            orderStatus = bundle.getString("OrderStatus");
             productsList = (List<Order_Product>) bundle.getSerializable("order_products");
-            //orderNo = productsList.get(0).getOrderNo();
         }
 
         setupProductsList(productsList);
@@ -65,23 +68,20 @@ public class PlaceOrder extends Fragment {
     private void setAddress(View view) {
         if(orderNo!=0){
             Orders order = Orders.findById(Orders.class,orderNo);
-            Address address = Address.findById(Address.class,order.getUserAddress());
-            boolean addressAvailable = false;
-            if(address==null){
-                SharedPreferenceUtility sharedPref = SharedPreferenceUtility.getInstance(getContext());
-                String email = sharedPref.getUserEmail();
+            Address address=null;
+            SharedPreferenceUtility sharedPref = SharedPreferenceUtility.getInstance(getContext());
+            String email = sharedPref.getUserEmail();
 
-                List<Address> addressList = Address.find(Address.class, "user_Email=?", email);
-                for(Address tempAddress : addressList){
-                    if(tempAddress.isDef()){
-                        address = tempAddress;
-                        addressAvailable = true;
-                        break;
-                    }
+            List<Address> addressList = Address.find(Address.class, "user_Email=?", email);
+            for(Address tempAddress : addressList){
+                if(tempAddress.isDef()){
+                    address = tempAddress;
+                    break;
                 }
             }
             if(address!=null) {
                 order.setUserAddress(address.getId());
+                order.save();
                 ((TextView) view.findViewById(R.id.txtAddressName)).setText(address.getfName() + " " + address.getlName());
                 ((TextView) view.findViewById(R.id.txtAddress)).setText(address.getAddress() + ", " + address.getCity() + ", " + address.getProvince());
             }else{
@@ -144,18 +144,19 @@ public class PlaceOrder extends Fragment {
 
     @OnClick(R.id.btnConfirmOrder)
     public void btnConfirmOrder(){
-
-
         if(orderNo!=0){
             Orders order = Orders.findById(Orders.class, orderNo);
             order.setOrderStatus("Delivery Pending");
             Calendar calendar = Calendar.getInstance();
             Date date = calendar.getTime();
-            //DateFormat date = DateFormat.getDateInstance(DateFormat.MEDIUM);
-            //String currentDate = DateFormat.getDateInstance(DateFormat.MEDIUM).format(calendar.getTime());
-            //order.setUserAddress(address.getId());
             order.setPurchasedDate(date);
             order.save();
+            for(Order_Product orderProd : productsList){
+                int quantity = orderProd.getQuantity();
+                Product product = Product.findById(Product.class,orderProd.getProdId());
+                product.setQuantity(product.getQuantity()-quantity);
+                product.save();
+            }
         }else{
             SharedPreferenceUtility sharedPref = SharedPreferenceUtility.getInstance(getContext());
             String email = sharedPref.getUserEmail();
@@ -179,6 +180,10 @@ public class PlaceOrder extends Fragment {
             for(Order_Product orderProd : productsList){
                 orderProd.setOrderNo(order.getId());
                 orderProd.save();
+                int quantity = orderProd.getQuantity();
+                Product product = Product.findById(Product.class,orderProd.getProdId());
+                product.setQuantity(product.getQuantity()-quantity);
+                product.save();
             }
         }
         fragment_actions.getIntance(this).btnBack_onClick();
@@ -188,5 +193,14 @@ public class PlaceOrder extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+
+    }
+
+    @Override
+    public void onDestroy() {
+        if(orderStatus!=null && orderStatus.equals("OrderNow")){
+            productsList.get(0).delete();
+        }
+        super.onDestroy();
     }
 }

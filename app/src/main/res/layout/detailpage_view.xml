@@ -49,6 +49,10 @@
         android:layout_marginTop="5dp"
         android:background="@drawable/button_layout"
         android:orientation="vertical"
+        android:paddingLeft="3dp"
+        android:paddingTop="5dp"
+        android:paddingRight="3dp"
+        android:paddingBottom="5dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
@@ -65,24 +69,35 @@
                 android:id="@+id/txtTitle2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_weight="1"
+                android:layout_gravity="center"
                 android:text="Quantity :"
                 android:textColor="@android:color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
+            <TextView
+                android:id="@+id/txtStockMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="Product Out Of Stock"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
             <Spinner
                 android:id="@+id/quantity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="center|right"
+                android:layout_marginLeft="20dp"
                 android:layout_weight="1"
                 android:background="@drawable/spinner_view"
                 android:foregroundGravity="center"
+                android:gravity="right"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp" />
 
@@ -91,18 +106,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:paddingLeft="8dp"
-            android:paddingTop="5dp"
-            android:paddingRight="8dp"
-            android:paddingBottom="8dp">
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/btnCartInView"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
                 android:layout_weight="1"
+                android:foregroundGravity="left"
                 android:src="@drawable/cart_icon" />
 
             <Button
@@ -110,7 +124,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/button_layout"
                 android:text="Add to cart" />
@@ -119,7 +133,7 @@
                 android:id="@+id/btnOrderNow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/button_layout"
                 android:text="Order Now" />
@@ -200,26 +214,30 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
             android:text="Imesh"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <View
-            android:id="@+id/divider3"
+        <TextView
+            android:id="@+id/txtRevText"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="?attr/dividerVertical" />
+            android:text="Review"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtRevDesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             android:text="No.432/3, Himbutana Lane, Angoda, Mulleriyawa, Western, 10620"
             android:textColor="@android:color/white"
             android:textSize="14sp" />
@@ -251,38 +269,53 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
             android:text="Questions and  Answers"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/txtQuestion"
+            android:id="@+id/textView41"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
-            android:text="Question : Is"
+            android:text="Question"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:text="Imesh"
             android:textColor="@android:color/white"
             android:textSize="14sp" />
 
-        <View
-            android:id="@+id/divider5"
+        <TextView
+            android:id="@+id/txtQueText"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="?attr/dividerVertical" />
+            android:text="Answer"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtAnswer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="Answer : No"
+            android:layout_marginBottom="5dp"
+            android:text="No.432/3, Himbutana Lane, Angoda, Mulleriyawa, Western, 10620"
             android:textColor="@android:color/white"
             android:textSize="14sp" />
 

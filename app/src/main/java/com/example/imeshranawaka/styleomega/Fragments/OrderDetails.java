@@ -1,6 +1,7 @@
 package com.example.imeshranawaka.styleomega.Fragments;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +18,7 @@ import com.example.imeshranawaka.styleomega.Models.Order_Product;
 import com.example.imeshranawaka.styleomega.Models.Orders;
 import com.example.imeshranawaka.styleomega.Models.Product;
 import com.example.imeshranawaka.styleomega.R;
+import com.example.imeshranawaka.styleomega.SharedPreferenceUtility;
 
 import java.text.DateFormat;
 import java.util.List;
@@ -77,9 +79,14 @@ public class OrderDetails extends Fragment {
         txtTotalPrice.setText("US$"+price);
 
         Address address = Address.findById(Address.class,order.getUserAddress());
-        txtName.setText(address.getfName()+" "+address.getlName());
-        txtAddress.setText(address.getAddress());
-
+        if(address!=null) {
+            txtName.setText(address.getfName() + " " + address.getlName());
+            txtAddress.setText(address.getAddress());
+        }else{
+            txtName.setText("Shipped Address Not Found!");
+            txtName.setTextColor(Color.RED);
+            txtAddress.setVisibility(View.GONE);
+        }
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         productsListRecycle.setLayoutManager(layoutManager);
 

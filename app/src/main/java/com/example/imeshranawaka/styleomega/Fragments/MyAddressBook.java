@@ -32,6 +32,7 @@ public class MyAddressBook extends Fragment {
 
     @BindView(R.id.addressList) RecyclerView addressListRecycle;
     private Unbinder unbonder;
+    private AddressAdapter addressAdapter;
 
     public MyAddressBook() {
         // Required empty public constructor
@@ -46,6 +47,14 @@ public class MyAddressBook extends Fragment {
         unbonder = ButterKnife.bind(this,v);
         setList(v);
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(addressAdapter!=null){
+            addressAdapter.notifyDataSetChanged();
+        }
     }
 
     @OnClick(R.id.btnBack)
@@ -69,7 +78,7 @@ public class MyAddressBook extends Fragment {
             LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
             addressListRecycle.setLayoutManager(layoutManager);
 
-            AddressAdapter addressAdapter = new AddressAdapter(getContext(), addressList);
+            addressAdapter = new AddressAdapter(getContext(), addressList,getFragmentManager());
             addressListRecycle.setAdapter(addressAdapter);
         }else{
             addressListRecycle.setVisibility(View.GONE);

@@ -18,6 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.Spinner;
@@ -68,11 +70,19 @@ public class ProductDetails extends Fragment {
     @BindView(R.id.txtRevDesc) TextView txtRevDesc;
     @BindView(R.id.txtQuestion) TextView txtQuestion;
     @BindView(R.id.txtAnswer) TextView txtAnswer;
+    @BindView(R.id.txtQueText) TextView txtQueText;
+    @BindView(R.id.txtRevText) TextView txtRevText;
     @BindView(R.id.quantity) Spinner quantity;
     @BindView(R.id.prodRating) RatingBar prodRating;
 
+    @BindView(R.id.btnOrderNow) Button btnOrderNow;
+    @BindView(R.id.btnAddToCart) Button btnAddToCart;
+    @BindView(R.id.btnCartInView) ImageView btnCartInView;
+    @BindView(R.id.txtStockMessage) TextView txtStockMessage;
+
     private Unbinder unbinder;
     private Product product;
+    private long prodId;
     public ProductDetails() {
         // Required empty public constructor
     }
@@ -81,11 +91,23 @@ public class ProductDetails extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        String email = SharedPreferenceUtility.getInstance(getContext()).getUserEmail();
         View v = inflater.inflate(R.layout.fragment_product_details, container, false);
         unbinder = ButterKnife.bind(this,v);
-        product = (Product) getArguments().getSerializable("product");
+        //product = (Product) getArguments().getSerializable("product");
+        prodId = getArguments().getLong("prodNo");
 
+        return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        product = Product.findById(Product.class,prodId);
+        setupProductPage();
+    }
+
+    private void setupProductPage() {
+        String email = SharedPreferenceUtility.getInstance(getContext()).getUserEmail();
         Display display = getActivity().getWindowManager(). getDefaultDisplay();
         Point size = new Point();
         display. getSize(size);
@@ -112,20 +134,29 @@ public class ProductDetails extends Fragment {
             qtyList.add(count);
         }
 
-        ArrayAdapter<Integer> qtyAdapter = new ArrayAdapter<>(getActivity(),R.layout.spinner_item_view,qtyList);
-        qtyAdapter.setDropDownViewResource(R.layout.spinner_item_view);
-        quantity.setAdapter(qtyAdapter);
+        if(product.getQuantity()!=0) {
+            ArrayAdapter<Integer> qtyAdapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item_view, qtyList);
+            qtyAdapter.setDropDownViewResource(R.layout.spinner_item_view);
+            quantity.setAdapter(qtyAdapter);
+        }else{
+            quantity.setVisibility(View.GONE);
+            btnAddToCart.setVisibility(View.GONE);
+            btnOrderNow.setVisibility(View.GONE);
+            btnCartInView.setVisibility(View.GONE);
+            txtStockMessage.setVisibility(View.VISIBLE);
+        }
 
         txtDesc.setText(Html.fromHtml(product.getDesc()));
 
-        List<Reviews> reviewsList = Reviews.find(Reviews.class,"prod_Id=? and user_Email=?"
-                ,String.valueOf(product.getId()),email);
-        List<Questions> questions = Questions.find(Questions.class, "prod_ID=? and user_Email=?"
-                , product.getId().toString(),email);
+        List<Reviews> reviewsList = Reviews.find(Reviews.class,"prod_Id=?"
+                ,String.valueOf(product.getId()));
+        List<Questions> questions = Questions.find(Questions.class, "prod_ID=?"
+                , product.getId().toString());
 
         if(reviewsList.size()==0){
             txtRevName.setText("No Reviews Found!");
             txtRevDesc.setVisibility(View.GONE);
+            txtRevText.setVisibility(View.GONE);
         }else{
             Reviews rev = reviewsList.get(reviewsList.size()-1);
             List<User> user = User.find(User.class, "email=?", rev.getUserEmail());
@@ -141,6 +172,7 @@ public class ProductDetails extends Fragment {
         if(questions.size()==0){
             txtQuestion.setText("No Questions Found!");
             txtAnswer.setVisibility(View.GONE);
+            txtQueText.setVisibility(View.GONE);
         }else{
             Questions que = questions.get(questions.size()-1);
             txtQuestion.setText(que.getQuestion());
@@ -150,7 +182,6 @@ public class ProductDetails extends Fragment {
                 txtAnswer.setText("Not answered yet!");
             }
         }
-        return v;
     }
 
     @OnClick(R.id.btnShare)
@@ -241,6 +272,27 @@ public class ProductDetails extends Fragment {
         transaction.addToBackStack("ProductDetails");
         transaction.commit();
 
+    }
+
+    @OnClick(R.id.btnOrderNow)
+    public void btnOrderNow_onClick(){
+        int selectedQty = Integer.parseInt(quantity.getSelectedItem().toString());
+        Order_Product orderItem = new Order_Product(0,product.getId(),selectedQty);
+        orderItem.save();
+        List<Order_Product> orderProducts = new ArrayList<>();
+        orderProducts.add(orderItem);
+
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("order_products", (Serializable) orderProducts);
+        PlaceOrder placeOrder = new PlaceOrder();
+        placeOrder.setArguments(bundle);
+
+        transaction.replace(R.id.mainFragment, placeOrder,"PlaceOrder");
+        transaction.addToBackStack("ProductDetails");
+        transaction.commit();
     }
 
     @OnClick(R.id.btnCart)

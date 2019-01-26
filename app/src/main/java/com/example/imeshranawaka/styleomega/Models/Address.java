@@ -2,7 +2,9 @@ package com.example.imeshranawaka.styleomega.Models;
 
 import com.orm.SugarRecord;
 
-public class Address extends SugarRecord<Address> {
+import java.io.Serializable;
+
+public class Address extends SugarRecord<Address> implements Serializable {
     private String userEmail;
     private String fName;
     private String lName;
@@ -10,13 +12,14 @@ public class Address extends SugarRecord<Address> {
     private String city;
     private int contact;
     private String province;
+    private int zipCode;
     private boolean def;
 
     public Address(){
 
     }
 
-    public Address(String userEmail, String fName, String lName, String address, String city, int contact, String province, boolean def) {
+    public Address(String userEmail, String fName, String lName, String address, String city, int contact, String province, int zipCode, boolean def) {
         this.userEmail = userEmail;
         this.fName = fName;
         this.lName = lName;
@@ -24,6 +27,7 @@ public class Address extends SugarRecord<Address> {
         this.city = city;
         this.contact = contact;
         this.province = province;
+        this.zipCode = zipCode;
         this.def = def;
     }
 
@@ -53,6 +57,10 @@ public class Address extends SugarRecord<Address> {
 
     public String getProvince() {
         return province;
+    }
+
+    public int getZipCode() {
+        return zipCode;
     }
 
     public boolean isDef() {
@@ -85,6 +93,10 @@ public class Address extends SugarRecord<Address> {
 
     public void setProvince(String province) {
         this.province = province;
+    }
+
+    public void setZipCode(int zipCode) {
+        this.zipCode = zipCode;
     }
 
     public void setDef(boolean def) {

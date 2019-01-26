@@ -38,6 +38,7 @@ public class NewAddress extends Fragment {
     @BindView(R.id.defaultSwitch) Switch defaultSwitch;
     private Unbinder unbinder;
     private long orderNo;
+    private Address saveAddress;
     public NewAddress() {
         // Required empty public constructor
     }
@@ -57,8 +58,34 @@ public class NewAddress extends Fragment {
         Bundle bundle = getArguments();
         if(bundle!=null) {
             orderNo = bundle.getLong("orderNo");
+            long addressId = bundle.getLong("Address");
+            if(addressId!=0){
+                saveAddress = Address.findById(Address.class,addressId);
+                setupAddress();
+            }
         }
         return view;
+    }
+
+    private void setupAddress() {
+        txtFName.setText(saveAddress.getfName());
+        txtLName.setText(saveAddress.getlName());
+        txtContactNo.setText(String.valueOf(saveAddress.getContact()));
+        txtCity.setText(saveAddress.getCity());
+        txtAddress.setText(saveAddress.getAddress());
+        txtZipCode.setText(String.valueOf(saveAddress.getZipCode()));
+        int pos=0;
+        boolean available=false;
+        for(;pos<provinceList.getAdapter().getCount();pos++){
+            if(provinceList.getAdapter().getItem(pos).toString().equals(saveAddress.getProvince())){
+                available = true;
+                break;
+            }
+        }
+        if(available) {
+            provinceList.setSelection(pos);
+        }
+        defaultSwitch.setChecked(saveAddress.isDef());
     }
 
     @OnClick(R.id.btnBack)
@@ -84,7 +111,7 @@ public class NewAddress extends Fragment {
 
             List<Address> addressList = Address.find(Address.class, "province=? and city=? and address=? and user_Email=?"
                     ,province , city, address, sharedPref.getUserEmail());
-            if(addressList.size()>0){
+            if(saveAddress==null && addressList.size()>0){
                 Toast.makeText(getContext(),"Address Already Saved!",Toast.LENGTH_SHORT).show();
             }else{
                 boolean defaultState = false;
@@ -98,23 +125,37 @@ public class NewAddress extends Fragment {
                 }else{
                     for(Address tempAddress : addressList){
                         if(tempAddress.isDef()){
-                            defaultState = true;
-                            break;
+                            if(tempAddress!=saveAddress) {
+                                defaultState = true;
+                                break;
+                            }
                         }
                     }
                     if(!defaultState){
                         defaultAdd = true;
                     }
                 }
-                Address newAddress = new Address(sharedPref.getUserEmail(),fName,lName,address,city,Integer.parseInt(contactNo)
-                        ,province,defaultAdd);
-                newAddress.save();
-
-                if(orderNo!=0){
-                    Orders order = Orders.findById(Orders.class,orderNo);
-                    order.setUserAddress(newAddress.getId());
-                    order.save();
+                if(address==null) {
+                    Address newAddress = new Address(sharedPref.getUserEmail(), fName, lName, address, city, Integer.parseInt(contactNo)
+                            , province, Integer.parseInt(zipCode), defaultAdd);
+                    newAddress.save();
+                    if(orderNo!=0){
+                        Orders order = Orders.findById(Orders.class,orderNo);
+                        order.setUserAddress(newAddress.getId());
+                        order.save();
+                    }
+                }else{
+                    saveAddress.setfName(fName);
+                    saveAddress.setlName(lName);
+                    saveAddress.setAddress(address);
+                    saveAddress.setCity(city);
+                    saveAddress.setContact(Integer.parseInt(contactNo));
+                    saveAddress.setProvince(province);
+                    saveAddress.setZipCode(Integer.parseInt(zipCode));
+                    saveAddress.setDef(defaultAdd);
+                    saveAddress.save();
                 }
+
                 Fragment frag = getFragmentManager().findFragmentByTag("NewAddress");
                 if(frag!=null) {
                     fragment_actions.getIntance(frag).btnBack_onClick();

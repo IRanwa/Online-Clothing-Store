@@ -23,6 +23,7 @@ import com.example.imeshranawaka.styleomega.Fragments.MyOrders;
 import com.example.imeshranawaka.styleomega.Fragments.SignIn;
 import com.example.imeshranawaka.styleomega.Fragments.fragment_actions;
 import com.example.imeshranawaka.styleomega.Models.Category;
+import com.example.imeshranawaka.styleomega.Models.Login;
 import com.example.imeshranawaka.styleomega.Models.Product;
 import com.example.imeshranawaka.styleomega.Models.User;
 import com.google.gson.Gson;
@@ -76,10 +77,22 @@ public class StyleOmega extends FragmentActivity
                         replace(R.id.mainFragment, new SignIn(), "SignIn").
                         commit();
             }else{
-                SharedPreferenceUtility shraed = SharedPreferenceUtility.getInstance(this);
-                getSupportFragmentManager().beginTransaction().
-                        replace(R.id.mainFragment, new MainMenu(), "MainMenu").
-                        commit();
+                List<Login> login = Login.find(Login.class, "email=?", email);
+                if(login.size()>0) {
+                    SharedPreferenceUtility shraed = SharedPreferenceUtility.getInstance(this);
+                    getSupportFragmentManager().beginTransaction().
+                            replace(R.id.mainFragment, new MainMenu(), "MainMenu").
+                            commit();
+                }else{
+                    SharedPreferences.Editor editor = SharedPreferenceUtility.getInstance(this).getEditor();
+                    editor.remove("email");
+                    editor.remove("user");
+                    editor.remove("pass");
+                    editor.commit();
+                    getSupportFragmentManager().beginTransaction().
+                            replace(R.id.mainFragment, new SignIn(), "SignIn").
+                            commit();
+                }
             }
         }
     }

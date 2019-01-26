@@ -142,7 +142,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
         public void onClick(View v) {
             ProductDetails prodDetails = new ProductDetails();
             Bundle bundle = new Bundle();
-            bundle.putSerializable("product",product);
+            bundle.putLong("prodNo",product.getId());
             prodDetails.setArguments(bundle);
 
             FragmentTransaction transaction = fm.beginTransaction().replace(R.id.mainFragment, prodDetails,"ProductDetails");
