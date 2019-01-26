@@ -2,6 +2,7 @@ package com.example.imeshranawaka.styleomega.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -62,9 +63,20 @@ public class MainMenu extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        SharedPreferenceUtility sharedPref = SharedPreferenceUtility.getInstance(getContext());
-        if (sharedPref != null) {
-            setNavHeader(sharedPref.getUserEmail());
+        setNavHeader();
+    }
+
+    private void setNavHeader(){
+        NavigationView nav_view = getActivity().findViewById(R.id.nav_view);
+        String loginEmail = SharedPreferenceUtility.getInstance(getContext()).getUserEmail();
+        TextView name = nav_view.getHeaderView(0).findViewById(R.id.txtNavName);
+        TextView email = nav_view.getHeaderView(0).findViewById(R.id.txtHeadEmail);
+
+        List<User> users = User.find(User.class, "email=?", loginEmail);
+        if(users.size()>0) {
+            User user = users.get(0);
+            name.setText(user.getfName() + " " + user.getlName());
+            email.setText(loginEmail);
         }
     }
 
@@ -82,16 +94,6 @@ public class MainMenu extends Fragment {
     private void enableDrawer(){
         DrawerLayout drawer = getActivity().findViewById(R.id.drawer_layout);
         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-    }
-
-    private void setNavHeader(String loginEmail){
-        TextView name = getActivity().findViewById(R.id.txtName);
-        TextView email = getActivity().findViewById(R.id.txtHeadEmail);
-
-        User user = User.find(User.class, "email=?", loginEmail).get(0);
-        name.setText(user.getfName()+" "+user.getlName());
-        email.setText(loginEmail);
-
     }
 
     private void setCategoryList(View v){

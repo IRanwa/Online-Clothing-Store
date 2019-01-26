@@ -1,5 +1,6 @@
 package com.example.imeshranawaka.styleomega;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.imeshranawaka.styleomega.Fragments.ContactUs;
+import com.example.imeshranawaka.styleomega.Fragments.MainMenu;
 import com.example.imeshranawaka.styleomega.Fragments.MyAccount;
 import com.example.imeshranawaka.styleomega.Fragments.MyOrders;
 import com.example.imeshranawaka.styleomega.Fragments.SignIn;
@@ -44,6 +46,7 @@ public class StyleOmega extends FragmentActivity
 
     @BindView(R.id.drawer_layout) DrawerLayout drawer_layout;
     @BindView(R.id.nav_view) NavigationView nav_view;
+
     private Unbinder unbinder;
     private static List<Fragment> fragList = new ArrayList<Fragment>();
 
@@ -51,25 +54,6 @@ public class StyleOmega extends FragmentActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_style_omega);
-        /*if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().
-                    replace(R.id.mainFragment, new SignIn(), "SignIn").
-                    commit();
-        }*/
-        if (findViewById(R.id.mainFragment) != null) {
-
-            // However, if we're being restored from a previous state,
-            // then we don't need to do anything and should return or else
-            // we could end up with overlapping fragments.
-            if (savedInstanceState != null) {
-                return;
-            }
-
-            // Add the fragment to the 'fragment_container' FrameLayout
-            getSupportFragmentManager().beginTransaction().
-                    replace(R.id.mainFragment, new SignIn(), "SignIn").
-                    commit();
-        }
         unbinder = ButterKnife.bind(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -81,7 +65,25 @@ public class StyleOmega extends FragmentActivity
 
         nav_view.setEnabled(true);
         drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
+        if (findViewById(R.id.mainFragment) != null) {
+            if (savedInstanceState != null) {
+                return;
+            }
+            String email = SharedPreferenceUtility.getInstance(this).getUserEmail();
+            if(email.isEmpty()) {
+                getSupportFragmentManager().beginTransaction().
+                        replace(R.id.mainFragment, new SignIn(), "SignIn").
+                        commit();
+            }else{
+                SharedPreferenceUtility shraed = SharedPreferenceUtility.getInstance(this);
+                getSupportFragmentManager().beginTransaction().
+                        replace(R.id.mainFragment, new MainMenu(), "MainMenu").
+                        commit();
+            }
+        }
     }
+
 
     @Override
     public void onAttachFragment(Fragment fragment) {
@@ -149,6 +151,18 @@ public class StyleOmega extends FragmentActivity
             FragmentTransaction transaction = fm.beginTransaction();
             transaction.replace(R.id.mainFragment, new ContactUs(), "ContactUs");
             transaction.addToBackStack("MainMenu");
+            transaction.commit();
+        }else if(id == R.id.nav_logout){
+            SharedPreferences.Editor editor = SharedPreferenceUtility.getInstance(this).getEditor();
+            editor.remove("email");
+            editor.remove("user");
+            editor.remove("pass");
+            editor.commit();
+
+
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
+            transaction.replace(R.id.mainFragment, new SignIn(), "SignIn");
             transaction.commit();
         }
 

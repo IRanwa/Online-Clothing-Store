@@ -14,7 +14,7 @@ public class SharedPreferenceUtility {
         return instance;
     }
 
-    private SharedPreferences.Editor getEditor(){
+    public SharedPreferences.Editor getEditor(){
         return mContext.getSharedPreferences("login",Context.MODE_PRIVATE).edit();
     }
 

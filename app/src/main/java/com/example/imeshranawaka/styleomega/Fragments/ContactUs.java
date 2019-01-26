@@ -86,6 +86,9 @@ public class ContactUs extends Fragment implements OnMapReadyCallback{
             mail.putExtra(Intent.EXTRA_TEXT, message);
             mail.setType("message/rfc822");
             startActivity(Intent.createChooser(mail, "Send email via:"));
+            txtName.setText("");
+            txtEmail.setText("");
+            txtMessage.setText("");
         }
     }
 }
