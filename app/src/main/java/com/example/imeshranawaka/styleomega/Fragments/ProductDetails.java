@@ -135,7 +135,7 @@ public class ProductDetails extends Fragment {
             for(Reviews tempRev : reviewsList){
                 rating+=tempRev.getRating();
             }
-            prodRating.setRating(rating);
+            prodRating.setRating(rating/reviewsList.size());
         }
 
         if(questions.size()==0){
@@ -215,6 +215,14 @@ public class ProductDetails extends Fragment {
 
     @OnClick(R.id.btnRevViewAll)
     public void btnRevViewAll_onClick(){
+        FragmentManager fm = getFragmentManager();
+        AllReviews revies = new AllReviews();
+        Bundle bundle = new Bundle();
+        bundle.putLong("productNo",product.getId());
+        revies.setArguments(bundle);
+        FragmentTransaction transaction = fm.beginTransaction().replace(R.id.mainFragment, revies, "AllReviews");
+        transaction.addToBackStack("ProductDetails");
+        transaction.commit();
 
     }
 

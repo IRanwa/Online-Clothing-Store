@@ -186,7 +186,7 @@
 
         <RatingBar
             android:id="@+id/prodRating"
-            style="@style/Widget.AppCompat.RatingBar.Small"
+            style="@android:style/Widget.DeviceDefault.Light.RatingBar.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
@@ -211,7 +211,7 @@
             android:layout_height="1dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="?android:attr/listDivider" />
+            android:background="?attr/dividerVertical" />
 
         <TextView
             android:id="@+id/txtRevDesc"
