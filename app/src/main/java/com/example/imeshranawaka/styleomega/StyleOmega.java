@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.imeshranawaka.styleomega.Fragments.ContactUs;
 import com.example.imeshranawaka.styleomega.Fragments.MyAccount;
 import com.example.imeshranawaka.styleomega.Fragments.MyOrders;
 import com.example.imeshranawaka.styleomega.Fragments.SignIn;
@@ -141,6 +142,12 @@ public class StyleOmega extends FragmentActivity
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();
             transaction.replace(R.id.mainFragment, new MyOrders(), "MyOrders");
+            transaction.addToBackStack("MainMenu");
+            transaction.commit();
+        }else if(id == R.id.nav_contact){
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
+            transaction.replace(R.id.mainFragment, new ContactUs(), "ContactUs");
             transaction.addToBackStack("MainMenu");
             transaction.commit();
         }
