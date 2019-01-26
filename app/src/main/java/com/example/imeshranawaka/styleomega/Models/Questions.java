@@ -3,7 +3,7 @@ package com.example.imeshranawaka.styleomega.Models;
 import com.orm.SugarRecord;
 
 public class Questions extends SugarRecord<Questions> {
-    private int prodId;
+    private long prodId;
     private String userEmail;
     private String question;
     private String answer;
@@ -12,7 +12,13 @@ public class Questions extends SugarRecord<Questions> {
 
     }
 
-    public void setProdId(int prodId) {
+    public Questions(long prodId, String userEmail, String question) {
+        this.prodId = prodId;
+        this.userEmail = userEmail;
+        this.question = question;
+    }
+
+    public void setProdId(long prodId) {
         this.prodId = prodId;
     }
 
@@ -28,7 +34,7 @@ public class Questions extends SugarRecord<Questions> {
         this.answer = answer;
     }
 
-    public int getProdId() {
+    public long getProdId() {
         return prodId;
     }
 

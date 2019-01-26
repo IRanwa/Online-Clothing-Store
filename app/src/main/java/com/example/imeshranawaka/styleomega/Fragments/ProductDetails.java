@@ -142,9 +142,13 @@ public class ProductDetails extends Fragment {
             txtQuestion.setText("No Questions Found!");
             txtAnswer.setVisibility(View.GONE);
         }else{
-            Questions que = questions.get(0);
+            Questions que = questions.get(questions.size()-1);
             txtQuestion.setText(que.getQuestion());
-            txtAnswer.setText(que.getAnswer());
+            if(que.getAnswer()!=null) {
+                txtAnswer.setText(que.getAnswer());
+            }else{
+                txtAnswer.setText("Not answered yet!");
+            }
         }
         return v;
     }
@@ -221,6 +225,19 @@ public class ProductDetails extends Fragment {
         bundle.putLong("productNo",product.getId());
         revies.setArguments(bundle);
         FragmentTransaction transaction = fm.beginTransaction().replace(R.id.mainFragment, revies, "AllReviews");
+        transaction.addToBackStack("ProductDetails");
+        transaction.commit();
+
+    }
+
+    @OnClick(R.id.btnQueViewAll)
+    public void btnQueViewAll_onClick(){
+        FragmentManager fm = getFragmentManager();
+        AllQuestions questions = new AllQuestions();
+        Bundle bundle = new Bundle();
+        bundle.putLong("productNo",product.getId());
+        questions.setArguments(bundle);
+        FragmentTransaction transaction = fm.beginTransaction().replace(R.id.mainFragment, questions, "AllQuestions");
         transaction.addToBackStack("ProductDetails");
         transaction.commit();
 

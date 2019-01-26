@@ -263,10 +263,17 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
             android:text="Question : Is"
             android:textColor="@android:color/white"
             android:textSize="14sp" />
+
+        <View
+            android:id="@+id/divider5"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="?attr/dividerVertical" />
 
         <TextView
             android:id="@+id/txtAnswer"
