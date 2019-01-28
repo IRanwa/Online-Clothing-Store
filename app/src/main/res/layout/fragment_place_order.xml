@@ -123,14 +123,6 @@
                             android:typeface="serif" />
                     </LinearLayout>
 
-                    <ImageView
-                        android:id="@+id/btnChangeAddress"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_gravity="center"
-                        android:layout_weight="2"
-                        android:src="@drawable/nav_next_icon" />
-
                 </LinearLayout>
 
                 <LinearLayout

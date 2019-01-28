@@ -17,7 +17,6 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        useLibrary 'org.apache.http.legacy'
     }
     buildTypes {
         release {
@@ -38,6 +37,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.jakewharton:butterknife:9.0.0-rc3'
+    implementation 'com.android.volley:volley:1.1.1'
 
     annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0-rc3'
     implementation fileTree(include: ['*.jar'], dir: 'libs')

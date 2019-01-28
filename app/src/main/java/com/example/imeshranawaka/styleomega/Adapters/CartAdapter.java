@@ -333,7 +333,44 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
             bundle.putLong("prodNo",orderProduct.getProdId());
             prodDetails.setArguments(bundle);
 
-            FragmentTransaction transaction = mActivity.getSupportFragmentManager().beginTransaction().replace(R.id.mainFragment, prodDetails,"ProductDetails");
+            FragmentManager fm = mActivity.getSupportFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
+
+            /*int backStackEntry = fm.getBackStackEntryCount();
+            List<Fragment> fragments = fm.getFragments();
+            if (backStackEntry > 0) {
+                for (int i = 0; i < backStackEntry; i++) {
+                    if(fragments.size()>i) {
+                        Fragment frag = fragments.get(0);
+                        if(frag.getTag()!=null && !frag.getTag().equals("MainMenu")) {
+                            transaction.remove(frag);
+                        }else{
+                            break;
+                        }
+                        fm.popBackStackImmediate();
+                    }
+                    fragments = fm.getFragments();
+                }
+            }*/
+
+            int backStackEntry = fm.getBackStackEntryCount();
+            List<Fragment> fragments = fm.getFragments();
+            if (backStackEntry > 0) {
+                for (int i = 0; i < backStackEntry; i++) {
+                    fm.popBackStackImmediate();
+                    if(fragments.size()<i) {
+                        Fragment frag = fragments.get(0);
+                        transaction.remove(frag);
+                        if(frag.getTag()!=null && !frag.getTag().toString().equals("MainMenu")) {
+                            break;
+                        }
+                    }
+                    fragments = fm.getFragments();
+                }
+            }
+
+            transaction.replace(R.id.mainFragment,
+                    prodDetails,"ProductDetails");
             transaction.addToBackStack("MainMenu");
             transaction.commit();
         }

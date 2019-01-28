@@ -15,6 +15,8 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.example.imeshranawaka.styleomega.R;
 
+import java.util.List;
+
 public class fragment_actions {
     private static fragment_actions instance = new fragment_actions();
     private static Fragment frag;
@@ -41,8 +43,9 @@ public class fragment_actions {
 
     public void btnCart_onClick(){
         FragmentManager fm = frag.getFragmentManager();
-        ShoppingCart shoppingCart = new ShoppingCart();
-        FragmentTransaction transaction = fm.beginTransaction().replace(R.id.mainFragment, shoppingCart,"ShoppingCart");
+        FragmentTransaction transaction = fm.beginTransaction();
+
+        transaction.replace(R.id.mainFragment, new ShoppingCart(),"ShoppingCart");
         transaction.addToBackStack("ProductDetails");
         transaction.commit();
     }

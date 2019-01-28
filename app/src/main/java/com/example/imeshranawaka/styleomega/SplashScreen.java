@@ -4,19 +4,19 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.imeshranawaka.styleomega.Models.Category;
 import com.example.imeshranawaka.styleomega.Models.Product;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,69 +32,56 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SplashScreen extends AppCompatActivity {
+    RequestQueue queue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String url = "https://api.myjson.com/bins/1egyaw";
-        new MyAsyncTask().execute(url,"categories");
+        getJsonData();
     }
 
-    class MyAsyncTask extends AsyncTask<String, Void, String> {
-
-        InputStream inputStream = null;
-        String status;
-        @Override
-        protected String doInBackground(String... params) {
-            status = params[1];
-            try {
-                URL url = new URL(params[0]);
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                inputStream = httpURLConnection.getInputStream();
-            } catch (Exception ex){
-
-            }
-
-            String result=null;
-            if(inputStream!=null) {
-                try {
-                    BufferedReader bReader = new BufferedReader(new InputStreamReader(inputStream, "utf-8"), 8);
-                    StringBuilder sBuilder = new StringBuilder();
-
-                    String line = null;
-                    while ((line = bReader.readLine()) != null) {
-                        sBuilder.append(line + "\n");
+    private void getJsonData() {
+        queue = Volley.newRequestQueue(this);
+        String url ="https://api.myjson.com/bins/1egyaw";
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            InsertCategories(new JSONArray(response));
+                        } catch (JSONException e) {
+                            finish();
+                        }
                     }
-
-                    inputStream.close();
-                    result = sBuilder.toString();
-
-                } catch (Exception e) {
-
-                }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                finish();
             }
-            return result;
-        }
+        });
+        stringRequest.setTag("categories");
+        queue.add(stringRequest);
 
-        @Override
-        protected void onPostExecute(String result) {
-            if(result!=null) {
-                try {
-                    JSONArray array = new JSONArray(result);
-                    if(status.equalsIgnoreCase("categories")){
-                        InsertCategories(array);
-                        String url = "https://api.myjson.com/bins/e7nk8";
-                        new MyAsyncTask().execute(url,"products");
-                    }else{
-                        InsertProducts(array);
-                        startActivity(new Intent(SplashScreen.this,StyleOmega.class));
+        url ="https://api.myjson.com/bins/e7nk8";
+        stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            InsertProducts(new JSONArray(response));
+                            startActivity(new Intent(SplashScreen.this,StyleOmega.class));
+                        } catch (JSONException e) {
+
+                        }
                         finish();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                finish();
             }
-            super.onPostExecute(result);
-        }
+        });
+        stringRequest.setTag("products");
+        queue.add(stringRequest);
     }
 
     private void InsertProducts(JSONArray array) {
@@ -151,6 +138,15 @@ public class SplashScreen extends AppCompatActivity {
             }
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onStop () {
+        super.onStop();
+        if (queue != null) {
+            queue.cancelAll("categories");
+            queue.cancelAll("products");
         }
     }
 }
