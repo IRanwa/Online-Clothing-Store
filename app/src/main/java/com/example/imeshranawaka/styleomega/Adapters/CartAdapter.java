@@ -31,6 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.imeshranawaka.styleomega.Fragments.PlaceOrder;
+import com.example.imeshranawaka.styleomega.Fragments.ProductDetails;
 import com.example.imeshranawaka.styleomega.Fragments.ShoppingCart;
 import com.example.imeshranawaka.styleomega.Fragments.fragment_actions;
 import com.example.imeshranawaka.styleomega.Models.Order_Product;
@@ -143,6 +144,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
         btnDelete_onClick deleteAction = new btnDelete_onClick(orderProduct, i);
         btnDeleteList.add(deleteAction);
         viewHolder.btnDelete.setOnClickListener(deleteAction);
+
+        viewHolder.btnUpdate.setOnClickListener(new btnUpdate_onClick(orderProduct));
 
     }
 
@@ -314,6 +317,25 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
             transaction.commit();
         }else{
             Toast.makeText(mContext,"No Items Selected!",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private class btnUpdate_onClick implements View.OnClickListener {
+        private Order_Product orderProduct;
+        public btnUpdate_onClick(Order_Product orderProduct) {
+            this.orderProduct = orderProduct;
+        }
+
+        @Override
+        public void onClick(View v) {
+            ProductDetails prodDetails = new ProductDetails();
+            Bundle bundle = new Bundle();
+            bundle.putLong("prodNo",orderProduct.getProdId());
+            prodDetails.setArguments(bundle);
+
+            FragmentTransaction transaction = mActivity.getSupportFragmentManager().beginTransaction().replace(R.id.mainFragment, prodDetails,"ProductDetails");
+            transaction.addToBackStack("MainMenu");
+            transaction.commit();
         }
     }
 }
