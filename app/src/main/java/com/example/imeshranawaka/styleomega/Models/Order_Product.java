@@ -9,9 +9,17 @@ public class Order_Product extends SugarRecord<Order_Product> implements Seriali
     private long orderNo;
     private long prodId;
     private int quantity;
+    private String size;
 
     public Order_Product(){
 
+    }
+
+    public Order_Product(long orderNo, long prodId, int quantity, String size) {
+        this.orderNo = orderNo;
+        this.prodId = prodId;
+        this.quantity = quantity;
+        this.size = size;
     }
 
     public Order_Product(long orderNo, long prodId, int quantity) {
@@ -42,5 +50,13 @@ public class Order_Product extends SugarRecord<Order_Product> implements Seriali
 
     public int getQuantity() {
         return quantity;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
     }
 }

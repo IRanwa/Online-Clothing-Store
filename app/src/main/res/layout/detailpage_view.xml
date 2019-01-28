@@ -22,11 +22,12 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
-            android:fontFamily="serif"
             android:text="Imesh Ranawaka"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:typeface="serif" />
 
         <TextView
             android:id="@+id/txtTitle"
@@ -37,9 +38,11 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
             android:text="Imesh Ranawaka"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:typeface="serif" />
     </LinearLayout>
 
     <LinearLayout
@@ -58,6 +61,42 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
         <LinearLayout
+            android:id="@+id/sizeContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:paddingLeft="8dp"
+            android:paddingTop="10dp"
+            android:paddingRight="8dp">
+
+            <TextView
+                android:id="@+id/txtSize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="Size        :"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:typeface="serif" />
+
+            <Spinner
+                android:id="@+id/size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|right"
+                android:layout_weight="1"
+                android:background="@drawable/spinner_view"
+                android:foregroundGravity="center"
+                android:gravity="right"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
@@ -70,22 +109,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_weight="1"
                 android:text="Quantity :"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
                 android:textColor="@android:color/white"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:typeface="serif" />
 
             <TextView
                 android:id="@+id/txtStockMessage"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="right"
                 android:text="Product Out Of Stock"
-                android:textColor="@android:color/holo_red_dark"
-                android:textSize="18sp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
+                android:textSize="16sp"
                 android:textStyle="bold"
+                android:typeface="serif"
                 android:visibility="gone" />
 
             <Spinner
@@ -93,7 +136,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|right"
-                android:layout_marginLeft="20dp"
                 android:layout_weight="1"
                 android:background="@drawable/spinner_view"
                 android:foregroundGravity="center"
@@ -127,7 +169,10 @@
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/button_layout"
-                android:text="Add to cart" />
+                android:text="Add to cart"
+                android:textAppearance="@android:style/TextAppearance.Holo.Widget.Button"
+                android:textSize="16sp"
+                android:typeface="serif" />
 
             <Button
                 android:id="@+id/btnOrderNow"
@@ -136,7 +181,10 @@
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/button_layout"
-                android:text="Order Now" />
+                android:text="Order Now"
+                android:textAppearance="@android:style/TextAppearance.Holo.Widget.Button"
+                android:textSize="16sp"
+                android:typeface="serif" />
         </LinearLayout>
     </LinearLayout>
 
@@ -158,9 +206,11 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:text="Description"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
             android:textColor="@android:color/white"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:typeface="serif" />
 
         <TextView
             android:id="@+id/txtDesc"
@@ -170,8 +220,9 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
             android:text="No.432/3, Himbutana Lane, Angoda, Mulleriyawa, Western, 10620"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
             android:textColor="@android:color/white"
-            android:textSize="14sp" />
+            android:typeface="serif" />
 
     </LinearLayout>
 
@@ -194,9 +245,11 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:text="Reviews"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
             android:textColor="@android:color/white"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:typeface="serif" />
 
         <RatingBar
             android:id="@+id/prodRating"
@@ -216,9 +269,11 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="5dp"
             android:text="Imesh"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:typeface="serif" />
 
         <TextView
             android:id="@+id/txtRevText"
@@ -227,9 +282,10 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:text="Review"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
             android:textColor="@android:color/white"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:typeface="serif" />
 
         <TextView
             android:id="@+id/txtRevDesc"
@@ -239,8 +295,9 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="5dp"
             android:text="No.432/3, Himbutana Lane, Angoda, Mulleriyawa, Western, 10620"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
             android:textColor="@android:color/white"
-            android:textSize="14sp" />
+            android:typeface="serif" />
 
         <Button
             android:id="@+id/btnRevViewAll"
@@ -249,7 +306,10 @@
             android:layout_gravity="center"
             android:layout_marginBottom="10dp"
             android:background="@drawable/button_layout"
-            android:text="view All" />
+            android:text="View All"
+            android:textAppearance="@android:style/TextAppearance.Holo.Widget.Button"
+            android:textSize="16sp"
+            android:typeface="serif" />
     </LinearLayout>
 
     <LinearLayout
@@ -271,9 +331,11 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="5dp"
             android:text="Questions and  Answers"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
             android:textColor="@android:color/white"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:typeface="serif" />
 
         <TextView
             android:id="@+id/textView41"
@@ -282,9 +344,11 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:text="Question"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
             android:textColor="@android:color/white"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:typeface="serif" />
 
         <TextView
             android:id="@+id/txtQuestion"
@@ -294,8 +358,9 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="5dp"
             android:text="Imesh"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
             android:textColor="@android:color/white"
-            android:textSize="14sp" />
+            android:typeface="serif" />
 
         <TextView
             android:id="@+id/txtQueText"
@@ -304,9 +369,11 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:text="Answer"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
             android:textColor="@android:color/white"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:typeface="serif" />
 
         <TextView
             android:id="@+id/txtAnswer"
@@ -316,8 +383,9 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="5dp"
             android:text="No.432/3, Himbutana Lane, Angoda, Mulleriyawa, Western, 10620"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
             android:textColor="@android:color/white"
-            android:textSize="14sp" />
+            android:typeface="serif" />
 
         <Button
             android:id="@+id/btnQueViewAll"
@@ -326,7 +394,10 @@
             android:layout_gravity="center"
             android:layout_marginBottom="10dp"
             android:background="@drawable/button_layout"
-            android:text="view All" />
+            android:text="View All"
+            android:textAppearance="@android:style/TextAppearance.Holo.Widget.Button"
+            android:textSize="16sp"
+            android:typeface="serif" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

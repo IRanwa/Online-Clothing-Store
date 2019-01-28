@@ -24,8 +24,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Order No :"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
             android:textColor="@android:color/white"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:typeface="serif" />
 
         <TextView
             android:id="@+id/txtOrderDate"
@@ -34,8 +36,10 @@
             android:layout_weight="1"
             android:gravity="right"
             android:text="Order Date :"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
             android:textColor="@android:color/white"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:typeface="serif" />
     </LinearLayout>
 
     <TextView
@@ -44,8 +48,10 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="Status :"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
         android:textColor="@android:color/white"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:typeface="serif" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -64,6 +70,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -72,16 +79,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="No"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
                 android:textColor="@android:color/white"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:typeface="serif" />
 
             <TextView
                 android:id="@+id/txtTotalPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="No"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
                 android:textColor="@android:color/white"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:typeface="serif" />
 
         </LinearLayout>
     </LinearLayout>

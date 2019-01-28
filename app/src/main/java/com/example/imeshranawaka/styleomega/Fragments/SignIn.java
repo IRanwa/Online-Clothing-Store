@@ -65,8 +65,6 @@ public class SignIn extends Fragment {
 
     @OnClick(R.id.btnSignIn)
     public void signIn_onClick(){
-
-
         String email = editTxtEmail.getText().toString();
         String pass = editTxtPass.getText().toString();
         if(email.isEmpty() || pass.isEmpty()){

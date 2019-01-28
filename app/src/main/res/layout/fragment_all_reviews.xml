@@ -8,7 +8,7 @@
     tools:context=".Fragments.AllReviews" >
 
     <LinearLayout
-        android:id="@+id/linearLayout6"
+        android:id="@+id/linearLayout8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
@@ -31,18 +31,17 @@
             android:src="@drawable/backarrow_icon" />
 
         <TextView
-            android:id="@+id/textView16"
+            android:id="@+id/txtSearchName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_weight="6"
+            android:layout_weight="5"
             android:fontFamily="serif"
             android:text="Product Reviews"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
+            android:typeface="serif" />
 
     </LinearLayout>
 
@@ -57,5 +56,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout8" />
 </android.support.constraint.ConstraintLayout>

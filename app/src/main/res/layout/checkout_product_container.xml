@@ -31,9 +31,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="Shipping Address"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
                 android:textColor="@android:color/white"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:typeface="serif" />
 
             <TextView
                 android:id="@+id/prodPrice"
@@ -41,10 +43,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="3dp"
                 android:text="Imesh Ranawaka"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
                 android:textColor="@android:color/white"
-                android:textSize="14sp" />
+                android:typeface="serif" />
+
+            <TextView
+                android:id="@+id/prodSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Imesh Ranawaka"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
+                android:textColor="@android:color/white"
+                android:typeface="serif" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -59,8 +71,9 @@
                     android:layout_marginBottom="5dp"
                     android:layout_weight="3"
                     android:text="Imesh Ranawaka"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
                     android:textColor="@android:color/white"
-                    android:textSize="14sp" />
+                    android:typeface="serif" />
 
                 <Button
                     android:id="@+id/btnReview"
@@ -74,7 +87,10 @@
                     android:paddingTop="5dp"
                     android:paddingRight="10dp"
                     android:paddingBottom="5dp"
-                    android:text="Write A Review"
+                    android:text="Write a review"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Widget.Button"
+                    android:textSize="16sp"
+                    android:typeface="serif"
                     android:visibility="gone" />
             </LinearLayout>
 

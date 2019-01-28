@@ -19,9 +19,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Category"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
             android:textColor="@android:color/white"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:typeface="serif" />
 
     </LinearLayout>
 

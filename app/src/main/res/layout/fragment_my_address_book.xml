@@ -9,79 +9,69 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <ImageView
-        android:id="@+id/imageView9"
+    <LinearLayout
+        android:id="@+id/linearLayout6"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:src="@color/colorPrimaryDark"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="horizontal"
+        android:paddingTop="5dp"
+        android:paddingBottom="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/btnBack"
-        android:layout_width="61dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:clickable="true"
-        android:src="@drawable/backarrow_icon"
-        app:layout_constraintBottom_toBottomOf="@+id/textView26"
-        app:layout_constraintEnd_toStartOf="@+id/textView26"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView26" />
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:src="@drawable/backarrow_icon" />
 
-    <TextView
-        android:id="@+id/textView26"
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:fontFamily="serif"
-        android:text="My Address Book"
-        android:textColor="@android:color/white"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.358"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/txtSearchName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="6"
+            android:fontFamily="serif"
+            android:text="My Address Book"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
+            android:typeface="serif" />
 
-    <ImageView
-        android:id="@+id/btnAddAddress"
-        android:layout_width="34dp"
-        android:layout_height="33dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="8dp"
-        android:clickable="true"
-        android:src="@drawable/add_icon"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/textView26"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        <ImageView
+            android:id="@+id/btnAddAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:src="@drawable/add_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/addressList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_marginStart="3dp"
         android:layout_marginLeft="3dp"
-        android:layout_marginTop="50dp"
         android:layout_marginEnd="3dp"
         android:layout_marginRight="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView9">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
 
     </android.support.v7.widget.RecyclerView>
 

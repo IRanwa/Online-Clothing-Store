@@ -78,23 +78,58 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
                 Display display = activity.getWindowManager(). getDefaultDisplay();
                 Point size = new Point();
                 display. getSize(size);
-                int width = size. x;
+                int width = size.y;
 
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT);
 
-                layoutParams.height = width/4;
-                layoutParams.width = width/4;
+                layoutParams.height = width/6;
+                layoutParams.width = width/6;
 
                 viewHolder.dislayImage.setLayoutParams(layoutParams);
 
-                Picasso.get().load(product.getImages().get(0)).into(viewHolder.dislayImage);
+                Picasso.get().load(product.getImages().get(0)).resize(300,300)
+                        .transform(new RoundedTransformation(75,0)).into(viewHolder.dislayImage);
                 viewHolder.txtProductTitle.setText(product.getTitle());
             }
         }
-        viewHolder.txtTotalPrice.setText("Total Price : Rs."+price);
+        viewHolder.txtTotalPrice.setText("Total Price : US$."+price);
         viewHolder.orderContainer.setOnClickListener(new order_onClick(order.getId()));
+    }
+
+    public class RoundedTransformation implements com.squareup.picasso.Transformation {
+        private final int radius;
+        private final int margin;
+
+        public RoundedTransformation(final int radius, final int margin) {
+            this.radius = radius;
+            this.margin = margin;
+        }
+
+        @Override
+        public Bitmap transform(Bitmap source) {
+            final Paint paint = new Paint();
+            paint.setAntiAlias(true);
+            paint.setShader(new BitmapShader(source, Shader.TileMode.CLAMP,
+                    Shader.TileMode.CLAMP));
+
+            Bitmap output = Bitmap.createBitmap(source.getWidth(), source.getHeight(),
+                    Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(output);
+            canvas.drawRoundRect(new RectF(margin, margin, source.getWidth() - margin,
+                    source.getHeight() - margin), radius, radius, paint);
+
+            if (source != output) {
+                source.recycle();
+            }
+            return output;
+        }
+
+        @Override
+        public String key() {
+            return "rounded(r=" + radius + ", m=" + margin + ")";
+        }
     }
 
     @Override

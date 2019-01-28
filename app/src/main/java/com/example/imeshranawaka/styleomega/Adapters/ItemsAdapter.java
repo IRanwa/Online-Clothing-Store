@@ -61,7 +61,6 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
 
             Product product = mDataset.get(i);
-        System.out.println(product);
             viewHolder.itemTitle.setText(product.getTitle());
             viewHolder.price.setText("$"+product.getPrice());
 
@@ -76,8 +75,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                 );
                 params.setMargins(10, 10, 10, 10);
                 viewHolder.container.setLayoutParams(params);
-            }
-            viewHolder.container.setOnClickListener(new Product_onClick(product));
+        }
+        viewHolder.container.setOnClickListener(new Product_onClick(product));
 
     }
 

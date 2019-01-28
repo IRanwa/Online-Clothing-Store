@@ -61,6 +61,11 @@ public class ContactUs extends Fragment implements OnMapReadyCallback{
         unbinder.unbind();
     }
 
+    @OnClick(R.id.btnBack)
+    public void btnBack_onClick(){
+        fragment_actions.getIntance(this).btnBack_onClick();
+    }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         LatLng latlng = new LatLng(6.9271,

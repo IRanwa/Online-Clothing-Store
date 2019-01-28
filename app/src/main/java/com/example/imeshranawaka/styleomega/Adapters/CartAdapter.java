@@ -1,7 +1,13 @@
 package com.example.imeshranawaka.styleomega.Adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.RectF;
+import android.graphics.Shader;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -62,6 +68,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
         @BindView(R.id.prodImg) ImageView prodImg;
         @BindView(R.id.txtProductTitle) TextView prodTitle;
         @BindView(R.id.txtPrice) TextView prodPrice;
+        @BindView(R.id.txtSize) TextView prodSize;
         @BindView(R.id.noOfQuantity) Spinner prodQty;
         @BindView(R.id.checkBox)CheckBox checkbox;
         @BindView(R.id.btnDelete) ImageView btnDelete;
@@ -102,9 +109,16 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
 
         viewHolder.prodImg.setLayoutParams(layoutParams);
 
-        Picasso.get().load(product.getImages().get(0)).fit().into(viewHolder.prodImg);
+        Picasso.get().load(product.getImages().get(0)).resize(300,300)
+                .transform(new RoundedTransformation(75,0)).into(viewHolder.prodImg);
+
         viewHolder.prodTitle.setText(product.getTitle());
         viewHolder.prodPrice.setText("US$"+String.valueOf(product.getPrice()));
+        if(orderProduct.getSize().isEmpty()){
+            viewHolder.prodSize.setVisibility(View.GONE);
+        }else{
+            viewHolder.prodSize.setText("Size : "+orderProduct.getSize());
+        }
 
         int totalQty = product.getQuantity();
         ArrayList<Integer> qtyList = new ArrayList<>();
@@ -130,6 +144,40 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
         btnDeleteList.add(deleteAction);
         viewHolder.btnDelete.setOnClickListener(deleteAction);
 
+    }
+
+    public class RoundedTransformation implements com.squareup.picasso.Transformation {
+        private final int radius;
+        private final int margin;
+
+        public RoundedTransformation(final int radius, final int margin) {
+            this.radius = radius;
+            this.margin = margin;
+        }
+
+        @Override
+        public Bitmap transform(Bitmap source) {
+            final Paint paint = new Paint();
+            paint.setAntiAlias(true);
+            paint.setShader(new BitmapShader(source, Shader.TileMode.CLAMP,
+                    Shader.TileMode.CLAMP));
+
+            Bitmap output = Bitmap.createBitmap(source.getWidth(), source.getHeight(),
+                    Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(output);
+            canvas.drawRoundRect(new RectF(margin, margin, source.getWidth() - margin,
+                    source.getHeight() - margin), radius, radius, paint);
+
+            if (source != output) {
+                source.recycle();
+            }
+            return output;
+        }
+
+        @Override
+        public String key() {
+            return "rounded(r=" + radius + ", m=" + margin + ")";
+        }
     }
 
     @Override
@@ -224,9 +272,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
 
     public void btnDeleteSelected_onClick(View v){
         int checkboxSize = checkboxList.size();
+        int checkBoxCount = 0;
         for(int count=0;count<checkboxSize;count++){
-            if(checkboxList.get(0).isChecked()){
-                btnDeleteList.get(0).onClick(v);
+            if(checkboxList.get(checkBoxCount).isChecked()){
+                deleteItem(checkBoxCount,mDataSet.get(checkBoxCount));
+            }else {
+                checkBoxCount++;
             }
         }
     }

@@ -122,13 +122,13 @@ public class MainMenu extends Fragment {
     private class searchBar_onQueryListener implements SearchView.OnQueryTextListener {
         @Override
         public boolean onQueryTextSubmit(String query) {
-               List<Product> tempList = Product.listAll(Product.class);
-            ArrayList<Product> productsList = new ArrayList<>();
-            for(Product prod : tempList){
-                if(prod.getTitle().toLowerCase().contains(query.toLowerCase())) {
-                    productsList.add(prod);
+                List<Product> tempList = Product.listAll(Product.class);
+                ArrayList<Product> productsList = new ArrayList<>();
+                for(Product prod : tempList){
+                    if(prod.getTitle().toLowerCase().contains(query.toLowerCase())) {
+                        productsList.add(prod);
+                    }
                 }
-            }
 
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("products",  productsList);
@@ -141,7 +141,8 @@ public class MainMenu extends Fragment {
                 searchProd.setArguments(bundle);
 
                 FragmentManager fm = getFragmentManager();
-                FragmentTransaction transaction = fm.beginTransaction().replace(R.id.mainFragment, searchProd,"SearchProducts");
+                FragmentTransaction transaction = fm.beginTransaction().replace(R.id.mainFragment,
+                        searchProd,"SearchProducts");
                 transaction.addToBackStack("MainMenu");
                 transaction.commit();
 

@@ -39,6 +39,7 @@ import com.example.imeshranawaka.styleomega.SharedPreferenceUtility;
 import com.orm.SugarRecord;
 import com.orm.query.Select;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -79,6 +80,9 @@ public class ProductDetails extends Fragment {
     @BindView(R.id.btnAddToCart) Button btnAddToCart;
     @BindView(R.id.btnCartInView) ImageView btnCartInView;
     @BindView(R.id.txtStockMessage) TextView txtStockMessage;
+
+    @BindView(R.id.sizeContainer) LinearLayout sizeContainer;
+    @BindView(R.id.size) Spinner sizeSelector;
 
     private Unbinder unbinder;
     private Product product;
@@ -138,13 +142,33 @@ public class ProductDetails extends Fragment {
             ArrayAdapter<Integer> qtyAdapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item_view, qtyList);
             qtyAdapter.setDropDownViewResource(R.layout.spinner_item_view);
             quantity.setAdapter(qtyAdapter);
+
+            if(product.getExtraFeatures().isEmpty()){
+                sizeContainer.setVisibility(View.GONE);
+            }else{
+                try {
+                    JSONArray array = new JSONArray(product.getExtraFeatures());
+                    List<String> sizes = new ArrayList<>();
+                    for(int count=0;count<array.length();count++){
+                        sizes.add(array.get(count).toString());
+                    }
+                    ArrayAdapter<String> sizeAdapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item_view, sizes);
+                    sizeAdapter.setDropDownViewResource(R.layout.spinner_item_view);
+                    sizeSelector.setAdapter(sizeAdapter);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
         }else{
             quantity.setVisibility(View.GONE);
             btnAddToCart.setVisibility(View.GONE);
             btnOrderNow.setVisibility(View.GONE);
             btnCartInView.setVisibility(View.GONE);
             txtStockMessage.setVisibility(View.VISIBLE);
+            sizeContainer.setVisibility(View.GONE);
         }
+
+
 
         txtDesc.setText(Html.fromHtml(product.getDesc()));
 
@@ -186,7 +210,8 @@ public class ProductDetails extends Fragment {
 
     @OnClick(R.id.btnShare)
     public void btnShare_onClick(){
-        String shareBody = product.getImages().get(0)+"\n\nProduct Title : "+product.getTitle()+"\n\nProduct Price : $"+product.getPrice();
+        String shareBody = product.getImages().get(0)+"\n\nProduct Title : "
+                +product.getTitle()+"\n\nProduct Price : $"+product.getPrice();
 
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
@@ -200,7 +225,8 @@ public class ProductDetails extends Fragment {
         SharedPreferenceUtility sharedPref = SharedPreferenceUtility.getInstance(getContext());
         String email = sharedPref.getUserEmail();
 
-        List<Orders> orders = Orders.find(Orders.class, "user_Email=? and order_Status=?", email, "pending");
+        List<Orders> orders = Orders.find(Orders.class, "user_Email=? and order_Status=?"
+                , email, "pending");
 
         if(orders.size()==0){
             List<Address> addressList = Address.find(Address.class, "user_Email=?", email);
@@ -222,24 +248,40 @@ public class ProductDetails extends Fragment {
             newOrder.save();
             long id = newOrder.getId();
 
-            Order_Product orderProduct = new Order_Product(id, product.getId(), Integer.parseInt(quantity.getSelectedItem().toString()));
-            orderProduct.save();
-
+            String size = sizeSelector.getSelectedItem().toString();
+            if(size.isEmpty()){
+                Order_Product orderProduct = new Order_Product(id, product.getId(),
+                        Integer.parseInt(quantity.getSelectedItem().toString()));
+                orderProduct.save();
+            }else{
+                Order_Product orderProduct = new Order_Product(id, product.getId(),
+                        Integer.parseInt(quantity.getSelectedItem().toString()),size);
+                orderProduct.save();
+            }
             Toast.makeText(getContext(), "Product Successfully Added!", Toast.LENGTH_SHORT).show();
         }else{
             Orders currentOrder = orders.get(0);
             long id = currentOrder.getId();
 
-            List<Order_Product> orderList = Order_Product.find(Order_Product.class, "prod_Id=? and order_No=?", product.getId().toString()
+            List<Order_Product> orderList = Order_Product.find(Order_Product.class,
+                    "prod_Id=? and order_No=?", product.getId().toString()
                     ,String.valueOf(id));
             Order_Product orderProduct;
             int selectedQty = Integer.parseInt(quantity.getSelectedItem().toString());
+            String size = sizeSelector.getSelectedItem().toString();
             if(orderList.size()==0){
-                orderProduct = new Order_Product(id,product.getId(),selectedQty);
+                if(size.isEmpty()) {
+                    orderProduct = new Order_Product(id, product.getId(), selectedQty);
+                }else{
+                    orderProduct = new Order_Product(id, product.getId(), selectedQty,size);
+                }
                 orderProduct.save();
             }else{
                 orderProduct = orderList.get(0);
                 orderProduct.setQuantity(selectedQty);
+                if(!size.isEmpty()) {
+                    orderProduct.setSize(size);
+                }
                 orderProduct.save();
             }
 
@@ -277,7 +319,13 @@ public class ProductDetails extends Fragment {
     @OnClick(R.id.btnOrderNow)
     public void btnOrderNow_onClick(){
         int selectedQty = Integer.parseInt(quantity.getSelectedItem().toString());
-        Order_Product orderItem = new Order_Product(0,product.getId(),selectedQty);
+        String size = sizeSelector.getSelectedItem().toString();
+        Order_Product orderItem;
+        if(size.isEmpty()){
+            orderItem = new Order_Product(0,product.getId(),selectedQty);
+        }else{
+            orderItem = new Order_Product(0,product.getId(),selectedQty,size);
+        }
         orderItem.save();
         List<Order_Product> orderProducts = new ArrayList<>();
         orderProducts.add(orderItem);

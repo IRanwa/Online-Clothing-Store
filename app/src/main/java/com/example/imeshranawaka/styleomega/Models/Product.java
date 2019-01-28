@@ -17,18 +17,20 @@ public class Product extends SugarRecord<Product> implements Serializable {
     private double price;
     private int quantity;
     private String images;//This is json object
+    private String extraFeatures;
 
     public Product(){
 
     }
 
-    public Product(int catId, String title, String desc, double price, int quantity, String images) {
+    public Product(int catId, String title, String desc, double price, int quantity, String images, String extraFeatures) {
         this.catId = catId;
         this.title = title;
         this.desc = desc;
         this.price = price;
         this.quantity = quantity;
         this.images = images;
+        this.extraFeatures = extraFeatures;
     }
 
     public void setCatId(int catId) {
@@ -55,6 +57,10 @@ public class Product extends SugarRecord<Product> implements Serializable {
         this.images = images;
     }
 
+    public void setExtraFeatures(String extraFeatures) {
+        this.extraFeatures = extraFeatures;
+    }
+
     public int getCatId() {
         return catId;
     }
@@ -77,5 +83,9 @@ public class Product extends SugarRecord<Product> implements Serializable {
 
     public List<String> getImages() {
         return new Gson().fromJson(this.images, new TypeToken<List<String>>(){}.getType());
+    }
+
+    public String getExtraFeatures() {
+        return extraFeatures;
     }
 }

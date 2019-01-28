@@ -31,7 +31,7 @@
             android:src="@drawable/backarrow_icon" />
 
         <TextView
-            android:id="@+id/textView16"
+            android:id="@+id/txtSearchName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -40,9 +40,8 @@
             android:layout_weight="6"
             android:fontFamily="serif"
             android:text="My Orders"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
+            android:typeface="serif" />
 
     </LinearLayout>
 
@@ -50,6 +49,8 @@
         android:id="@+id/ordersList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -17,6 +17,7 @@ import com.example.imeshranawaka.styleomega.Models.Address;
 import com.example.imeshranawaka.styleomega.Models.Order_Product;
 import com.example.imeshranawaka.styleomega.Models.Orders;
 import com.example.imeshranawaka.styleomega.Models.Product;
+import com.example.imeshranawaka.styleomega.Models.Reviews;
 import com.example.imeshranawaka.styleomega.R;
 import com.example.imeshranawaka.styleomega.SharedPreferenceUtility;
 
@@ -25,6 +26,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -43,6 +45,7 @@ public class OrderDetails extends Fragment {
     @BindView(R.id.btnRemove) Button btnRemove;
 
     private Unbinder unbinder;
+    private Orders order;
 
     public OrderDetails() {
         // Required empty public constructor
@@ -64,8 +67,9 @@ public class OrderDetails extends Fragment {
     }
 
     private void setupDetails(long orderNo) {
-        Orders order = Orders.findById(Orders.class,orderNo);
-        txtOrderStatus.setText(order.getOrderStatus());
+        order = Orders.findById(Orders.class,orderNo);
+        String orderStatus = order.getOrderStatus();
+        txtOrderStatus.setText(orderStatus);
         txtOrderDate.setText(DateFormat.getDateInstance(DateFormat.MEDIUM).format(order.getPurchasedDate()));
         txtOrderNo.setText(String.valueOf(orderNo));
         List<Order_Product> orderProductList = Order_Product.find(Order_Product.class, "order_No=?", order.getId().toString());
@@ -87,12 +91,60 @@ public class OrderDetails extends Fragment {
             txtName.setTextColor(Color.RED);
             txtAddress.setVisibility(View.GONE);
         }
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         productsListRecycle.setLayoutManager(layoutManager);
 
-        OrderProductAdapter adapter = new OrderProductAdapter(getContext(), orderProductList, getActivity(),"OrderState");
+        OrderProductAdapter adapter = new OrderProductAdapter(getContext(), orderProductList, getActivity(),orderStatus);
         productsListRecycle.setAdapter(adapter);
         productsListRecycle.setNestedScrollingEnabled(false);
+
+        if(orderStatus.equalsIgnoreCase("delivery pending")){
+            btnRemove.setVisibility(View.GONE);
+        }else if(orderStatus.equalsIgnoreCase("order cancelled")
+                || orderStatus.equalsIgnoreCase("Order Completed")){
+            btnCancel.setVisibility(View.GONE);
+            btnConfirm.setVisibility(View.GONE);
+        }
+    }
+
+    @OnClick(R.id.btnRemove)
+    public void btnRemove_onClick(){
+        List<Order_Product> orderProducts = Order_Product.find(Order_Product.class, "order_No=?", order.getId().toString());
+        for(Order_Product orderProd : orderProducts){
+            List<Reviews> reviews = Reviews.find(Reviews.class, "order_Prod_Id=?", orderProd.getId().toString());
+            if(reviews.size()>0){
+                reviews.get(0).delete();
+            }
+            orderProd.delete();
+        }
+        order.delete();
+        fragment_actions.getIntance(this).btnBack_onClick();
+    }
+
+    @OnClick(R.id.btnCancel)
+    public void btnCancel_onClick(){
+        List<Order_Product> orderProductsList = Order_Product.find(Order_Product.class,"order_No=?",order.getId().toString());
+        for(Order_Product orderProd : orderProductsList){
+            Product product = Product.findById(Product.class,orderProd.getProdId());
+            product.setQuantity(product.getQuantity()+orderProd.getQuantity());
+            product.save();
+        }
+        order.setOrderStatus("Order Cancelled");
+        order.save();
+        fragment_actions.getIntance(this).btnBack_onClick();
+    }
+
+    @OnClick(R.id.btnConfirm)
+    public void btnConfirm_onClick(){
+        order.setOrderStatus("Order Completed");
+        order.save();
+        fragment_actions.getIntance(this).btnBack_onClick();
+    }
+
+    @OnClick(R.id.btnBack)
+    public void btnBack_onCLick(){
+        fragment_actions.getIntance(this).btnBack_onClick();
     }
 
     @Override

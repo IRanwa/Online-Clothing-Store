@@ -21,6 +21,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -41,8 +42,13 @@ public class MyOrders extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_orders, container, false);
         unbinder = ButterKnife.bind(this,view);
-        setupOrdersList();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setupOrdersList();
     }
 
     private void setupOrdersList() {
@@ -58,6 +64,11 @@ public class MyOrders extends Fragment {
         }else{
             ordersListRecycle.setVisibility(View.GONE);
         }
+    }
+
+    @OnClick(R.id.btnBack)
+    public void btnBack_onCLick(){
+        fragment_actions.getIntance(this).btnBack_onClick();
     }
 
     @Override

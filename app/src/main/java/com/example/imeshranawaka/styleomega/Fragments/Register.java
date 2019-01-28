@@ -19,6 +19,8 @@ import com.example.imeshranawaka.styleomega.R;
 import com.example.imeshranawaka.styleomega.SharedPreferenceUtility;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -74,38 +76,46 @@ public class Register extends Fragment {
         }else if(!cpass.equals(pass)){
             Toast.makeText(view.getContext(),"Password not matched.",Toast.LENGTH_SHORT).show();
         }else{
-            List<Login> login = Login.find(Login.class, "email=?", email);
-            if(login.size()>0){
-                Toast.makeText(view.getContext(),"User already registered",Toast.LENGTH_SHORT).show();
-            }else{
-                User user = new User(email,fName,lName);
-                user.save();
+            //Validate the email address
+            String checkingText ="^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";
+            Pattern pattern = Pattern.compile(checkingText,Pattern.CASE_INSENSITIVE);
+            Matcher match = pattern.matcher(email);
+            if(match.find()) {
+                List<Login> login = Login.find(Login.class, "email=?", email);
+                if (login.size() > 0) {
+                    Toast.makeText(view.getContext(), "User already registered", Toast.LENGTH_SHORT).show();
+                } else {
+                    User user = new User(email, fName, lName);
+                    user.save();
 
-                Login userLogin = new Login(email,pass);
-                userLogin.save();
+                    Login userLogin = new Login(email, pass);
+                    userLogin.save();
 
-                SharedPreferenceUtility sharedPref = SharedPreferenceUtility.getInstance(getContext());
-                sharedPref.setUserId(userLogin.getId());
-                sharedPref.setUserEmail(userLogin.getEmail());
-                sharedPref.setUserPass(userLogin.getPass());
+                    SharedPreferenceUtility sharedPref = SharedPreferenceUtility.getInstance(getContext());
+                    sharedPref.setUserId(userLogin.getId());
+                    sharedPref.setUserEmail(userLogin.getEmail());
+                    sharedPref.setUserPass(userLogin.getPass());
 
-                FragmentManager fm = getFragmentManager();
-                MainMenu menu = new MainMenu();
-                FragmentTransaction transaction = fm.beginTransaction();
+                    FragmentManager fm = getFragmentManager();
+                    MainMenu menu = new MainMenu();
+                    FragmentTransaction transaction = fm.beginTransaction();
 
-                int backStackEntry = fm.getBackStackEntryCount();
-                List<Fragment> fragments = fm.getFragments();
-                if (backStackEntry > 0) {
-                    for (int i = 0; i < backStackEntry; i++) {
-                        fm.popBackStack();
-                        transaction.remove(fragments.get(i));
-
+                    int backStackEntry = fm.getBackStackEntryCount();
+                    List<Fragment> fragments = fm.getFragments();
+                    if (backStackEntry > 0) {
+                        for (int i = 0; i < backStackEntry; i++) {
+                            fm.popBackStackImmediate();
+                            transaction.remove(fragments.get(i));
+                            fragments = fm.getFragments();
+                        }
                     }
-                }
-                transaction.replace(R.id.mainFragment, menu,"MainMenu");
-                transaction.commit();
+                    transaction.replace(R.id.mainFragment, menu, "MainMenu");
+                    transaction.commit();
 
-                fragment_actions.getIntance(Register.this).hideKeyboard();
+                    fragment_actions.getIntance(Register.this).hideKeyboard();
+                }
+            }else{
+                Toast.makeText(getContext(),"Invalid Email Address!",Toast.LENGTH_SHORT).show();
             }
         }
     }

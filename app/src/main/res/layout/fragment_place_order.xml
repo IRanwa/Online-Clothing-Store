@@ -9,54 +9,52 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <ImageView
-        android:id="@+id/imageView15"
+    <LinearLayout
+        android:id="@+id/linearLayout6"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:src="@color/colorPrimaryDark"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="horizontal"
+        android:paddingTop="5dp"
+        android:paddingBottom="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/btnBack"
-        android:layout_width="61dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:clickable="true"
-        android:src="@drawable/backarrow_icon"
-        app:layout_constraintEnd_toStartOf="@+id/textView16"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:src="@drawable/backarrow_icon" />
 
-    <TextView
-        android:id="@+id/textView14"
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="12dp"
-        android:fontFamily="serif"
-        android:text="Place Order"
-        android:textColor="@android:color/white"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/btnBack"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/txtSearchName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="6"
+            android:fontFamily="serif"
+            android:text="Place Order"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
+            android:typeface="serif" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
+        android:layout_height="0dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -95,9 +93,11 @@
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="10dp"
                             android:text="Shipping Address"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
                             android:textColor="@android:color/white"
                             android:textSize="18sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:typeface="serif" />
 
                         <TextView
                             android:id="@+id/txtAddressName"
@@ -107,8 +107,9 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginBottom="5dp"
                             android:text="Imesh Ranawaka"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
                             android:textColor="@android:color/white"
-                            android:textSize="14sp" />
+                            android:typeface="serif" />
 
                         <TextView
                             android:id="@+id/txtAddress"
@@ -117,8 +118,9 @@
                             android:layout_marginLeft="10dp"
                             android:layout_marginBottom="10dp"
                             android:text="No.432/3, Himbutana Lane, Angoda, Mulleriyawa, Western, 10620"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
                             android:textColor="@android:color/white"
-                            android:textSize="14sp" />
+                            android:typeface="serif" />
                     </LinearLayout>
 
                     <ImageView
@@ -146,9 +148,11 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
                         android:text="Product Details"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
                         android:textColor="@android:color/white"
                         android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:typeface="serif" />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/productsList"
@@ -176,9 +180,11 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
                         android:text="Payment Method"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
                         android:textColor="@android:color/white"
                         android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:typeface="serif" />
 
                     <RadioGroup
                         android:id="@+id/paymentMethod"
@@ -197,8 +203,9 @@
                             android:buttonTint="@android:color/white"
                             android:checked="true"
                             android:text="Cash on delivery"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
                             android:textColor="@android:color/white"
-                            android:textSize="14sp" />
+                            android:typeface="serif" />
 
                         <RadioButton
                             android:id="@+id/radioButton2"
@@ -207,8 +214,9 @@
                             android:layout_weight="1"
                             android:buttonTint="@android:color/white"
                             android:text="Credit or Debit Card"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
                             android:textColor="@android:color/white"
-                            android:textSize="14sp" />
+                            android:typeface="serif" />
                     </RadioGroup>
 
                 </LinearLayout>
@@ -237,8 +245,11 @@
                     android:layout_marginLeft="10dp"
                     android:layout_weight="0"
                     android:text="Total :"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
                     android:textColor="@android:color/white"
-                    android:textSize="18sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:typeface="serif" />
 
                 <TextView
                     android:id="@+id/txtTotalPrice"
@@ -248,8 +259,11 @@
                     android:layout_marginLeft="10dp"
                     android:layout_weight="10"
                     android:text="Total :"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
                     android:textColor="@android:color/white"
-                    android:textSize="18sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:typeface="serif" />
 
                 <Button
                     android:id="@+id/btnConfirmOrder"
@@ -262,7 +276,9 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_layout"
                     android:text="Confirm Order"
-                    android:textColor="@android:color/black" />
+                    android:textAppearance="@android:style/TextAppearance.Holo.Widget.Button"
+                    android:textSize="16sp"
+                    android:typeface="serif" />
 
             </LinearLayout>
         </LinearLayout>

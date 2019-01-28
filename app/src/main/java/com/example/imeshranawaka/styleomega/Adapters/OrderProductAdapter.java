@@ -2,7 +2,13 @@ package com.example.imeshranawaka.styleomega.Adapters;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.RectF;
+import android.graphics.Shader;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
@@ -51,6 +57,7 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
         @BindView(R.id.productImage) ImageView productImage;
         @BindView(R.id.prodTitle) TextView prodTitle;
         @BindView(R.id.prodPrice) TextView prodPrice;
+        @BindView(R.id.prodSize) TextView prodSize;
         @BindView(R.id.prodQuantity) TextView prodQuantity;
         @BindView(R.id.btnReview) Button btnReview;
         public ViewHolder(View v){
@@ -74,6 +81,11 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
 
         viewHolder.prodTitle.setText(product.getTitle());
         viewHolder.prodPrice.setText("Price : US$"+String.valueOf(product.getPrice()));
+        if(orderProduct.getSize().isEmpty()){
+            viewHolder.prodSize.setVisibility(View.GONE);
+        }else{
+            viewHolder.prodSize.setText("Size : "+orderProduct.getSize());
+        }
         viewHolder.prodQuantity.setText("Quantitiy : ".concat(String.valueOf(orderProduct.getQuantity())));
 
         Display display = mActivity.getWindowManager(). getDefaultDisplay();
@@ -91,15 +103,50 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
 
         viewHolder.productImage.setLayoutParams(layoutParams);
 
-        Picasso.get().load(product.getImages().get(0)).fit().into(viewHolder.productImage);
+        Picasso.get().load(product.getImages().get(0)).resize(300,300)
+                .transform(new RoundedTransformation(75,0)).into(viewHolder.productImage);
 
-        if(status.equals("OrderState")){
+        if(status.equalsIgnoreCase("Order Completed")){
             String email = SharedPreferenceUtility.getInstance(mContext).getUserEmail();
             List<Reviews> reviews = Reviews.find(Reviews.class, "order_Prod_Id=? and user_Email=?", String.valueOf(orderProduct.getId()), email);
             if(reviews.size()==0) {
                 viewHolder.btnReview.setVisibility(View.VISIBLE);
                 viewHolder.btnReview.setOnClickListener(new review_onClick(orderProduct,position));
             }
+        }
+    }
+
+    public class RoundedTransformation implements com.squareup.picasso.Transformation {
+        private final int radius;
+        private final int margin;
+
+        public RoundedTransformation(final int radius, final int margin) {
+            this.radius = radius;
+            this.margin = margin;
+        }
+
+        @Override
+        public Bitmap transform(Bitmap source) {
+            final Paint paint = new Paint();
+            paint.setAntiAlias(true);
+            paint.setShader(new BitmapShader(source, Shader.TileMode.CLAMP,
+                    Shader.TileMode.CLAMP));
+
+            Bitmap output = Bitmap.createBitmap(source.getWidth(), source.getHeight(),
+                    Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(output);
+            canvas.drawRoundRect(new RectF(margin, margin, source.getWidth() - margin,
+                    source.getHeight() - margin), radius, radius, paint);
+
+            if (source != output) {
+                source.recycle();
+            }
+            return output;
+        }
+
+        @Override
+        public String key() {
+            return "rounded(r=" + radius + ", m=" + margin + ")";
         }
     }
 

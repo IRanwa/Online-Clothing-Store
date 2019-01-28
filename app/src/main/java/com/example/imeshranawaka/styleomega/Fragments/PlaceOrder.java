@@ -171,8 +171,6 @@ public class PlaceOrder extends Fragment {
             Orders order = new Orders("Delivery Pending",email,address.getId());
             Calendar calendar = Calendar.getInstance();
             Date date = calendar.getTime();
-            //DateFormat date = DateFormat.getDateInstance(DateFormat.MEDIUM);
-            //String currentDate = DateFormat.getDateInstance(DateFormat.MEDIUM).format(calendar.getTime());
             order.setPurchasedDate(date);
             order.setUserAddress(address.getId());
             order.save();

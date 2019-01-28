@@ -68,7 +68,11 @@ public class ChangePassword extends Fragment {
                 login.setPass(newPass);
                 login.save();
 
-                sharedPref.setUserId(0);
+                SharedPreferences.Editor editor = SharedPreferenceUtility.getInstance(getContext()).getEditor();
+                editor.remove("email");
+                editor.remove("user");
+                editor.remove("pass");
+                editor.commit();
 
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 FragmentTransaction transaction = fm.beginTransaction();

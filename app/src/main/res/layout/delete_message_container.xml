@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
@@ -11,15 +12,18 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="8dp"
+        android:gravity="center"
         android:text="Are you sure you want to delete?"
-        android:textColor="@android:color/black"
-        android:textSize="18sp" />
+        android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+        android:typeface="serif" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingBottom="5dp">
 
         <Button
             android:id="@+id/btnNo"
@@ -27,11 +31,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/button_layout"
-            android:text="No" />
+            android:text="No"
+            android:textAppearance="@android:style/TextAppearance.Holo.Widget.Button"
+            android:textSize="16sp"
+            android:typeface="serif" />
 
         <View
             android:id="@+id/divider2"
-            android:layout_width="1dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="10" />
 
@@ -41,6 +48,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/button_layout"
-            android:text="Yes" />
+            android:text="Yes"
+            android:textAppearance="@android:style/TextAppearance.Holo.Widget.Button"
+            android:textSize="16sp"
+            android:typeface="serif" />
     </LinearLayout>
 </LinearLayout>

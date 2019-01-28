@@ -120,34 +120,43 @@ public class StyleOmega extends FragmentActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
+            int backStackEntry = fm.getBackStackEntryCount();
+            List<Fragment> fragments = fm.getFragments();
+            if (backStackEntry > 0) {
+                for (int i = 0; i < backStackEntry; i++) {
+                    fm.popBackStackImmediate();
+                    if(fragments.size()<i) {
+                        Fragment frag = fragments.get(0);
+                        transaction.remove(frag);
+                        if(frag.getTag()!=null && !frag.getTag().toString().equals("MainMenu")) {
+                            break;
+                        }
+                    }
+                    fragments = fm.getFragments();
+                }
+            }
+            transaction.replace(R.id.mainFragment, new MainMenu(), "MainMenu");
+            transaction.commit();
         } else if (id == R.id.nav_account) {
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();
 
-            Fragment fragment = getSupportFragmentManager().findFragmentByTag("AccountInfo");
-            if(fragment != null) {
-                fragment_actions.getIntance(fragment).btnBack_onClick();
-            }
-
-            fragment = getSupportFragmentManager().findFragmentByTag("ChangePassword");
-            if(fragment != null) {
-                fragment_actions.getIntance(fragment).btnBack_onClick();
-            }
-
-            fragment = getSupportFragmentManager().findFragmentByTag("MyAddressBook");
-            if(fragment != null) {
-                fragment_actions.getIntance(fragment).btnBack_onClick();
-            }
-
-            fragment = getSupportFragmentManager().findFragmentByTag("NewAddress");
-            if(fragment != null) {
-                fragment_actions.getIntance(fragment).btnBack_onClick();
-            }
-
-            fragment = getSupportFragmentManager().findFragmentByTag("MyAccount");
-            if(fragment != null) {
-                fragment_actions.getIntance(fragment).btnBack_onClick();
+            int backStackEntry = fm.getBackStackEntryCount();
+            List<Fragment> fragments = fm.getFragments();
+            if (backStackEntry > 0) {
+                for (int i = 0; i < backStackEntry; i++) {
+                    fm.popBackStackImmediate();
+                    if(fragments.size()<i) {
+                        Fragment frag = fragments.get(0);
+                        transaction.remove(frag);
+                        if(frag.getTag()!=null && !frag.getTag().toString().equals("MyAccount")) {
+                            break;
+                        }
+                    }
+                    fragments = fm.getFragments();
+                }
             }
 
             transaction.replace(R.id.mainFragment, new MyAccount(), "MyAccount");
@@ -156,12 +165,42 @@ public class StyleOmega extends FragmentActivity
         } else if (id == R.id.nav_order) {
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();
+            int backStackEntry = fm.getBackStackEntryCount();
+            List<Fragment> fragments = fm.getFragments();
+            if (backStackEntry > 0) {
+                for (int i = 0; i < backStackEntry; i++) {
+                    fm.popBackStackImmediate();
+                    if(fragments.size()<i) {
+                        Fragment frag = fragments.get(0);
+                        transaction.remove(frag);
+                        if(frag.getTag()!=null && !frag.getTag().toString().equals("MyOrders")) {
+                            break;
+                        }
+                    }
+                    fragments = fm.getFragments();
+                }
+            }
             transaction.replace(R.id.mainFragment, new MyOrders(), "MyOrders");
             transaction.addToBackStack("MainMenu");
             transaction.commit();
         }else if(id == R.id.nav_contact){
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();
+            int backStackEntry = fm.getBackStackEntryCount();
+            List<Fragment> fragments = fm.getFragments();
+            if (backStackEntry > 0) {
+                for (int i = 0; i < backStackEntry; i++) {
+                    fm.popBackStackImmediate();
+                    if(fragments.size()<i) {
+                        Fragment frag = fragments.get(0);
+                        transaction.remove(frag);
+                        if(frag.getTag()!=null && !frag.getTag().toString().equals("ContactUs")) {
+                            break;
+                        }
+                    }
+                    fragments = fm.getFragments();
+                }
+            }
             transaction.replace(R.id.mainFragment, new ContactUs(), "ContactUs");
             transaction.addToBackStack("MainMenu");
             transaction.commit();
@@ -175,6 +214,18 @@ public class StyleOmega extends FragmentActivity
 
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();
+            int backStackEntry = fm.getBackStackEntryCount();
+            List<Fragment> fragments = fm.getFragments();
+            if (backStackEntry > 0) {
+                for (int i = 0; i < backStackEntry; i++) {
+                    fm.popBackStackImmediate();
+                    if(fragments.size()<i) {
+                        Fragment frag = fragments.get(0);
+                        transaction.remove(frag);
+                    }
+                    fragments = fm.getFragments();
+                }
+            }
             transaction.replace(R.id.mainFragment, new SignIn(), "SignIn");
             transaction.commit();
         }

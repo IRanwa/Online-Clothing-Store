@@ -19,6 +19,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -58,6 +59,11 @@ public class AllReviews extends Fragment {
         }else{
             reviewsListRecycle.setVisibility(View.GONE);
         }
+    }
+
+    @OnClick(R.id.btnBack)
+    public void btnBack_onClick(){
+        fragment_actions.getIntance(this).btnBack_onClick();
     }
 
     @Override

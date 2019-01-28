@@ -109,7 +109,8 @@ public class NewAddress extends Fragment {
         }else{
             SharedPreferenceUtility sharedPref = SharedPreferenceUtility.getInstance(getContext());
 
-            List<Address> addressList = Address.find(Address.class, "province=? and city=? and address=? and user_Email=?"
+            List<Address> addressList = Address.find(Address.class, "province=? and city=? " +
+                            "and address=? and user_Email=?"
                     ,province , city, address, sharedPref.getUserEmail());
             if(saveAddress==null && addressList.size()>0){
                 Toast.makeText(getContext(),"Address Already Saved!",Toast.LENGTH_SHORT).show();
@@ -135,8 +136,9 @@ public class NewAddress extends Fragment {
                         defaultAdd = true;
                     }
                 }
-                if(address==null) {
-                    Address newAddress = new Address(sharedPref.getUserEmail(), fName, lName, address, city, Integer.parseInt(contactNo)
+                if(saveAddress==null) {
+                    Address newAddress = new Address(sharedPref.getUserEmail(), fName, lName, address, city,
+                            Integer.parseInt(contactNo)
                             , province, Integer.parseInt(zipCode), defaultAdd);
                     newAddress.save();
                     if(orderNo!=0){
@@ -158,7 +160,7 @@ public class NewAddress extends Fragment {
 
                 Fragment frag = getFragmentManager().findFragmentByTag("NewAddress");
                 if(frag!=null) {
-                    fragment_actions.getIntance(frag).btnBack_onClick();
+                    fragment_actions.getIntance(this).btnBack_onClick();
                 }
             }
         }

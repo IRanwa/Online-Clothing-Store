@@ -38,13 +38,21 @@ public class SplashScreen extends AppCompatActivity {
                     JSONObject obj = array.getJSONObject(count);
                     ArrayList<String> imagesList = new Gson().fromJson(obj.getString("images"), new TypeToken<List<String>>(){}.getType());
                     String title = obj.getString("title");
+                    String sizeString = "";
+                    try {
+                        JSONArray size = obj.getJSONArray("size");
+                        sizeString = size.toString();
+                    }catch(Exception ex){
+
+                    }
                     Product product = new Product(
                             obj.getInt("category"),
                             obj.getString("title"),
                             obj.getString("description"),
                             obj.getDouble("price"),
                             obj.getInt("quantity"),
-                            obj.getString("images")
+                            obj.getString("images"),
+                            sizeString
                     );
                     product.save();
 

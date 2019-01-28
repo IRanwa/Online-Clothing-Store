@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
@@ -23,9 +24,11 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="5dp"
         android:text="Imesh"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
         android:textColor="@android:color/white"
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:typeface="serif" />
 
     <TextView
         android:id="@+id/textView45"
@@ -34,9 +37,11 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:text="Review"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
         android:textColor="@android:color/white"
-        android:textSize="14sp"
-        android:textStyle="bold" />
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:typeface="serif" />
 
     <TextView
         android:id="@+id/txtRevDesc"
@@ -46,7 +51,9 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:text="No.432/3, Himbutana Lane, Angoda, Mulleriyawa, Western, 10620"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
         android:textColor="@android:color/white"
-        android:textSize="14sp" />
+        android:textSize="16sp"
+        android:typeface="serif" />
 
 </LinearLayout>

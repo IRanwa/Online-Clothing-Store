@@ -31,7 +31,7 @@
             android:src="@drawable/backarrow_icon" />
 
         <TextView
-            android:id="@+id/textView16"
+            android:id="@+id/txtSearchName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -40,9 +40,8 @@
             android:layout_weight="6"
             android:fontFamily="serif"
             android:text="Contact Us"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
+            android:typeface="serif" />
 
     </LinearLayout>
 
@@ -62,10 +61,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="5dp"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:padding="5dp">
+                android:orientation="vertical">
 
                 <include
                     layout="@layout/activity_maps"
@@ -74,7 +71,10 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -85,9 +85,8 @@
                         android:layout_marginEnd="8dp"
                         android:fontFamily="serif"
                         android:text="Contact No :"
-                        android:textAllCaps="false"
-                        android:textColor="@android:color/black"
-                        android:textSize="14sp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:typeface="serif"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.03"
                         app:layout_constraintStart_toStartOf="parent"
@@ -102,9 +101,8 @@
                         android:fontFamily="serif"
                         android:gravity="right"
                         android:text="011-2549612 / 0772551540"
-                        android:textAllCaps="false"
-                        android:textColor="@android:color/black"
-                        android:textSize="14sp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:typeface="serif"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.03"
                         app:layout_constraintStart_toStartOf="parent"
@@ -114,7 +112,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -124,9 +124,7 @@
                         android:layout_marginEnd="8dp"
                         android:fontFamily="serif"
                         android:text="Email :"
-                        android:textAllCaps="false"
-                        android:textColor="@android:color/black"
-                        android:textSize="14sp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.03"
                         app:layout_constraintStart_toStartOf="parent"
@@ -140,9 +138,7 @@
                         android:fontFamily="serif"
                         android:gravity="right"
                         android:text="StyleOmega@hotmail.com"
-                        android:textAllCaps="false"
-                        android:textColor="@android:color/black"
-                        android:textSize="14sp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.03"
                         app:layout_constraintStart_toStartOf="parent"
@@ -153,150 +149,175 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:background="@android:color/darker_gray"
+                android:orientation="vertical"
+                android:padding="1dp">
 
-                <TextView
-                    android:id="@+id/textView40"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginEnd="8dp"
-                    android:fontFamily="serif"
-                    android:gravity="center"
-                    android:text="Contact Form"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/black"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.03"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/textView29"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginEnd="8dp"
-                    android:fontFamily="serif"
-                    android:text="Name"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.03"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+                    <TextView
+                        android:id="@+id/textView40"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="serif"
+                        android:gravity="center"
+                        android:text="Contact Form"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="@android:color/black"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:typeface="serif"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.03"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
-                <EditText
-                    android:id="@+id/txtName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:autofillHints=""
-                    android:backgroundTint="@drawable/editext_background"
-                    android:defaultFocusHighlightEnabled="true"
-                    android:ems="10"
-                    android:hint="Name"
-                    android:inputType="textPersonName"
-                    android:textColor="@color/ediText_textColor"
-                    android:textColorHint="@android:color/darker_gray"
-                    android:textSize="18sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/textView7"
-                    app:layout_constraintTop_toBottomOf="@+id/textView7"
-                    tools:targetApi="o" />
+                    <TextView
+                        android:id="@+id/textView29"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="serif"
+                        android:text="Name"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:typeface="serif"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.03"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
-                <TextView
-                    android:id="@+id/textView30"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:fontFamily="serif"
-                    android:text="Email"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    <EditText
+                        android:id="@+id/txtName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+                        android:autofillHints=""
+                        android:backgroundTint="@drawable/editext_background"
+                        android:defaultFocusHighlightEnabled="true"
+                        android:ems="10"
+                        android:hint="Name"
+                        android:inputType="textPersonName"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textColorHint="@android:color/darker_gray"
+                        android:textSize="16sp"
+                        android:typeface="serif"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/textView7"
+                        app:layout_constraintTop_toBottomOf="@+id/textView7"
+                        tools:targetApi="o" />
 
-                <EditText
-                    android:id="@+id/txtEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:autofillHints=""
-                    android:backgroundTint="@drawable/editext_background"
-                    android:defaultFocusHighlightEnabled="true"
-                    android:ems="10"
-                    android:hint="Email"
-                    android:inputType="textPersonName"
-                    android:textColor="@color/ediText_textColor"
-                    android:textColorHint="@android:color/darker_gray"
-                    android:textSize="18sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="@+id/textView8"
-                    app:layout_constraintTop_toBottomOf="@+id/textView8"
-                    tools:targetApi="o" />
+                    <TextView
+                        android:id="@+id/textView30"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="serif"
+                        android:text="Email"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:typeface="serif" />
 
-                <TextView
-                    android:id="@+id/textView34"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:fontFamily="serif"
-                    android:text="Message"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    <EditText
+                        android:id="@+id/txtEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+                        android:autofillHints=""
+                        android:backgroundTint="@drawable/editext_background"
+                        android:defaultFocusHighlightEnabled="true"
+                        android:ems="10"
+                        android:hint="Email"
+                        android:inputType="textPersonName"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textColorHint="@android:color/darker_gray"
+                        android:textSize="16sp"
+                        android:typeface="serif"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@+id/textView8"
+                        app:layout_constraintTop_toBottomOf="@+id/textView8"
+                        tools:targetApi="o" />
 
-                <EditText
-                    android:id="@+id/txtMessage"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="8dp"
-                    android:ems="10"
-                    android:hint="Message"
-                    android:inputType="textMultiLine"
-                    android:textColor="@color/ediText_textColor"
-                    android:textColorHint="@android:color/darker_gray" />
+                    <TextView
+                        android:id="@+id/textView34"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="serif"
+                        android:text="Message"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:typeface="serif" />
 
-                <Button
-                    android:id="@+id/btnSubmit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@drawable/button_layout"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:text="Submit" />
+                    <EditText
+                        android:id="@+id/txtMessage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="8dp"
+                        android:ems="10"
+                        android:hint="Message"
+                        android:inputType="textMultiLine"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textColorHint="@android:color/darker_gray"
+                        android:textSize="16sp"
+                        android:typeface="serif" />
+
+                    <Button
+                        android:id="@+id/btnSubmit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/button_layout"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:text="Submit"
+                        android:textAppearance="@android:style/TextAppearance.Holo.Widget.Button"
+                        android:textSize="16sp"
+                        android:typeface="serif" />
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>

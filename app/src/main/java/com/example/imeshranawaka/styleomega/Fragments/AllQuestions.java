@@ -115,6 +115,11 @@ public class AllQuestions extends Fragment {
         dialog.show();
     }
 
+    @OnClick(R.id.btnBack)
+    public void btnBack_onClick(){
+        fragment_actions.getIntance(this).btnBack_onClick();
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

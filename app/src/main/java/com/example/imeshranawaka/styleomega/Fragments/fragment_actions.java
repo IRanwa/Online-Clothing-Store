@@ -1,6 +1,12 @@
 package com.example.imeshranawaka.styleomega.Fragments;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.Shader;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
