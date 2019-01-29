@@ -259,7 +259,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
         btnDeleteList.remove(position);
 
         for(int count=position;count<btnDeleteList.size();count++){
-            btnDeleteList.get(position).setPosition(position);
+            btnDeleteList.get(count).setPosition(count);
         }
 
         if(mDataSet.size()==0){
